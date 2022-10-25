@@ -2,6 +2,7 @@
 
 NYC Neighborhood Internet Adoption
 Source Data : https://opendata.cityofnewyork.us/
+Income, Internet and NYC Boroughs analysis
 
 We will fill this in later.
 

@@ -1,8 +1,9 @@
 **NYC Neighborhood Internet Adoption**
 
-NYC Neighborhood Internet Adoption
 Source Data : https://opendata.cityofnewyork.us/
 Income, Internet and NYC Boroughs analysis
+
+**Description**
 
 For our final project we have decided to explore internet availability around 
 New York City. Society in the United States have reached a point where internet 

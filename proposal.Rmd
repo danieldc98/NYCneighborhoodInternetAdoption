@@ -1,10 +1,6 @@
 # Proposal
 
-**Trends Affecting NYC Internet Connectivity**
-
-Modern American society has reached a point where the Internet is a driver of the economy and increasingly a necessity of modern life. Consequently, there has been a rapid expansion of Internet infrastructure and availability around the country. However, this expansion has not progressed uniformly across society. For this reason our hypothesis is that there may be inequity in Internet availability and adoption, especially in a city as stratified as New York City. We intend to explore how Internet availability, adoption, and usage vary across New York City.
-
-**Problem Statement**
+**Problem Statement to Analyze**
 
 Is there a trend in Internet adoption across New York City based on demographic data?
 
@@ -13,7 +9,7 @@ Is there a trend in Internet adoption across New York City based on demographic 
 
 **Inpiration and Approach**
 
-To identify and analyse this, we intend to use NYC's [Internet Master Plan: Adoption and Infrastructure Data by Neighborhood](https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk) data to look at dozens of variables related to Internet speed, reliability, usage, and physical infrastructure at a neighborhood level. 
+To identify and analyse the problem statement, we intend to use NYC's [Internet Master Plan: Adoption and Infrastructure Data by Neighborhood](https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk) data to look at dozens of variables related to Internet speed, reliability, usage, and physical infrastructure at a neighborhood level. 
 Collected by NYC's Office of Technology and Innovation (OTI), this dataset contains detailed breakdowns of the state of Internet infrastructure and usage by city-recognized neighborhood. 
 These range from obvious indicators of Internet usage ("Mobile Dependent Households (Percentage of Households)") to detailed accountings of infrastructure ("Number of Free Public Wi-Fi Access Points in a Pedestrian Corridor") to *really* detailed accountings of infrastructure ("Density of Poles Reserved and with Equipment Installed for Mobile Telecom Franchise"). 
 As most digital public infrastructure must go through OTI for permits and oversight, we expect this data to offer an accurate accounting of the city's digital infrastructure. 
@@ -42,4 +38,3 @@ Both datasets are available on [NYC OpenData](https://opendata.cityofnewyork.us)
 - This will enable us to effectively analyze and visualize any combination of the many categorical and continuous variables about Internet connectivity or socioeconomic demographics for all neighborhoods in New York City.
 
 Together, these two datasets should allow us to explore how and why some New Yorkers enjoy world-class, ubiquitous access to the so-called information superhighway, while others still struggle to find any on ramps.
-

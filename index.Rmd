@@ -7,3 +7,9 @@ site: bookdown::bookdown_site
 
 # Introduction
 
+**Trends Affecting NYC Internet Connectivity**
+
+Modern American society has reached a point where the Internet is a driver of the economy and increasingly a necessity of modern life. 
+Consequently, there has been a rapid expansion of Internet infrastructure and availability around the country. However, this expansion has not progressed uniformly across society. 
+For this reason our hypothesis is that there may be inequity in Internet availability and adoption, especially in a city as stratified as New York City. We intend to explore how Internet availability, adoption, and usage vary across New York City.
+

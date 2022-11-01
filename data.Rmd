@@ -2,6 +2,13 @@
 
 ## Sources
 
+**Dataset Sources**
+
+ - Internet Master Plan: Adoption and Infrastructure Data by Neighborhood:
+ https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk
+ - Demographic Profiles of ACS 5 Year Estimates at the Neighborhood Tabulation Area (NTA) level
+ https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn
+
 ## Cleaning / transformation
 
 ## Missing value analysis

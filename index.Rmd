@@ -7,9 +7,29 @@ site: bookdown::bookdown_site
 
 # Introduction
 
-**Trends Affecting NYC Internet Connectivity**
+"How and whom should the Government help get efficient, reliable and super-fast internet access?"
 
-Modern American society has reached a point where the Internet is a driver of the economy and increasingly a necessity of modern life. 
-Consequently, there has been a rapid expansion of Internet infrastructure and availability around the country. However, this expansion has not progressed uniformly across society. 
-For this reason our hypothesis is that there may be inequity in Internet availability and adoption, especially in a city as stratified as New York City. We intend to explore how Internet availability, adoption, and usage vary across New York City.
+This burgeoning question definitely gets invoked either directly or indirectly in government's Multi Billion$ infrastructure programs as part of the broadband infrastructure deployment. To expand the access of the broadband,
+proper planning and detailed split of money and resources needs to be determined.
+
+**Trends Affecting Internet Connectivity**
+
+Modern American society has reached a point where the Internet is a driver of the economy and increasingly a necessity of modern life. Consequently, there has been a rapid expansion of Internet infrastructure and availability around the country. However, this expansion has not progressed uniformly across society.
+Certain digital divides still exist between urban, suburban and rural America.
+
+Research studies highlight that 72% Rural Americans say that they own a home broadband internet connection however the rural residents go online less frequently than their urban counterparts. [Research survey done of U.S. adults from Jan 25, 2021 to Feb 8, 2021 by Pew Research Center]. Almost half of the people who did not have a broadband connection said they could not afford it. Only 7% blamed the main reason to be, the lack of access to high-speed networks.
+
+It is less likely that rural adults have multiple devices like smartphone, tablet, laptop and computers in contrast to suburban and urban adults those who own multiple devices or services that help them to go online. 3 out of 10 adults rural community members report owning multiple devices like a desktop / laptop, a smartphone, a home broadband connection & a tablet computer, in comparison to 44% urban & 43% suburban adults. 8 out of 10 people who live in rural communities mentioned they use the internet at least on a daily basis, versus 9 out of 10 of those in urban areas.
+
+**Digital Divide beyond Internet Adoption**
+
+According to a long term study done by the National Telecommunications and Information Administration under the aegis of United States Department of Commerce, analyzed the digital divide by Educational Attainment and Population Density, Family Income, Race & Ethnicity and Location. Internet use at particular locations, and participation in online activities.
+
+Based on the results they obtained, its evident that there is a continuing need to address the obstacles rural residents face in Internet use. For example, certain homes may need subsidies to make the Internet more affordable, while others may require training sessions on digital literacy to leverage the Internet. Even till this date, few remote rural communities still lack Internet access at all / poor service available or restrictively high priced.
+
+Around 81% rural areas are plugged into broadband, as against 86% in urban households, as per the Census Bureau data. But 13.6 Million urban households without a connection, is approx 3 times as big as the 4.6 Million rural households that don’t have one.
+
+**Motivation to Analyze NYC trends**
+
+For all the above reasons stated, and to know more about the internet adoption trends across households in NYC and the wonderful city we are part of, our hypothesis is that there may be inequity in Internet availability and adoption, especially in a city as stratified as New York City. his motivated us to choose and further deepdive on this topic. We intend to explore how Internet availability, adoption, and usage vary across New York City. 
 

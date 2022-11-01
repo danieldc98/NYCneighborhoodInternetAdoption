@@ -132,12 +132,29 @@ While this may bias our findings as they relate to neighborhoods that have under
 <li>Demographic Profiles of ACS 5 Year Estimates at the Neighborhood Tabulation Area (NTA) level
 <a href="https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn" class="uri">https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn</a></li>
 </ul>
-<p>Both datasets are available on <a href="https://opendata.cityofnewyork.us">NYC OpenData</a> either as a .csv file or as a zipped folder of .xlsx files.
-- The Internet and demographic datasets both have 195 neighborhood rows with around 100 and around 4,000 variable columns, respectively.
-- Per-factor statistics breakdowns on many-factored categorical data cause the demographic dataset’s high width.<br />
-- While we considered using several more recent NYC demographic datasets, we chose this one because of its thoroughness and mutual Neighborhood Tabulation Area structure with the Internet dataset.
-- Since they are both under 6 MB, we were able to download the files using conventional HTTPS file downloads. To preprocess our data, we will read in the csv and excel files and combine them all on NTA code before writing the result out as a single csv file.
-- This will enable us to effectively analyze and visualize any combination of the many categorical and continuous variables about Internet connectivity or socioeconomic demographics for all neighborhoods in New York City.</p>
+<p>Both datasets are available on <a href="https://opendata.cityofnewyork.us">NYC OpenData</a> either as a .csv file or as a zipped folder of .xlsx files.</p>
+<ul>
+<li>The Internet and demographic datasets both have 195 neighborhood rows with around 100 and around 4,000 variable columns, respectively.</li>
+<li>Per-factor statistics breakdowns on many-factored categorical data cause the demographic dataset’s high width.<br />
+</li>
+<li>While we considered using several more recent NYC demographic datasets, we chose this one because of its thoroughness and mutual Neighborhood Tabulation Area structure with the Internet dataset.</li>
+<li>Since they are both under 6 MB, we were able to download the files using conventional HTTPS file downloads. To preprocess our data, we will read in the csv and excel files and combine them all on NTA code before writing the result out as a single csv file.</li>
+<li>This will enable us to effectively analyze and visualize any combination of the many categorical and continuous variables about Internet connectivity or socioeconomic demographics for all neighborhoods in New York City.</li>
+</ul>
+<p><strong>Statistics about the Internet Master Plan dataset:</strong>
+Includes Key indicators of broadband adoption, service and infrastructure in New York City.</p>
+<p>Data Provided by - Office of Technology and Innovation (OTI)
+Dataset Owner - NYC OpenData
+Update Frequency - Annually
+Date Made Public - 12/09/2019
+Metadata Last Updated - September 23, 2022</p>
+<p><strong>Statistics about the Demographic Profiles dataset:</strong>
+Includes 4 profiles include demographics, economic, housing and sociological.</p>
+<p>Data Provided by - Department of City Planning (DCP)
+Dataset Owner - NYC OpenData
+Update Frequency - Annually
+Date Made Public - 05/29/2018
+Last Updated - March 4, 2020</p>
 <p>Together, these two datasets should allow us to explore how and why some New Yorkers enjoy world-class, ubiquitous access to the so-called information superhighway, while others still struggle to find any on ramps.</p>
 
 </div>

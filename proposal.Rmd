@@ -7,7 +7,7 @@ Is there a trend in Internet adoption across New York City based on demographic 
 
 ## Research topic
 
-**Inpiration and Approach**
+**Inspiration and Approach**
 
 To identify and analyse the problem statement, we intend to use NYC's [Internet Master Plan: Adoption and Infrastructure Data by Neighborhood](https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk) data to look at dozens of variables related to Internet speed, reliability, usage, and physical infrastructure at a neighborhood level. 
 Collected by NYC's Office of Technology and Innovation (OTI), this dataset contains detailed breakdowns of the state of Internet infrastructure and usage by city-recognized neighborhood. 
@@ -39,21 +39,21 @@ Both datasets are available on [NYC OpenData](https://opendata.cityofnewyork.us)
 - This will enable us to effectively analyze and visualize any combination of the many categorical and continuous variables about Internet connectivity or socioeconomic demographics for all neighborhoods in New York City.
 
 **Statistics about the Internet Master Plan dataset:**
-Includes Key indicators of broadband adoption, service and infrastructure in New York City.
+- Includes Key indicators of broadband adoption, service and infrastructure in New York City.
 
-Data Provided by - Office of Technology and Innovation (OTI)
-Dataset Owner - NYC OpenData
-Update Frequency - Annually
-Date Made Public - 12/09/2019
-Metadata Last Updated - September 23, 2022
+- Data Provided by - Office of Technology and Innovation (OTI)
+- Dataset Owner - NYC OpenData
+- Update Frequency - Annually
+- Date Made Public - 12/09/2019
+- Metadata Last Updated - September 23, 2022
 
 **Statistics about the Demographic Profiles dataset:**
-Includes 4 profiles include demographics, economic, housing and sociological.
+- Includes 4 profiles include demographics, economic, housing and sociological.
 
-Data Provided by - Department of City Planning (DCP)
-Dataset Owner - NYC OpenData
-Update Frequency - Annually
-Date Made Public - 05/29/2018
-Last Updated - March 4, 2020
+- Data Provided by - Department of City Planning (DCP)
+- Dataset Owner - NYC OpenData
+- Update Frequency - Annually
+- Date Made Public - 05/29/2018
+- Last Updated - March 4, 2020
 
 Together, these two datasets should allow us to explore how and why some New Yorkers enjoy world-class, ubiquitous access to the so-called information superhighway, while others still struggle to find any on ramps.

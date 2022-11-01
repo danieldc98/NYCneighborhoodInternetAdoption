@@ -31,5 +31,5 @@ Around 81% rural areas are plugged into broadband, as against 86% in urban house
 
 **Motivation to Analyze NYC trends**
 
-For all the above reasons stated, and to know more about the internet adoption trends across households in NYC and the wonderful city we are part of, our hypothesis is that there may be inequity in Internet availability and adoption, especially in a city as stratified as New York City. his motivated us to choose and further deepdive on this topic. We intend to explore how Internet availability, adoption, and usage vary across New York City. 
+For all the above reasons stated, and to know more about the internet adoption trends across households in NYC and the wonderful city we are part of, our hypothesis is that there may be inequity in Internet availability and adoption, especially in a city as stratified as New York City. This motivated us to choose and further deepdive on this topic. We intend to explore how Internet availability, adoption, and usage vary across New York City. 
 

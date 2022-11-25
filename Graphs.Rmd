@@ -9,6 +9,7 @@ library(broom)
 library(httr)
 library(rgdal)
 library(ggplot2)
+library(tigris)
 
 api <- 'AIzaSyC9UAYf9ihb5oDuKcWkORkcL9hOAtlTJe4'
 register_google(key = api)
@@ -53,4 +54,21 @@ leaflet(nyc_neighborhoods) %>%
   addTiles() %>% 
   addPolygons(popup = ~neighborhood) %>%
   addProviderTiles("CartoDB.Positron")
+```
+
+```{r}
+current <- select(data, c(3, 9))
+names(current)[1] <- 'neighborhood'
+names(current)[2] <- 'points'
+
+map_data <- geo_join(nyc_neighborhoods, current, "neighborhood", "neighborhood")
+
+pal <- colorNumeric(palette = "RdBu",
+                    domain = range(map_data@data$points, na.rm=T))
+
+leaflet(map_data) %>%
+  addTiles() %>% 
+  addPolygons(fillColor = ~pal(points), popup = paste("Neighborhood", map_data@data$neighborhood, "<br>",
+                           "% HH Adoption:", map_data@data$points)) %>% 
+  addProviderTiles("CartoDB.Positron") 
 ```

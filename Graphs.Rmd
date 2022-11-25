@@ -1,0 +1,74 @@
+Initialize
+```{r}
+library(dplyr)
+library(leaflet)
+library(sp)
+library(ggmap)
+library(maptools)
+library(broom)
+library(httr)
+library(rgdal)
+library(ggplot2)
+library(tigris)
+
+api <- 'AIzaSyC9UAYf9ihb5oDuKcWkORkcL9hOAtlTJe4'
+register_google(key = api)
+getOption("ggmap")
+
+data = read.csv(file='data/clean/combined_dataset.csv')
+head(data)
+
+r <- GET('http://data.beta.nyc//dataset/0ff93d2d-90ba-457c-9f7e-39e47bf2ac5f/resource/35dd04fb-81b3-479b-a074-a27a37888ce7/download/d085e2f8d0b54d4590b1e7d1f35594c1pediacitiesnycneighborhoods.geojson')
+nyc_neighborhoods <- readOGR(content(r,'text'), 'OGRGeoJSON', verbose = F)
+nyc_neighborhoods_df <- tidy(nyc_neighborhoods)
+```
+```{r}
+ggplot(data, aes(x=Borough, internet_Total.Population)) +
+  geom_bar(stat="identity")
+```
+```{r}
+ggplot(data, aes_string(x = names(data)[2], names(data)[9])) +           # ggplot2 barplot with mean
+  geom_bar(position = "dodge",
+           stat = "summary",
+           fun = "mean") +
+  ggtitle('Borough household mobile internet adoption percentage') +
+  ylab('mean percentage')
+```
+```{r}
+ggplot(data, aes(x=Borough, y=econ_MdHHIncE)) +
+  geom_bar(position = "dodge",
+             stat = "summary",
+             fun = "mean") +
+    ggtitle('Median household income by borough') +
+    ylab('income') 
+```
+
+```{r}
+nyc_map <- get_map(location = c(lon = -74.00, lat = 40.71), maptype = "terrain", zoom = 11)
+ggmap(nyc_map) + 
+  geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="blue", fill=NA)
+```
+
+```{r}
+leaflet(nyc_neighborhoods) %>%
+  addTiles() %>% 
+  addPolygons(popup = ~neighborhood) %>%
+  addProviderTiles("CartoDB.Positron")
+```
+
+```{r}
+current <- select(data, c(3, 9))
+names(current)[1] <- 'neighborhood'
+names(current)[2] <- 'points'
+
+map_data <- geo_join(nyc_neighborhoods, current, "neighborhood", "neighborhood")
+
+pal <- colorNumeric(palette = "RdBu",
+                    domain = range(map_data@data$points, na.rm=T))
+
+leaflet(map_data) %>%
+  addTiles() %>% 
+  addPolygons(fillColor = ~pal(points), popup = paste("Neighborhood", map_data@data$neighborhood, "<br>",
+                           "% HH Adoption:", map_data@data$points)) %>% 
+  addProviderTiles("CartoDB.Positron") 
+```

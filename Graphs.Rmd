@@ -163,7 +163,7 @@ current$borough <- unclass(current$borough)
 current$opacity_lvl <- current$points
 
 map_data <- geo_join(nyc_neighborhoods, current, "neighborhood", "neighborhood")
-map_data@data$opacity_lvl[is.na(map_data@data$opacity_lvl)] = .1
+map_data@data$opacity_lvl[is.na(map_data@data$opacity_lvl)] = .4
 pal <- colorFactor(palette = 'Set1',
                     domain = c(1, 2, 3, 4, 5))
 
@@ -173,8 +173,7 @@ leaflet(map_data) %>%
                             "Borough:", map_data@data$borough, "<br>",
                             "Internet Adoption (neighborhood):", map_data@data$points, "<br>"),
               fillColor = ~pal(map_data@data$boroughCode),
-              fillOpacity = map_data@data$opacity_lvl
-
+              fillOpacity = map_data@data$opacity_lvl^3,
               highlightOptions = highlightOptions( weight = 3, bringToFront = TRUE),
               color = "#444444",
               weight = 1) %>%

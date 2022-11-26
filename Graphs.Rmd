@@ -10,6 +10,7 @@ library(httr)
 library(rgdal)
 library(ggplot2)
 library(tigris)
+library(RColorBrewer)
 
 api <- 'AIzaSyC9UAYf9ihb5oDuKcWkORkcL9hOAtlTJe4'
 register_google(key = api)
@@ -22,10 +23,12 @@ r <- GET('http://data.beta.nyc//dataset/0ff93d2d-90ba-457c-9f7e-39e47bf2ac5f/res
 nyc_neighborhoods <- readOGR(content(r,'text'), 'OGRGeoJSON', verbose = F)
 nyc_neighborhoods_df <- tidy(nyc_neighborhoods)
 ```
+Population by Borough
 ```{r}
 ggplot(data, aes(x=Borough, internet_Total.Population)) +
   geom_bar(stat="identity")
 ```
+Internet Adoption by Borough
 ```{r}
 ggplot(data, aes_string(x = names(data)[2], names(data)[9])) +           # ggplot2 barplot with mean
   geom_bar(position = "dodge",
@@ -34,6 +37,7 @@ ggplot(data, aes_string(x = names(data)[2], names(data)[9])) +           # ggplo
   ggtitle('Borough household mobile internet adoption percentage') +
   ylab('mean percentage')
 ```
+Houshold Income by Borough
 ```{r}
 ggplot(data, aes(x=Borough, y=econ_MdHHIncE)) +
   geom_bar(position = "dodge",
@@ -42,13 +46,13 @@ ggplot(data, aes(x=Borough, y=econ_MdHHIncE)) +
     ggtitle('Median household income by borough') +
     ylab('income') 
 ```
-
+Reference Map for ggmaps split by neighborhood
 ```{r}
 nyc_map <- get_map(location = c(lon = -74.00, lat = 40.71), maptype = "terrain", zoom = 11)
 ggmap(nyc_map) + 
   geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="blue", fill=NA)
 ```
-
+Leaflet interactive reference map of NYC
 ```{r}
 leaflet(nyc_neighborhoods) %>%
   addTiles() %>% 
@@ -56,6 +60,7 @@ leaflet(nyc_neighborhoods) %>%
   addProviderTiles("CartoDB.Positron")
 ```
 
+Internet Adoption on leaflet map
 ```{r}
 current <- select(data, c(3, 9))
 names(current)[1] <- 'neighborhood'
@@ -63,12 +68,141 @@ names(current)[2] <- 'points'
 
 map_data <- geo_join(nyc_neighborhoods, current, "neighborhood", "neighborhood")
 
-pal <- colorNumeric(palette = "RdBu",
+pal <- colorNumeric(palette = 'YlGnBu',
                     domain = range(map_data@data$points, na.rm=T))
 
 leaflet(map_data) %>%
   addTiles() %>% 
-  addPolygons(fillColor = ~pal(points), popup = paste("Neighborhood", map_data@data$neighborhood, "<br>",
-                           "% HH Adoption:", map_data@data$points)) %>% 
+  addPolygons(popup = paste("Neighborhood", map_data@data$neighborhood, "<br>", 
+                            "Percent Internet Adoption:", map_data@data$points),
+              fillColor = ~pal(points),
+              highlightOptions = highlightOptions( weight = 3, bringToFront = TRUE),
+              color = "#444444",
+              weight = 1) %>% 
   addProviderTiles("CartoDB.Positron") 
+```
+Public Wifi Hotspots by neighborhood on leaflet
+```{r}
+current <- select(data, c(3, 26))
+names(current)[1] <- 'neighborhood'
+names(current)[2] <- 'points'
+
+map_data <- geo_join(nyc_neighborhoods, current, "neighborhood", "neighborhood")
+
+pal <- colorNumeric(palette = 'YlGnBu',
+                    domain = range(map_data@data$points, na.rm=T))
+
+leaflet(map_data) %>%
+  addTiles() %>% 
+  addPolygons(popup = paste("Neighborhood", map_data@data$neighborhood, "<br>", 
+                            "Public Wifi Hotspots:", map_data@data$points),
+              fillColor = ~pal(points),
+              highlightOptions = highlightOptions( weight = 3, bringToFront = TRUE),
+              color = "#444444",
+              weight = 1) %>% 
+  addProviderTiles("CartoDB.Positron") 
+```
+Income by neighborhood on leaflet map
+```{r}
+current <- select(data, c(3, 4106))
+names(current)[1] <- 'neighborhood'
+names(current)[2] <- 'points'
+
+map_data <- geo_join(nyc_neighborhoods, current, "neighborhood", "neighborhood")
+
+pal <- colorNumeric(palette = 'YlGnBu',
+                    domain = range(map_data@data$points, na.rm=T))
+
+leaflet(map_data) %>%
+  addTiles() %>% 
+  addPolygons(popup = paste("Neighborhood", map_data@data$neighborhood, "<br>", 
+                            "HH Income:", map_data@data$points),
+              fillColor = ~pal(points),
+              highlightOptions = highlightOptions( weight = 3, bringToFront = TRUE),
+              color = "#444444",
+              weight = 1) %>% 
+  addProviderTiles("CartoDB.Positron") 
+```
+Categorical Internet speeds on leaflet map
+```{r}
+current <- select(data, c(3, 10))
+names(current)[1] <- 'neighborhood'
+names(current)[2] <- 'points'
+
+current$points <- factor(current$points, order = TRUE,
+                         levels = c("Low Connected",
+                                    "Medium Low Connected",
+                                    "Medium High Connected",
+                                    "High Connected"))
+
+current$points_num <- unclass(current$points)
+
+map_data <- geo_join(nyc_neighborhoods, current, "neighborhood", "neighborhood")
+
+pal <- colorNumeric(palette = 'YlGnBu',
+                    domain = range(map_data@data$points_num, na.rm=T))
+
+leaflet(map_data) %>%
+  addTiles() %>%
+  addPolygons(popup = paste("Neighborhood", map_data@data$neighborhood, "<br>",
+                            "Internet Adoption:", map_data@data$points),
+              fillColor = ~pal(points_num),
+              highlightOptions = highlightOptions( weight = 3, bringToFront = TRUE),
+              color = "#444444",
+              weight = 1) %>%
+  addProviderTiles("CartoDB.Positron")
+```
+By Borough
+```{r}
+current <- select(data, c(3, 9, 2))
+names(current)[1] <- 'neighborhood'
+names(current)[2] <- 'points'
+names(current)[3] <- 'borough'
+
+current$borough <- unclass(current$borough)
+current$opacity_lvl <- current$points
+
+map_data <- geo_join(nyc_neighborhoods, current, "neighborhood", "neighborhood")
+map_data@data$opacity_lvl[is.na(map_data@data$opacity_lvl)] = .1
+pal <- colorFactor(palette = 'Set1',
+                    domain = c(1, 2, 3, 4, 5))
+
+leaflet(map_data) %>%
+  addTiles() %>%
+  addPolygons(popup = paste("Neighborhood", map_data@data$neighborhood, "<br>",
+                            "Borough:", map_data@data$borough, "<br>",
+                            "Internet Adoption (neighborhood):", map_data@data$points, "<br>"),
+              fillColor = ~pal(map_data@data$boroughCode),
+              fillOpacity = map_data@data$opacity_lvl
+
+              highlightOptions = highlightOptions( weight = 3, bringToFront = TRUE),
+              color = "#444444",
+              weight = 1) %>%
+  addProviderTiles("CartoDB.Positron")
+```
+Wifi hotspots and adoption rate
+```{r}
+ggplot(data, aes_string(x = names(data)[9], names(data)[26])) +
+  geom_point(stat="identity") +
+  geom_smooth(method = 'lm')
+```
+Income and adoption rate
+```{r}
+ggplot(data, aes(x = data$internet_Home.Broadband.Adoption..Percentage.of.Households., y = data$housing_MdGRE)) +
+  geom_point(stat="identity") +
+  geom_smooth(method = 'lm')
+```
+Adoption rate Histogram
+```{r}
+ggplot(data, aes(x = internet_Home.Broadband.Adoption..Percentage.of.Households.)) +
+  geom_histogram(bins=50) +
+  geom_density(color = "Red") +
+  facet_grid(Borough~.)
+```
+Income histograms
+```{r}
+ggplot(data, aes(x =econ_MdHHIncE)) +
+  geom_histogram(bins=40, aes(y=..density..)) +
+  facet_grid(Borough~.) +
+  geom_density(color = "Red") 
 ```

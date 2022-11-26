@@ -179,6 +179,36 @@ leaflet(map_data) %>%
               weight = 1) %>%
   addProviderTiles("CartoDB.Positron")
 ```
+Borrough Internet Adoption rate
+```{r}
+current <- select(data, c(3, 9, 2))
+names(current)[1] <- 'neighborhood'
+names(current)[2] <- 'points'
+names(current)[3] <- 'borough'
+
+current$borough <- unclass(current$borough)
+current$opacity_lvl <- current$points
+
+totals <- aggregate(points ~ borough, data = current, median)
+names(totals)[2] <- 'point_total'
+
+map_data <- geo_join(nyc_neighborhoods, current, "neighborhood", "neighborhood")
+# map_data@data$points_total <- merge(map_data@data, totals, 'borough')
+
+pal <- colorFactor(palette = 'Set1',
+                    domain = c(1, 2, 3, 4, 5))
+
+leaflet(map_data) %>%
+  addTiles() %>%
+  addPolygons(popup = paste("Borough:", map_data@data$borough, "<br>",
+                            "Internet Adoption Rate:"),
+              fillColor = ~pal(map_data@data$boroughCode),
+              fillOpacity = 1,
+              color = ~pal(map_data@data$boroughCode),
+              weight = 2,
+              opacity = 1)%>%
+  addProviderTiles("CartoDB.Positron")
+```
 Wifi hotspots and adoption rate
 ```{r}
 ggplot(data, aes_string(x = names(data)[9], names(data)[26])) +

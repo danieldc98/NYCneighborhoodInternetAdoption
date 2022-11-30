@@ -19,9 +19,9 @@ getOption("ggmap")
 data = read.csv(file='data/clean/combined_dataset.csv')
 head(data)
 
-r <- GET('http://data.beta.nyc//dataset/0ff93d2d-90ba-457c-9f7e-39e47bf2ac5f/resource/35dd04fb-81b3-479b-a074-a27a37888ce7/download/d085e2f8d0b54d4590b1e7d1f35594c1pediacitiesnycneighborhoods.geojson')
-nyc_neighborhoods <- readOGR(content(r,'text'), 'OGRGeoJSON', verbose = F)
-nyc_neighborhoods_df <- tidy(nyc_neighborhoods)
+# r <- GET('http://data.beta.nyc//dataset/0ff93d2d-90ba-457c-9f7e-39e47bf2ac5f/resource/35dd04fb-81b3-479b-a074-a27a37888ce7/download/d085e2f8d0b54d4590b1e7d1f35594c1pediacitiesnycneighborhoods.geojson')
+nyc_neighborhoods <- readOGR('./NTA_map.geojson')
+# nyc_neighborhoods_df <- tidy(nyc_neighborhoods)
 ```
 Population by Borough
 ```{r}
@@ -56,7 +56,7 @@ Leaflet interactive reference map of NYC
 ```{r}
 leaflet(nyc_neighborhoods) %>%
   addTiles() %>% 
-  addPolygons(popup = ~neighborhood) %>%
+  addPolygons(popup = ~ntaname) %>%
   addProviderTiles("CartoDB.Positron")
 ```
 
@@ -108,14 +108,14 @@ current <- select(data, c(3, 4106))
 names(current)[1] <- 'neighborhood'
 names(current)[2] <- 'points'
 
-map_data <- geo_join(nyc_neighborhoods, current, "neighborhood", "neighborhood")
+map_data <- geo_join(nyc_neighborhoods, current, "ntaname", "neighborhood")
 
 pal <- colorNumeric(palette = 'YlGnBu',
                     domain = range(map_data@data$points, na.rm=T))
 
 leaflet(map_data) %>%
   addTiles() %>% 
-  addPolygons(popup = paste("Neighborhood", map_data@data$neighborhood, "<br>", 
+  addPolygons(popup = paste("Neighborhood", map_data@data$ntaname, "<br>", 
                             "HH Income:", map_data@data$points),
               fillColor = ~pal(points),
               highlightOptions = highlightOptions( weight = 3, bringToFront = TRUE),
@@ -162,18 +162,18 @@ names(current)[3] <- 'borough'
 current$borough <- unclass(current$borough)
 current$opacity_lvl <- current$points
 
-map_data <- geo_join(nyc_neighborhoods, current, "neighborhood", "neighborhood")
+map_data <- geo_join(nyc_neighborhoods, current, "ntaname", "neighborhood")
 map_data@data$opacity_lvl[is.na(map_data@data$opacity_lvl)] = .4
 pal <- colorFactor(palette = 'Set1',
                     domain = c(1, 2, 3, 4, 5))
 
 leaflet(map_data) %>%
   addTiles() %>%
-  addPolygons(popup = paste("Neighborhood", map_data@data$neighborhood, "<br>",
+  addPolygons(popup = paste("Neighborhood", map_data@data$ntaname, "<br>",
                             "Borough:", map_data@data$borough, "<br>",
                             "Internet Adoption (neighborhood):", map_data@data$points, "<br>"),
-              fillColor = ~pal(map_data@data$boroughCode),
-              fillOpacity = map_data@data$opacity_lvl^3,
+              fillColor = ~pal(map_data@data$borocode),
+              fillOpacity = map_data@data$opacity_lvl^4,
               highlightOptions = highlightOptions( weight = 3, bringToFront = TRUE),
               color = "#444444",
               weight = 1) %>%

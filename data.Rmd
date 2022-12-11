@@ -165,3 +165,28 @@ Of the 524 columns in the Housing dataset, we settled on the following columns f
 -   "Renter occupied Housing unit %"
 
 -   "Total occupied Housing unit %"
+
+# Missing Value Analysis
+
+```{r}
+library(ggplot2)
+data <- read.csv("./data/clean/combined_dataset.csv")
+data$na_count <- rowSums(is.na(data))
+data$Neighborhood.Name <- factor(data$Neighborhood.Name,
+                  levels = data$Neighborhood.Name[order(data$na_count, decreasing = FALSE)])
+row_na_counts <- ggplot(
+  filter(data, na_count > 0),
+  aes(Neighborhood.Name, na_count)
+) +
+  geom_bar(stat='identity') +
+  coord_flip() +
+  labs(title="Missing Fields per Row", x="Neighborhood", y="Missing Fields") +
+  theme_bw()
+
+row_na_counts
+
+```
+
+Only 8 neighborhoods are missing any data in our chosen fields.  Of them, 5 are the boroughs' parks/cemeteries, one is the city's airports, and one is the city's primary jail, Rikers Island.  These are clearly not normal neighborhoods with normal neighborhood populations, so these omissions are logical.  Stuyvesant Town-Cooper Village, the centrally designed complex of apartments in the Lower East Side unique for its lack of adherence to the Manhattan street grid, is an entirely rental apartment complex.  As such, it has no median home price.
+
+

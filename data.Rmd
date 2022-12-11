@@ -32,7 +32,15 @@ These categorical and continuous variables will add valuable context to each nei
 
 ### Details
 
-Overall size: - Demographic: 195 neighborhood rows by 484 feature columns - Economic: 195 neighborhood rows by 659 feature columns - Housing: 195 neighborhood rows by 524 feature columns - Sociological: 195 neighborhood rows by 2,714 feature columns
+Overall size:
+
+-   Demographic: 195 neighborhood rows by 484 feature columns
+
+-   Economic: 195 neighborhood rows by 659 feature columns
+
+-   Housing: 195 neighborhood rows by 524 feature columns
+
+-   Sociological: 195 neighborhood rows by 2,714 feature columns
 
 Provider: Department of City Planning (DCP)
 
@@ -49,3 +57,111 @@ There are several causes for the high width of these datasets:
 1.  Nearly every characteristic has 4 versions: a raw count, a margin of error, a percentage of overall neighborhood population, and a margin of error of the percentage.
 
 2.  Many features, especially in the sociological dataset, are broken down on a per-factor level. In the most extreme case, this results in 4 columns (raw, percentage, and margins of error) for every country from which a New Yorker has emigrated.
+
+# Data Cleaning/Transformation
+
+We intentionally chose these datasets because of their interoperability. Because they use the same neighborhood definitions and unique identifiers, cleaning and joining these two datasets together was a relatively straightforward process.
+
+## Cleaning Up Join Columns
+
+The Internet Dataset calls each neighborhood's unique code a "Neighborhood Tabulation Area Code (NTA Code)", while the housing/economic/demographic/social dataset refers to it as a "GeoID". Due to the former's unwieldiness, we regularized both to use "GeoID". We also standardized both to use "Borough" rather than "Borough Name". Finally, we changed all instances of "Borough": "Bronx" to be "The Bronx" in the Internet dataset to match the style of the socioeconomic data. The result was a series of simple left joins between 5 dataframes with perfectly matching "GeoID" and "Borough" columns.
+
+## Feature Reduction
+
+Joining these datasets together as-is resulted in over 4,000 columns. As previously discussed, many of these were factor-level breakdowns of high-cardinality categorical variables (such as country of origin or language spoken at home). Most of these were not useful for our analysis, and so we decided to prune and aggregate them into data we could analyze easily in R. In general, we settled on using predominantly percentage-based variables whenever appropriate in order to better compare across neighborhoods. We also created several new columns by aggregating across existing ones. In general, this was done to assign each neighborhood a single value/category where it previously had several factor-level breakdowns, in order to better compare across neighborhoods.
+
+### Internet
+
+Of the 77 columns in the Internet dataset, we settled on the following columns for our analysis:
+
+-   "GeoID"
+
+-   "Borough"
+
+-   "neighborhood_name"
+
+-   "Total Population"
+
+-   "Population Density (per Sq. Mi.)"
+
+-   "Total Number of Households"
+
+-   "Home Broadband Adoption %"
+
+-   "Mobile Broadband Adoption %"
+
+-   "Mobile Dependent Households %"
+
+-   "Residential Broadband Choice Average by NTA"
+
+-   "Blocks with ISP Reported Speed Availability of \>=900 Mbps %"
+
+-   "Public Wi-Fi in NYC Count"
+
+-   "NYC Internet Master Plan Open Access Infrastructure Cost Comparison Coefficient"
+
+### Sociological
+
+Of the 2,714 columns in the Sociological dataset, we settled on the following columns for our analysis:
+
+-   "GeoID"
+
+-   "Borough"
+
+-   "English only language %"
+
+-   "Language other than English %"
+
+-   "Native born in US %"
+
+-   "Foreign born %"
+
+-   "Completed Bachelors degree or higher %"
+
+### Demographic
+
+Of the 484 columns in the Demographic dataset, we settled on the following columns for our analysis:
+
+-   "GeoID"
+
+-   "Borough"
+
+-   "Population under 18 years %"
+
+-   "Population over 64 years %"
+
+as well as a new column we created, "plurality_racial_group", which we made by finding the highest-population racial group in each neighborhood. In effect, this converted 6 numerical columns into one categorical one.
+
+### Economic
+
+Of the 659 columns in the Economic dataset, we settled on the following columns for our analysis:
+
+-   "GeoID"
+
+-   "Borough"
+
+-   "Per Capita Income (in \$)"
+
+-   "Families below poverty level %"
+
+-   "Population employed in labor force %"
+
+as well as two new columns we created, "Work from Home - Capable" and "Work from Home - Incapable", by adding up the proportions of workers in roles we deemed potentially doable from home via the Internet. We settled on management, business, sciences, arts, sales, and office workers as being WFH-capable and service, natural resources, construction, maintenance, production, and transportation workers as being WFH-incapable. We recognize that not all workers in the former can or do work from home, while some in the latter may.
+
+### Housing
+
+Of the 524 columns in the Housing dataset, we settled on the following columns for our analysis:
+
+-   "GeoID"
+
+-   "Borough"
+
+-   "Median House gross rent (in \$)"
+
+-   "Median House value (in \$)"
+
+-   "Owner occupied Housing unit %"
+
+-   "Renter occupied Housing unit %"
+
+-   "Total occupied Housing unit %"

@@ -1,0 +1,58 @@
+Libraries:
+```{r}
+library(dplyr)
+library(leaflet)
+library(sp)
+library(ggmap)
+library(maptools)
+library(broom)
+library(httr)
+library(rgdal)
+library(ggplot2)
+library(tigris)
+library(RColorBrewer)
+```
+Load Data and Maps
+```{r}
+api <- 'AIzaSyC9UAYf9ihb5oDuKcWkORkcL9hOAtlTJe4'
+register_google(key = api)
+getOption("ggmap")
+
+nyc_neighborhoods <- readOGR('data/map/NTA_map.geojson')
+nyc_map <- get_map(location = c(lon = -74.00, lat = 40.71), maptype = "terrain", zoom = 11)
+
+data = read.csv(file='data/clean/combined_dataset.csv')
+```
+Graphs:
+```{r}
+
+```   
+Map of Internet Adoption Rate
+```{r}
+current <- select(data, c('Borough', 'Neighborhood.Name', 'Home.Broadband.Adoption..'))
+names(current)[1] <- 'borough'
+names(current)[2] <- 'neighborhood'
+names(current)[3] <- 'points'
+
+current$borough_num <- unclass(current$borough)
+current$opacity_lvl <- current$points
+current$opacity_lvl <- current$opacity_lvl^3
+
+map_data <- geo_join(nyc_neighborhoods, current, "ntaname", "neighborhood")
+
+pal <- colorFactor(palette = 'Set1',
+                    unique(map_data@data$boroname))
+
+leaflet(map_data) %>%
+  addTiles() %>%
+  addPolygons(popup = paste("Neighborhood:", map_data@data$ntaname, "<br>",
+                            "Borough:", map_data@data$boroname, "<br>",
+                            "Internet Adoption Rate:", paste(map_data@data$points*100, '%', sep=''), "<br>"),
+              fillColor = ~pal(map_data@data$boroname),
+              fillOpacity = map_data@data$points^3,
+              highlightOptions = highlightOptions(weight = 3),
+                                  color = "Black",
+                                  weight = 1) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addLegend("bottomright", pal = pal, values = ~map_data@data$boroname)
+```

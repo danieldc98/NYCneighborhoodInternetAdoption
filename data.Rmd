@@ -60,7 +60,7 @@ There are several causes for the high width of these datasets:
 
 # Data Cleaning/Transformation
 
-We intentionally chose these datasets because of their interoperability. Because they use the same neighborhood definitions and unique identifiers, cleaning and joining these two datasets together was a relatively straightforward process.
+We intentionally chose these datasets because of their interoperability. Because they use the same neighborhood definitions and unique identifiers, cleaning and joining these two datasets together was a relatively straightforward process. The code for this cleaning/transformation is located in /preprocessing.ipynb. Data can be found in /data/raw/ and data/clean/.
 
 ## Cleaning Up Join Columns
 

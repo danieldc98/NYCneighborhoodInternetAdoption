@@ -4,33 +4,143 @@ library(dplyr)
 library(forcats)
 library(tidyr)
 library(ggridges)
+library(GGally)
+library(RColorBrewer)
+library(ggrepel)
 ```
 
 ```{r}
 data <- read.csv("./data/clean/combined_dataset_no_weird.csv")
-names(data)
 ```
 
+It is impossible to discuss disparity in New York City without talking about race and national origin. New York has at various times been a key port in the trans-Atlantic slave trade, one of the largest destinations of the Great Migration, a golden door for myriad huddled masses sailing from the world's teeming shores, an origin of White Flight, and a battleground of gentrification. The present-day product of so much history is a complex geography of clustering, mixing, and segregation between races tracing their ancestry all over the world. This racial geography has informed decades and centuries of infrastructure construction and maintenance, including infrastructure to connect New Yorkers to the Internet. In 2020, a novel coronavirus rendered Internet connectivity more important than ever. In doing so, it also highlighted the degree of digital division in New York City's access to the Internet.
 
 ```{r}
 data$plurality_racial_group <- as.factor(data$plurality_racial_group)
-data$plurality_racial_group <- fct_relevel(data$plurality_racial_group, "White", "Asian", "Black or African American")
-plot1 <- ggplot(data, aes(x=100*Home.Broadband.Adoption.., y=fct_rev(plurality_racial_group))) +
-  geom_density_ridges(scale = 0.4) +
+data$plurality_racial_group <- fct_relevel(data$plurality_racial_group, "White", "Asian", "Black or African American", "Hispanic or Latino")
+broadband_vs_race <- ggplot(data, aes(x=100*Home.Broadband.Adoption.., y=fct_rev(plurality_racial_group))) +
+  geom_density_ridges(scale = 2) +
   theme_bw() +
   labs(
-    x="% Households with Broadband Internet",
+    title="Adoption of Home Broadband by Neighborhood Racial Plurality",
+    x="% Households with Wired Broadband Internet",
     y="Plurality Racial Group"
   )
-
-plot2 <- ggplot(data, aes(x=100*Mobile.Dependent.Households..Percentage.of.Households., y=fct_rev(plurality_racial_group))) +
-  geom_density_ridges(scale = 0.4) +
-  theme_bw() +
-  labs(
-    x="% Households Reliant on Mobile Internet",
-    y="Plurality Racial Group"
-  )
-ggarrange(plot1, plot2, ncol=1)
+broadband_vs_race
 ```
 
+Perhaps the most significant factor in one's ability to work or learn remotely is the quality of one's home Internet connection. There are many ways for a household to get connected, including wired options such as fiber-optic, coaxial cable, and dial-up, as well wireless options such as through a cellular network or via satellite. In general, wired options tend to be faster and more reliable. They are, however, more costly for the provider to install and for the end-user to subscribe to. Thus, one key metric of a neighborhood's ability to weather work-from-home and remote-learning is the portion of its households with a wired broadband Internet connection.
 
+While at least half of households in almost every neighborhood in the city have access to broadband, there is a clear racial pattern to how close a neighborhood is to universal broadband. On average, over three quarters of households in neighborhoods where White-identifying residents made up the largest racial group had access to and made use of broadband Internet service in 2021. For neighborhoods of every other racial-plurality group, the average portion of households having adopted broadband Internet was lower, with Hispanic/Latino-plurality neighborhoods having the lowest average broadband adoption rate of all.
+
+```{r}
+mobile_reliant_vs_race <- ggplot(data, aes(x=100*Mobile.Dependent.Households..Percentage.of.Households., y=fct_rev(plurality_racial_group))) +
+  geom_density_ridges(scale = 2) +
+  theme_bw() +
+  labs(
+    title="Mobile-Dependence by Neighborhood Racial Plurality",
+    x="% Households Reliant on Wireless Mobile Internet",
+    y="Plurality Racial Group"
+  )
+mobile_reliant_vs_race
+```
+
+An inverse measure of neighborhood Internet access is the proportion of households which rely on a wireless mobile connection. While advances in wireless technology have narrowed the speed gap between cellular-based Internet connections and their terrestrial counterparts, the former are still not able to handle multi-party video calls, HD streaming, and other data-intensive tasks as well as the latter. Mobile-dependent households thus enjoy diminished connectivity, especially when one considers that almost all households with a wired connection *also* have access to wireless mobile internet.
+
+As can be expected, neighborhoods with a lower portion of households with a wired connection tend to have a higher portion of mobile-dependent households. The result is a similar racial disparity in both. In several plurality-Black neighborhoods, over a quarter of households are reliant on a wireless connection. No plurality-White neighborhood has over 15% household mobile-reliance. By all measures of central tendency, a smaller fraction of households in plurality-White neighborhoods rely on their cell phones for Internet than in any other racial-plurality neighborhoods.
+
+```{r}
+data3 <- data %>% rename(
+  Foreign.Born = Foreign.born..,
+  Home.Broadband.Adoption = Home.Broadband.Adoption..,
+  Mobile.Dependent = Mobile.Dependent.Households..Percentage.of.Households.,
+  Broadband.Providers = Residential.Broadband.Choice.Average.by.NTA,
+  Public.Hotspots = Public.Wi.Fi.in.NYC.Count,
+  Broadband.Providers = Residential.Broadband.Choice.Average.by.NTA,
+  Mobile.Broadband = Mobile.Broadband.Adoption..
+)
+data3$Majority.Foreign.Born <- ifelse(data3$Foreign.Born > 50, "Majority Foreign-Born", "Majority Native-Born")
+data3$foreign.quartile <- cut(data3$Foreign.Born,quantile(data3$Foreign.Born),include.lowest=TRUE,labels=FALSE)
+
+par_coord_necessary = c(
+  "Borough",
+  "foreign.quartile",
+  "Foreign.Born",
+  "Home.Broadband.Adoption",
+  # "Mobile.Broadband",
+  "Broadband.Providers"
+)
+par_coord_cols = par_coord_necessary[
+  !par_coord_necessary %in% c("Borough", "foreign.quartile")
+]
+data3 <- data3 %>% select(all_of(par_coord_necessary))
+
+foreign_born_par_coord <- ggparcoord(
+  data3,
+  columns=par_coord_cols,
+  order=c(1, 2, 3, 4, 5, 6, 7),
+  alphaLines = 0.7,
+  scale = "center",
+  splineFactor = 5,
+  groupColumn = 2,
+  mapping=aes(color=as.factor(foreign.quartile))
+) +
+  labs(
+    title="Broadband Availability and Adoption in Foreign/Native-Born Neighborhoods"
+  ) +
+  guides(color = guide_legend(title = "% Foreign-Born Quartile")) +
+  theme_bw() +
+  scale_color_brewer(type="seq", palette="Reds", direction=1)
+foreign_born_par_coord
+```
+
+```{r}
+data4 <- data %>% rename(
+  minors = Population.under.18.years..,
+  retired = Population.over.64.years..,
+  Home.Broadband.Adoption = Home.Broadband.Adoption..,
+  Mobile.Dependent = Mobile.Dependent.Households..Percentage.of.Households.,
+  Broadband.Providers = Residential.Broadband.Choice.Average.by.NTA,
+  Public.Hotspots = Public.Wi.Fi.in.NYC.Count,
+  Broadband.Providers = Residential.Broadband.Choice.Average.by.NTA,
+  Mobile.Broadband = Mobile.Broadband.Adoption..
+)
+data4$working.age <- 100 - data4$minors - data4$retired
+
+children_vs_broadband <- ggplot(data4, aes(x=minors, y=100*Home.Broadband.Adoption)) +
+  geom_point(aes(colour=Borough)) +
+  geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
+  geom_text_repel(label=data4$Neighborhood.Name, max.overlaps=12, size=2) +
+  theme_bw() +
+  labs(
+    title="Children's Access to Home Broadband",
+    x="Neighborhood Population Younger than 18 (%)",
+    y="Neighborhood Home Broadband Adoption (%)"
+  )
+children_vs_broadband
+
+children_vs_hotspots <- ggplot(data4, aes(x=minors, y=Public.Hotspots)) +
+  geom_point(aes(colour=Borough)) +
+  geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
+  geom_text_repel(label=data4$Neighborhood.Name, max.overlaps=12, size=2) +
+  theme_bw() +
+  labs(
+    title="Children's Access to Public Wi-Fi",
+    x="Neighborhood Population Younger than 18 (%)",
+    y="Public NYC Wi-Fi Hotspots"
+  )
+
+data5 <- data4 %>% filter(Borough != "Manhattan")
+children_vs_hotspots_no_manhattan <- ggplot(data5, aes(x=minors, y=Public.Hotspots)) +
+  geom_point(aes(colour=Borough)) +
+  geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
+  geom_text_repel(label=data5$Neighborhood.Name, max.overlaps=4, size=2) +
+  theme_bw() +
+  labs(
+    title="Children's Access to Public Wi-Fi (Outer Boroughs)",
+    x="Neighborhood Population Younger than 18 (%)",
+    y="Public NYC Wi-Fi Hotspots"
+  ) +
+  ylim(0,60)
+ggarrange(children_vs_hotspots, children_vs_hotspots_no_manhattan, ncol=1)
+```

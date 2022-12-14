@@ -1,3 +1,5 @@
 # Interactive component
 
-
+<script src="https://d3js.org/d3.v7.js"></script>
+<div id="plot"></div>
+<script src="./scripts/interactive.js"></script>

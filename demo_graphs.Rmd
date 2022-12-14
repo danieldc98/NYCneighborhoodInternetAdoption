@@ -1,0 +1,200 @@
+```{r}
+library(ggplot2)
+library(dplyr)
+library(forcats)
+library(tidyr)
+library(ggridges)
+library(GGally)
+library(RColorBrewer)
+library(ggrepel)
+```
+
+```{r}
+data <- read.csv("./data/clean/combined_dataset_no_weird.csv")
+```
+
+# Racial Stratification in Internet Infrastructure
+
+It is impossible to discuss disparity in New York City without talking about race and national origin. New York has at various times been a key port in the trans-Atlantic slave trade, one of the largest destinations of the Great Migration, a "golden door" for myriad "huddled masses" sailing from the world's teeming shores, an origin of White Flight, and a battleground of gentrification. The present-day product of so much history is a complex geography of clustering, mixing, and segregation between races tracing their ancestry all over the world. This racial geography has informed decades and centuries of infrastructure construction and maintenance, including infrastructure to connect New Yorkers to the Internet. In 2020, a novel coronavirus rendered Internet connectivity more important than ever. In doing so, it also highlighted the degree of digital division in New York City's access to the Internet.
+
+```{r}
+data$plurality_racial_group <- as.factor(data$plurality_racial_group)
+data$plurality_racial_group <- fct_relevel(
+  data$plurality_racial_group,
+  "White", "Asian", "Black or African American", "Hispanic or Latino"
+)
+broadband_vs_race <- ggplot(
+  data, aes(x=100*Home.Broadband.Adoption.., y=fct_rev(plurality_racial_group))
+) +
+  geom_density_ridges(scale = 2) +
+  theme_bw() +
+  labs(
+    title="Adoption of Home Broadband by Neighborhood Racial Plurality",
+    x="% Households with Wired Broadband Internet",
+    y="Plurality Racial Group"
+  )
+broadband_vs_race
+```
+
+Perhaps the most significant factor in one's ability to work or learn remotely is the quality of one's home Internet connection. There are many ways for a household to get connected, including wired options such as fiber-optic, coaxial cable, and dial-up, as well wireless options such as through a cellular network or via satellite. In general, wired options tend to be faster and more reliable. They are, however, more costly for the provider to install and for the end-user to subscribe to. Thus, one key metric of a neighborhood's ability to weather work-from-home and remote-learning is the portion of its households with a wired broadband Internet connection.
+
+While at least half of households in almost every neighborhood in the city have access to broadband, there is a clear racial pattern to how close a neighborhood is to universal broadband. On average, over three quarters of households in neighborhoods where White-identifying residents made up the largest racial group had access to and made use of broadband Internet service in 2021. For neighborhoods of every other racial-plurality group, the average portion of households having adopted broadband Internet was lower, with neighborhoods home to a plurality Hispanic/Latino population having the lowest average broadband adoption rate of all.
+
+```{r}
+mobile_reliant_vs_race <- ggplot(data, aes(x=100*Mobile.Dependent.Households..Percentage.of.Households., y=fct_rev(plurality_racial_group))) +
+  geom_density_ridges(scale = 2) +
+  theme_bw() +
+  labs(
+    title="Mobile-Dependence by Neighborhood Racial Plurality",
+    x="% Households Reliant on Wireless Mobile Internet",
+    y="Plurality Racial Group"
+  )
+mobile_reliant_vs_race
+```
+
+An inverse measure of neighborhood Internet infrastructure is the proportion of households which rely on a wireless mobile connection. While advances in wireless technology have narrowed the speed gap between cellular-based Internet connections and their terrestrial counterparts, the former are still not able to handle multi-party video calls, HD streaming, and other data-intensive tasks as well as the latter. Mobile-dependent households thus enjoy diminished connectivity, especially when one considers that almost all households with a wired connection *also* have access to wireless mobile internet.
+
+As can be expected, neighborhoods with a lower portion of households with a wired connection tend to have a higher portion of mobile-dependent households. The result is a similar racial disparity in both. In several plurality-Black neighborhoods, over a quarter of households are reliant on a wireless connection. No plurality-White neighborhood has over 15% household mobile-reliance. By all measures of central tendency, a smaller fraction of households in plurality-White neighborhoods rely on their cell phones for Internet than in any other racial-plurality neighborhoods.
+
+Mayor de Blasio opened New York City's *Internet Master Plan*'s with a letter. In it, he lamented that "this digital divide, like so many other aspects of life in New York City, leaves a significant part of our population at a major disadvantage." One year after the letter's publishing, the *Plan*-directed survey of Internet access revealed that the city still has more of a gap to close the divide along all too familiar racial lines.
+
+# 
+
+# The Golden Door to Cyberspace: Internet Infrastructure of New York's Foreign-Born
+
+New York City has always prided itself on its global connectivity. For over a century since the poet Emma Lazarus wrote of the city's beloved Lady Liberty "From her beacon-hand / Glows world-wide welcome", people from around the globe have made New York their home. Today's city population was born in over 150 countries. Like many people moving to unfamiliar places, many chose to live around those of similar backgrounds. As a consequence, 34% of the median City neighborhood, Bay Ridge, Brooklyn, was born outside of the United States. In over two dozen neighborhoods more than half of the population was born abroad. 10% of residents were born elsewhere even in the quiet suburb Rossville-Woodrow near Staten Island's southwestern tip, which has the second-lowest proportion of foreign-born residents of any City neighborhood. While immigrants make up a portion of all New York neighborhood populations, the make a more significant contribution to some neighborhood populations than to others.
+
+```{r}
+data3 <- data %>% rename(
+  Pct.Foreign.Born = Foreign.born..,
+  Home.Broadband.Adoption = Home.Broadband.Adoption..,
+  Mobile.Dependent = Mobile.Dependent.Households..Percentage.of.Households.,
+  Broadband.Providers = Residential.Broadband.Choice.Average.by.NTA,
+  Public.Hotspots = Public.Wi.Fi.in.NYC.Count,
+  Broadband.Providers = Residential.Broadband.Choice.Average.by.NTA,
+  Mobile.Broadband = Mobile.Broadband.Adoption..
+)
+
+data3$foreign.quantile <- cut(
+  data3$Pct.Foreign.Born,
+  quantile(data3$Pct.Foreign.Born),
+  include.lowest=TRUE,
+  labels=FALSE,
+  breaks=10,
+)
+
+par_coord_necessary = c(
+  "foreign.quantile",
+  "Pct.Foreign.Born",
+  "Mobile.Dependent",
+  "Home.Broadband.Adoption",
+  "Broadband.Providers"
+)
+par_coord_cols = par_coord_necessary[
+  !par_coord_necessary %in% c("foreign.quantile")
+]
+data3 <- data3 %>% select(all_of(par_coord_necessary))
+data3
+data3 <- data3 %>%
+  group_by(foreign.quantile) %>%
+  summarise_at(
+    c(
+      "Pct.Foreign.Born",
+      "Mobile.Dependent",
+      "Home.Broadband.Adoption",
+      "Broadband.Providers"
+  ),
+  mean
+)
+
+foreign_born_par_coord <- ggparcoord(
+  data3,
+  columns=par_coord_cols,
+  order=c(1, 2, 3, 4, 5, 6, 7),
+  alphaLines = 0.7,
+  scale = "center",
+  splineFactor = 0,
+  groupColumn = 2,
+  mapping=aes(color=as.factor(foreign.quantile))
+) +
+  labs(
+    title="Broadband Availability and Adoption in Foreign/Native-Born Neighborhoods",
+    y="Scaled Value"
+  ) +
+  guides(color = guide_legend(title = "% Foreign-Born Decile", reverse=TRUE)) +
+  theme_bw() +
+  scale_color_brewer(type="div", palette="RdYlBu", direction=1)
+foreign_born_par_coord
+```
+
+While some neighborhoods with a foreign population on each side of the median enjoyed better and suffered through poorer Internet infrastructure, the extremes showed a clear pattern. The top 10% of neighborhoods by foreign-born makeup were among the most mobile-dependent and among the least broadband-subscribing, while the 20% of neighborhoods with the smallest ratios of foreign-born residents subscribed to home broadband and relied on their cell phones the least for Internet access. Clearly, the most huddled masses were still yearning to browse free.
+
+In between, things were messier. Neighborhoods in the seventh decile of foreign-born makeup subscribed to home broadband at the second highest rate of any decile. Those in the fourth subscribed the second least. Furthermore, the amount of immigrants in a neighborhood held almost no effect on the number of residents' ISP options. While there are some correlations between having extremely high or low foreign-born populations and having better or worse Internet infrastructure, in general, neighborhoods of all foreign-born makeups enjoy good and poor Internet service.
+
+# Trying to Learn Remotely
+
+When the Covid-19 pandemic forced society to a standstill, one of our most significant fears was its effect on children. Worries over the drops in children's learning and development of social skills loomed large in parents' thoughts, while schools muddled through teaching their students as best they could. While hard for all students, some faced more difficulties than others. Sadly, neighborhoods with the most children used some of the least reliable Internet in the city.
+
+```{r}
+data4 <- data %>% rename(
+  minors = Population.under.18.years..,
+  retired = Population.over.64.years..,
+  Home.Broadband.Adoption = Home.Broadband.Adoption..,
+  Mobile.Dependent = Mobile.Dependent.Households..Percentage.of.Households.,
+  Broadband.Providers = Residential.Broadband.Choice.Average.by.NTA,
+  Public.Hotspots = Public.Wi.Fi.in.NYC.Count,
+  Broadband.Providers = Residential.Broadband.Choice.Average.by.NTA,
+  Mobile.Broadband = Mobile.Broadband.Adoption..
+)
+data4$working.age <- 100 - data4$minors - data4$retired
+
+children_vs_broadband <- ggplot(data4, aes(x=minors, y=100*Home.Broadband.Adoption)) +
+  geom_point(aes(colour=Borough)) +
+  geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
+  geom_text_repel(label=data4$Neighborhood.Name, max.overlaps=12, size=2) +
+  theme_bw() +
+  labs(
+    title="Children's Access to Home Broadband",
+    x="Neighborhood Population Younger than 18 (%)",
+    y="Neighborhood Home Broadband Adoption (%)"
+  ) +
+  xlim(0, 40)
+children_vs_broadband
+```
+
+There was a clear negative correlation between youth population and home broadband adoption. Much of this connection could be attributed to relatively child-free and better-off Manhattan's high broadband adoption. Following the time-worn connection between poverty, geography, and childbirth rates, New York neighborhoods raising a greater portion of children were the same neighborhoods with the lowest adoption of wired home Internet. For children who might not have yet been old enough to have their own cell phones, this might have meant reliance on a parent's phone hotspot to attend class or do homework.
+
+```{r}
+children_vs_hotspots <- ggplot(data4, aes(x=minors, y=Public.Hotspots)) +
+  geom_point(aes(colour=Borough)) +
+  geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
+  geom_text_repel(label=data4$Neighborhood.Name, max.overlaps=12, size=2) +
+  theme_bw() +
+  labs(
+    title="Children's Access to Public Wi-Fi",
+    x="Neighborhood Population Younger than 18 (%)",
+    y="Public NYC Wi-Fi Hotspots"
+  ) +
+  ylim(0, 155)
+children_vs_hotspots
+```
+
+If a child had to attend class remotely, then perhaps they might have been able to use a public Wi-Fi network? Unfortunately, during the pandemic, city network access points were more likely to be available in neighborhoods with fewer children. Many of the most youthful neighborhoods had 0 public hotspots at all. For students to learn effectively during Zoom school, many were not able to turn to public Wi-Fi in their neighborhood.
+
+```{r}
+data5 <- data4 %>% filter(Borough != "Manhattan")
+children_vs_hotspots_no_manhattan <- ggplot(data5, aes(x=minors, y=Public.Hotspots)) +
+  geom_point(aes(colour=Borough)) +
+  geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
+  geom_text_repel(label=data5$Neighborhood.Name, max.overlaps=4, size=2) +
+  theme_bw() +
+  labs(
+    title="Children's Access to Public Wi-Fi (Outer Boroughs)",
+    x="Neighborhood Population Younger than 18 (%)",
+    y="Public NYC Wi-Fi Hotspots"
+  ) +
+  ylim(0,60)
+children_vs_hotspots_no_manhattan
+```
+
+Even excluding the high number of public hotspots in the city's Manhattan central business districts, public network connections were still more likely to be in neighborhoods with a smaller portion of children. The result was a city Internet infrastructure ill-equipped to accommodate students' transition to virtual learning.

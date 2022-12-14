@@ -56,42 +56,48 @@ plot1 <- ggplot(current, aes(x=Per.Capita.Income..in..., y=Home.Broadband.Adopti
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   xlab('Income (in $1000s)') +
   ylab('% Internet Adoption') +
-  theme(text = element_text(size = 10))
+  theme(text = element_text(size = 10)) +
+  theme_bw()
   
 plot2 <- ggplot(current, aes(x=Per.Capita.Income..in..., y=Residential.Broadband.Choice.Average.by.NTA)) +
   geom_point(aes(color=Borough), alpha=.6, size=1) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   xlab('Income (in $1000s)') +
   ylab('# of Carriers') +
-  theme(text = element_text(size = 10))
+  theme(text = element_text(size = 10)) +
+  theme_bw()
 
 plot3 <- ggplot(current, aes(x=Per.Capita.Income..in..., y=Mobile.Dependent.Households..Percentage.of.Households.)) +
   geom_point(aes(color=Borough), alpha=.6, size=1) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   xlab('Income (in $1000s)') +
   ylab('% Mobile Dep. Households') +
-  theme(text = element_text(size = 10))
+  theme(text = element_text(size = 10)) +
+  theme_bw()
 
 plot4 <- ggplot(current, aes(x=Per.Capita.Income..in..., y=Blocks.with.ISP.Reported.Speed.Availability.of...900.Mbps.in..)) +
   geom_point(aes(color=Borough), alpha=.6, size=1) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black')  +
   xlab('Income (in $1000s)') +
   ylab('% High Speed Internet') +
-  theme(text = element_text(size = 10))
+  theme(text = element_text(size = 10)) +
+  theme_bw()
 
 plot5 <- ggplot(current, aes(x=Per.Capita.Income..in..., y=Public.Wi.Fi.in.NYC.Count)) +
   geom_point(aes(color=Borough), alpha=.6, size=1) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   xlab('Income (in $1000s)') +
   ylab('Public WiFi Count') +
-  theme(text = element_text(size = 10))
+  theme(text = element_text(size = 10)) +
+  theme_bw()
 
 plot6 <- ggplot(current, aes(x=Per.Capita.Income..in..., y=Mobile.Broadband.Adoption..)) +
   geom_point(aes(color=Borough), alpha=.6, size=1) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   xlab('Income (in $1000s)') +
   ylab('% Mobile Internt Adoption') +
-  theme(text = element_text(size = 10))
+  theme(text = element_text(size = 10)) +
+  theme_bw()
 
 figure <- ggarrange(plot1, plot2, plot3, plot4, plot5, plot6, ncol=3, nrow=2, common.legend = TRUE, legend="bottom")
 
@@ -115,42 +121,48 @@ plot1 <- ggplot(current, aes(x=Families.below.poverty.level.., y=Home.Broadband.
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   xlab('Fam. Below Poverty Line') +
   ylab('Internet Adoption') +
-  theme(text = element_text(size = 10))
+  theme(text = element_text(size = 10)) +
+  theme_bw()
   
 plot2 <- ggplot(current, aes(x=Families.below.poverty.level.., y=Residential.Broadband.Choice.Average.by.NTA)) +
   geom_point(aes(color=Borough), alpha=.6, size=1) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   xlab('Fam. Below Poverty Line') +
   ylab('# of Carriers') +
-  theme(text = element_text(size = 10))
+  theme(text = element_text(size = 10)) +
+  theme_bw()
 
 plot3 <- ggplot(current, aes(x=Families.below.poverty.level.., y=Mobile.Dependent.Households..Percentage.of.Households.)) +
   geom_point(aes(color=Borough), alpha=.6, size=1) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   xlab('Fam. Below Poverty Line') +
   ylab('Mobile Dep. Households') +
-  theme(text = element_text(size = 10))
+  theme(text = element_text(size = 10)) +
+  theme_bw()
 
 plot4 <- ggplot(current, aes(x=Families.below.poverty.level.., y=Blocks.with.ISP.Reported.Speed.Availability.of...900.Mbps.in..)) +
   geom_point(aes(color=Borough), alpha=.6, size=1) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black')  +
   xlab('Fam. Below Poverty Line') +
   ylab('Fast Speed Internet') +
-  theme(text = element_text(size = 10))
+  theme(text = element_text(size = 10)) +
+  theme_bw()
 
 plot5 <- ggplot(current, aes(x=Families.below.poverty.level.., y=Public.Wi.Fi.in.NYC.Count)) +
   geom_point(aes(color=Borough), alpha=.6, size=1) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   xlab('Fam. Below Poverty Line') +
   ylab('Public WiFi Count') +
-  theme(text = element_text(size = 10))
+  theme(text = element_text(size = 10)) +
+  theme_bw()
 
 plot6 <- ggplot(current, aes(x=Families.below.poverty.level.., y=Mobile.Broadband.Adoption..)) +
   geom_point(aes(color=Borough), alpha=.6, size=1) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   xlab('Fam. Below Poverty Line') +
   ylab('Mobile Internt Adoption') +
-  theme(text = element_text(size = 10))
+  theme(text = element_text(size = 10)) +
+  theme_bw()
 
 figure <- ggarrange(plot1, plot2, plot3, plot4, plot5, plot6, ncol=3, nrow=2, common.legend = TRUE, legend="bottom")
 
@@ -166,7 +178,8 @@ ggplot(current, aes(x=Families.below.poverty.level.., y=Blocks.with.ISP.Reported
   geom_point(size=2) +
   xlab('Families Below Poverty Line') +
   ylab('% Internet availability > 900 Mbps') +
-  ggtitle('Poverty Level and Fast Speed Internet')
+  ggtitle('Poverty Level and Fast Speed Internet') +
+  theme_bw()
 ```
 Map of Internet Adoption Rate
 ```{r}

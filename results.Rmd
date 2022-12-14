@@ -152,6 +152,9 @@ ggplot(current, aes(x=Families.below.poverty.level.., y=Blocks.with.ISP.Reported
   ggtitle('Poverty Level and Fast Speed Internet') +
   theme_bw()
 ```
-This graph represents families below the poverty line in each neighborhood compared to high speed internet availability. The poverty line in the United States is annual income below $33,000. As for the y-axis variable, this represents the percentage of blocks in a neighborhood that have access to internet speeds of 900 Mbps or higher. This high speed internet is crucial for businesses operating several internt-dependent pieces of technology at once as well as any household with a large number of connected devices. 
+This graph represents families below the poverty line in each neighborhood compared to high speed internet availability. According to the US Census, the poverty line in the United States is annual income below $33,000. As for the y-axis variable, this represents the percentage of blocks in a neighborhood that have access to internet speeds of 900 Mbps or higher. This high speed internet is crucial for businesses operating several internet-dependent pieces of technology at once as well as any household with a large number of connected devices. 
 
-As we can see from the chart The Bronx seems to be isolated from the other boroughs. No neighborhood in The Bronx has complete access to internet speeds greater than 900 Mbps. Also, we see neighborhoods int he Bronx being further right on the graph than neighborhoods in other boroughs. This signifies more families below the poverty line compared to the other boroughs. These two factors again reinforce the idea that economic status and internt adoption are correlated.
+As we can see from the chart The Bronx seems to be isolated from the other boroughs. No neighborhood in The Bronx has complete access to internet speeds greater than 900 Mbps. Also, we see neighborhoods int he Bronx being further right on the graph than neighborhoods in other boroughs. This signifies more families below the poverty line compared to the other boroughs. These two factors again reinforce the idea that economic status and internet adoption are correlated.
+
+Sources:
+https://www.census.gov/topics/income-poverty/poverty/guidance/poverty-measures.html#:~:text=Step%201%3A%20Determine%20the%20family's,threshold%20(below)%20is%20%2433%2C148.

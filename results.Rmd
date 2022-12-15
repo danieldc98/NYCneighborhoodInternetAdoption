@@ -21,6 +21,7 @@ library(ggrepel)
 library(forcats)
 library(tidyr)
 # import data
+library(ggthemes)
 data = read.csv(file='data/clean/combined_dataset.csv')
 ```
 Home Internet Adoption Map:
@@ -327,6 +328,7 @@ figure <- ggarrange(plot1, plot2, plot3, plot4, plot5, plot6, ncol=3, nrow=2, co
 annotate_figure(figure,
                 top = text_grob("Income and Internet Trends", size=20, face = "bold"))
 ```
+
 In the above graphs we can see a comparison of income levels (by borough) and several internet availability measures. The black line on each graph represents the trend between income and the respective measure of internet. The colors represent the boroughs and each dot is a neighborhood within the borough. 
 
 As we can see from the data, Manhattan seems to be the borough with the highest income. The green dots tend to be further right and away from the other boroughs demonstrating that trend. The rest of the boroughs are relatively close together regarding their income. We see this in looking at the clusters in each graph.
@@ -387,9 +389,9 @@ data_snap$Home.Broadband.Adoption.. <- data_snap$Home.Broadband.Adoption.. * 100
 
 ```
 
-```{r}
-
 ## Do the people in NYC who we are living in rented stays have access to better internet facilities?
+
+```{r}
 
 # Internet Access Ratings around Rented Stays
 iar <- ggplot(data, aes(fill=Borough, x=Residential.Broadband.Choice.Average.by.NTA, y=Renter.occupied.Housing.unit..)) +
@@ -404,11 +406,15 @@ iar <- ggplot(data, aes(fill=Borough, x=Residential.Broadband.Choice.Average.by.
 
 iar
 ```
+
 Above plot analyses the broadband effectiveness in and around rented stays. Students, employed or unemployed people need to ensure the rent they pay give them the best facilities that's available in the region. As most of the people are immigrants, their internet connectivity concern may have a role in determining their quality of life as they may choose to live away from home.
 We can observe the Brooklyn borough has wide variance in the internet connectivity spread and broadband rating in neighborhoods, however Manhattan on the other end has pretty much better access and connectivity due to more activity and internet dependent businesses that prevail in the area.The Staten island has an average NTA rating of 1.8 which is less than average of other boroughs like the Queens and Manhattan but far better than the Bronx area.
 
 
+## How does the NYC household racial ethnicity distribution look like ?
+
 ```{r}
+
 # Borough wise Household Distribution
 bhd <- ggplot(data, aes(x=Borough, y=Total.Number.of.Households)) +
    geom_boxplot() + facet_wrap(~ plurality_racial_group) +
@@ -419,24 +425,6 @@ bhd <- ggplot(data, aes(x=Borough, y=Total.Number.of.Households)) +
 
 bhd
 ```
-
-
-```{r}
-pcolors <- wsj_pal(palette = "colors6")
-freq_count <- data %>%
-  group_by(Borough,plurality_racial_group) %>%
-  summarize(Freq = n())
-
-# Basic Mosaic Plot of Racial groups residing in different boroughs
-fig_mos <- vcd::mosaic( plurality_racial_group ~ Borough,data = freq_count,
-             set_labels=list(plurality_racial_group = c("W_e","H/L","A_n","B/A_n"),
-                             highlighting_fill = pcolors,
-                             Borough = c("B","M","Q","SI","Bx")),direction = c("v","h"))
-
-fig_mos
-
-```
-
 ```{r}
 # Enhanced Mosaic Plot of Racial groups residing in different boroughs
 cex.axis = 0.5
@@ -453,6 +441,12 @@ adv_mos <- mosaicplot(data$Borough ~ data$plurality_racial_group,
 adv_mos
 ```
 
+The neighborhood Internet infrastructure typically utilized across different racial groups vary significantly.
+Double clicking on it, neighborhoods in a smaller borough with highly populated individuals get better access to infrastructure facilities, the above does showcase racial disparity . Couple of boroughs including Manhattan has fewer Hispanic groups compared to Black or African American neighborhoods, and the highest fraction of households in White groups depend and prominently access better Internet facilities than any other racial-plurality neighborhoods in NYC.
+
+The mosaic plot also clearly demonstrates the spread and distribution in a very visual and effective manner to identify and learn the ethnicity distribution across neighborhoods affecting their social lifestyle.
+
+## Are we democratizing Internet Access to Everyone
 ```{r}
 # Democratized Internet Access Spread
 dias <- ggplot(data, aes(Home.Broadband.Adoption..,Total.Number.of.Households)) +
@@ -470,6 +464,12 @@ dias <- ggplot(data, aes(Home.Broadband.Adoption..,Total.Number.of.Households)) 
 dias
 ```
 
+This graph represents families in each neighborhood belonging to various ethnicity compared to high speed internet availability access . High speed access to rich and low speed to others isn't democratizing internet access to everyone, isn't it ? High speed internet is paramount for any household be  it any ethnicity.
+Lot of Hispanic Latino individual neighborhoods have less internet adoption rate in the Bronx and other high visible boroughs like Manhattan.
+Are we taking the steps in the right direction to democratize internet access ? We continue to identify the patterns and disparities.
+
+## Will the rent you pay guarantee effective high internet ?
+
 ```{r}
 # Home Internet Users Lifestyle
 wsj_plot <- ggplot(data, aes(fill=Borough, y=Home.Broadband.Adoption.., x=Median.House.gross.rent..in...)) +
@@ -485,6 +485,9 @@ wsj_plot
 
 ```
 
+Finding a place to stay and rent in NYC is already tough, add it to the plethora of facilities one expects to pay to leverage services like internet. The above plot insight-fully showcases that be it 1000\$ or 3000\$ rent stay, people still lack internet services to a great extent. There are still 20-30% of individuals and neighborhoods that lack better facilities of high speed internet in Queens and Brooklyn boroughs. Paying more rent may guranatee a better lifestyle but doesn't guarantee one a better high speed internet availability all the time.
+
+## How Satisfied are internet users in HCOL (High cost of living) & LCOL (low cost of living) neighborhood areas ? 
 ```{r}
 
 # Broadband Ratings in HCOL & LCOL
@@ -501,7 +504,9 @@ wsj_plot2
 
 ```
 
+Brooklyn demonstrates the widespread variance in the internet availability given the high valued houses they live in. On the other hand the region of The Bronx, people are averagely happy with the services provided. However, Manhattan being so much densely populated does showcase a link between better facilities for higher house values. Looking at this graph, certainly there is direct correlation on internet access in high cost of living neighbourhoods in the dense boroughs.
 
+## Are we moving to a mobile first era or households still rely on the high speed home internet ?
 ```{r}
 
 # Parallel Coordinates Plot of Variables
@@ -514,6 +519,8 @@ ppcoord_plot <- ggparcoord(data, columns = c(4,7,6,8), alphaLines = 0.5,scale = 
 
 ppcoord_plot
 ```
+
+The above is a rhetorical introspection on what the future holds for NYC and the neighborhoods. The total population seemingly has direct relation to increasing family size, bigger and better homes and lifestyle. This increase in households leads to fewer increase in home broadband connections as compared to the vast increase in mobile broadband users. Across all neighborhoods in NYC 3-5 years down the line, we already are and definitely moving to a mobile first generation where prevalence of mobile phone users and internet access is gonna splurge exponentially. Households will still rely on home broadband for majority of tasks but the future awaits to see the transition and change in human behavior to mobile first.
 
 Sources:
 https://www.census.gov/topics/income-poverty/poverty/guidance/poverty-measures.html#:~:text=Step%201%3A%20Determine%20the%20family's,threshold%20(below)%20is%20%2433%2C148.

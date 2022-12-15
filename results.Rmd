@@ -25,7 +25,7 @@ library(ggthemes)
 data = read.csv(file='data/clean/combined_dataset.csv')
 ```
 
-# Mapping Home Internet Adoption
+## Mapping Home Internet Adoption
 
 ```{r, echo=FALSE}
 # import map data
@@ -63,7 +63,7 @@ leaflet(map_data) %>%
 data <- read.csv("./data/clean/combined_dataset_no_weird.csv")
 ```
 
-# Racial Stratification in Internet Infrastructure
+## Racial Stratification in Internet Infrastructure
 
 It is impossible to discuss disparity in New York City without talking about race and national origin. New York has at various times been a key port in the trans-Atlantic slave trade, one of the largest destinations of the Great Migration, a "golden door" for myriad "huddled masses" sailing from the world's teeming shores, an origin of White Flight, and a battleground of gentrification. The present-day product of so much history is a complex geography of clustering, mixing, and segregation between races tracing their ancestry all over the world. This racial geography has informed decades and centuries of infrastructure construction and maintenance, including infrastructure to connect New Yorkers to the Internet. In 2020, a novel coronavirus rendered Internet connectivity more important than ever. In doing so, it also highlighted the degree of digital division in New York City's access to the Internet.
 
@@ -108,7 +108,7 @@ As can be expected, neighborhoods with a lower portion of households with a wire
 
 Mayor de Blasio opened New York City's *Internet Master Plan*'s with a letter. In it, he lamented that "this digital divide, like so many other aspects of life in New York City, leaves a significant part of our population at a major disadvantage." One year after the letter's publishing, the *Plan*-directed survey of Internet access revealed that the city still has more of a gap to close the divide along all too familiar racial lines.
 
-# The Golden Door to Cyberspace: Internet Infrastructure of New York's Foreign-Born
+## The Golden Door to Cyberspace: Internet Infrastructure of New York's Foreign-Born
 
 New York City has always prided itself on its global connectivity. For over a century since the poet Emma Lazarus wrote of the city's beloved Lady Liberty "From her beacon-hand / Glows world-wide welcome", people from around the globe have made New York their home. Today's city population was born in over 150 countries. Like many people moving to unfamiliar places, many chose to live around those of similar backgrounds. As a consequence, 34% of the median City neighborhood, Bay Ridge, Brooklyn, was born outside of the United States. In over two dozen neighborhoods more than half of the population was born abroad. 10% of residents were born elsewhere even in the quiet suburb Rossville-Woodrow near Staten Island's southwestern tip, which has the second-lowest proportion of foreign-born residents of any City neighborhood. While immigrants make up a portion of all New York neighborhood populations, the make a more significant contribution to some neighborhood populations than to others.
 
@@ -179,7 +179,7 @@ While some neighborhoods with a foreign population on each side of the median en
 
 In between, things were messier. Neighborhoods in the seventh decile of foreign-born makeup subscribed to home broadband at the second highest rate of any decile. Those in the fourth subscribed the second least. Furthermore, the amount of immigrants in a neighborhood held almost no effect on the number of residents' ISP options. While there are some correlations between having extremely high or low foreign-born populations and having better or worse Internet infrastructure, in general, neighborhoods of all foreign-born makeups enjoy good and poor Internet service.
 
-# Trying to Learn Remotely
+## Trying to Learn Remotely
 
 When the Covid-19 pandemic forced society to a standstill, one of our most significant fears was its effect on children. Worries over the drops in children's learning and development of social skills loomed large in parents' thoughts, while schools muddled through teaching their students as best they could. While hard for all students, some faced more difficulties than others. Sadly, neighborhoods with the most children used some of the least reliable Internet in the city.
 
@@ -246,7 +246,7 @@ children_vs_hotspots_no_manhattan
 
 Even excluding the high number of public hotspots in the city's Manhattan central business districts, public network connections were still more likely to be in neighborhoods with a smaller portion of children. The result was a city Internet infrastructure ill-equipped to accommodate students' transition to virtual learning.
 
-# Trends between Income and Internet
+## Trends between Income and Internet
 
 ```{r, echo=FALSE}
 current <- select(data, c('Borough',
@@ -332,11 +332,11 @@ In the above graphs we can see a comparison of income levels (by borough) and se
 
 As we can see from the data, Manhattan seems to be the borough with the highest income. The green dots tend to be further right and away from the other boroughs demonstrating that trend. The rest of the boroughs are relatively close together regarding their income. We see this in looking at the clusters in each graph.
 
-Now, looking at internet trends with regards to internet availability, there are some significant patterns to be aware of. First of all, when looking at the black trend line we can see that they are all positive trends except the top right graph representing mobile dependent households. For the other five comparisons, this signifies that higher incomes are correlated with better internet. Whether it be more public Wi-Fi hot-spots, faster internet, more selection with internet providers, or higher mobile and household internet adoption. As for the top right graph showing the negative trend. This is because mobile dependency is the inverse of better internet coverage. If more households are mobile dpendent it means they do not have internet in their and therefore a lower internet adoption rate.
+Now, looking at internet trends with regards to internet availability, there are some significant patterns to be aware of. First of all, when looking at the black trend line we can see that they are all positive trends except the top right graph representing mobile dependent households. For the other five comparisons, this signifies that higher incomes are correlated with better internet. Whether it be more public Wi-Fi hot-spots, faster internet, more selection with internet providers, or higher mobile and household internet adoption. As for the top right graph showing the negative trend. This is because mobile dependency is the inverse of better internet coverage. If more households are mobile-dependent it means they do not have internet in their and therefore a lower internet adoption rate.
 
 Looking at these trends we can see that internet adoption is positively correlated to income level. As the higher the income the more available internet is in each neighborhood.
 
-Significant Trend in The Bronx:
+## Significant Trend in The Bronx
 
 ```{r, echo=FALSE}
 current = select(data, c('Borough', 'Families.below.poverty.level..', 'Blocks.with.ISP.Reported.Speed.Availability.of...900.Mbps.in..'))
@@ -351,7 +351,7 @@ ggplot(current, aes(x=Families.below.poverty.level.., y=Blocks.with.ISP.Reported
   theme_bw(15)
 ```
 
-This graph represents families below the poverty line in each neighborhood compared to high speed internet availability. According to the US Census, the poverty line in the United States is annual income below \$33,000. As for the y-axis variable, this represents the percentage of blocks in a neighborhood that have access to internet speeds of 900 Mbps or higher. This high speed internet is crucial for businesses operating several internet-dependent pieces of technology at once as well as any household with a large number of connected devices.
+This graph represents families below the poverty line in each neighborhood compared to high speed internet availability. According to the [US Census Bureau](https://www.census.gov/topics/income-poverty/poverty/guidance/poverty-measures.html), the poverty line in the United States is annual income below \$33,000. As for the y-axis variable, this represents the percentage of blocks in a neighborhood that have access to internet speeds of 900 Mbps or higher. This high speed internet is crucial for businesses operating several internet-dependent pieces of technology at once as well as any household with a large number of connected devices.
 
 As we can see from the chart The Bronx seems to be isolated from the other boroughs. No neighborhood in The Bronx has complete access to internet speeds greater than 900 Mbps. Also, we see neighborhoods int he Bronx being further right on the graph than neighborhoods in other boroughs. This signifies more families below the poverty line compared to the other boroughs. These two factors again reinforce the idea that economic status and internet adoption are correlated.
 
@@ -446,12 +446,11 @@ bhd <- ggplot(short_borough_names_data, aes(x=Borough, y=Total.Number.of.Househo
 bhd
 ```
 
-```{r}
+```{r echo=FALSE, message=FALSE, results='hide'}
+
 # Enhanced Mosaic Plot of Racial groups residing in different boroughs
-cex.axis = 0.5
 adv_mos <- mosaicplot(data$Borough ~ data$plurality_racial_group, 
            main = "Mosaic Distribution of Racial Groups",
-           sub = "",
            ylab = "Plurality Racial Groups",
            xlab = "Boroughs",
            las = 1,
@@ -460,6 +459,7 @@ adv_mos <- mosaicplot(data$Borough ~ data$plurality_racial_group,
            shade = TRUE)
 
 adv_mos
+
 ```
 
 The neighborhood Internet infrastructure typically utilized across different racial groups vary significantly. Double clicking on it, neighborhoods in a smaller borough with highly populated individuals get better access to infrastructure facilities, the above does showcase racial disparity . Couple of boroughs including Manhattan has fewer Hispanic groups compared to Black or African American neighborhoods, and the highest fraction of households in White groups depend and prominently access better Internet facilities than any other racial-plurality neighborhoods in NYC.
@@ -470,7 +470,7 @@ The mosaic plot also clearly demonstrates the spread and distribution in a very 
 
 ```{r}
 # Democratized Internet Access Spread
-dias <- ggplot(short_borough_names_data, aes(Home.Broadband.Adoption..,Total.Number.of.Households/1000)) +
+dias <- ggplot(short_borough_names_data, aes(Home.Broadband.Adoption.. * 100,Total.Number.of.Households/1000)) +
   geom_point(aes(color = plurality_racial_group)) +
   facet_grid(~Borough) +
   # theme(strip.text = element_text(size = 10, color = "blue"), legend.direction = "horizontal", legend.position = "bottom") +
@@ -492,7 +492,7 @@ This graph represents families in each neighborhood belonging to various ethnici
 
 ```{r}
 # Home Internet Users Lifestyle
-wsj_plot <- ggplot(data, aes(fill=Borough, y=Home.Broadband.Adoption.., x=Median.House.gross.rent..in...)) +
+wsj_plot <- ggplot(data, aes(fill=Borough, y=Home.Broadband.Adoption.. * 100, x=Median.House.gross.rent..in...)) +
     geom_line(aes(color=Borough), alpha=.5, size =1.5) +
     ggtitle("Home Internet Users Lifestyle") +
     ylab("Percentage of Home Broadband Users (%) ") +
@@ -543,5 +543,3 @@ ppcoord_plot
 ```
 
 The above is a rhetorical introspection on what the future holds for NYC and the neighborhoods. The total population seemingly has direct relation to increasing family size, bigger and better homes and lifestyle. This increase in households leads to fewer increase in home broadband connections as compared to the vast increase in mobile broadband users. Across all neighborhoods in NYC 3-5 years down the line, we already are and definitely moving to a mobile first generation where prevalence of mobile phone users and internet access is gonna splurge exponentially. Households will still rely on home broadband for majority of tasks but the future awaits to see the transition and change in human behavior to mobile first.
-
-Sources: <https://www.census.gov/topics/income-poverty/poverty/guidance/poverty-measures.html#>:\~:text=Step%201%3A%20Determine%20the%20family's,threshold%20(below)%20is%20%2433%2C148.

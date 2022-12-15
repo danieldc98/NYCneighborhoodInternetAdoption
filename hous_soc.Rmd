@@ -50,9 +50,12 @@ data_snap$Home.Broadband.Adoption.. <- data_snap$Home.Broadband.Adoption.. * 100
 ```
 
 ```{r}
+
+## Do the people in NYC who we are living in rented stays have access to better internet facilities?
+
 # Internet Access Ratings around Rented Stays
 iar <- ggplot(data, aes(fill=Borough, x=Residential.Broadband.Choice.Average.by.NTA, y=Renter.occupied.Housing.unit..)) +
-    geom_line(aes(color=Borough), alpha=.5, size =10) +
+    geom_line(aes(color=Borough), alpha=.6, size = 8) +
     ggtitle("Internet Access Ratings around Rented Stays") +
     xlab("Region Broadband Rating by NTA") +
     ylab("Rented Housing Units in %") +
@@ -63,6 +66,8 @@ iar <- ggplot(data, aes(fill=Borough, x=Residential.Broadband.Choice.Average.by.
 
 iar
 ```
+Above plot analyses the broadband effectiveness in and around rented stays. Students, employed or unemployed people need to ensure the rent they pay give them the best facilities that's available in the region. As most of the people are immigrants, their internet connectivity concern may have a role in determining their quality of life as they may choose to live away from home.
+We can observe the Brooklyn borough has wide variance in the internet connectivity spread and broadband rating in neighborhoods, however Manhattan on the other end has pretty much better access and connectivity due to more activity and internet dependent businesses that prevail in the area.The Staten island has an average NTA rating of 1.8 which is less than average of other boroughs like the Queens and Manhattan but far better than the Bronx area.
 
 
 ```{r}

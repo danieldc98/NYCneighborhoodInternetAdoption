@@ -1,3 +1,308 @@
+---
+title: "NYC Neighborhood Internet Adoption"
+author: "Daniel de Castro, Sushant Prabhu, Kiyan Mohebbizadeh"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+---
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+# Introduction
+
+The Internet is a driver of the American economy and increasingly a necessity of modern life. Recognizing this centrality, in January 2020 New York City Mayor de Blasio's office [released](https://www.nyc.gov/office-of-the-mayor/news/010-20/de-blasio-administration-releases-internet-master-plan-city-s-broadband-future) an ambitious plan to "close the digital divide" by bringing "universal broadband" to "all New Yorkers". Dubbed the [*Internet Master Plan*](https://www1.nyc.gov/assets/cto/downloads/internet-master-plan/NYC_IMP_1.7.20_FINAL-2.pdf), the sixty-eight-page missive details the economic, social, and educational benefits of spreading high-speed Internet access to the 195 neighborhoods that make up the five boroughs, as well as a roadmap to its achievement. While the authors of the *Plan* called for an aggressive timeline of expanded infrastructural roll out entering full swing sometime in Q1 2022, they had no idea how soon their goals would become vital to the City's functioning.
+
+Months after the *Plan*'s announcement, a wholesale digital migration of professional, educational, and interpersonal life brought about by an unexpected global pandemic rendered online connectivity more important than ever. A year after the onset of stay-at-home orders, virtual learning, and social distancing, the City's eight million inhabitants were more at the mercy of their Internet infrastructure than ever before. Some, though, faced more daunting obstacles to connectivity than others. The purpose of this project is to better understand the nature of this digital disparity. Using data on neighborhood digital infrastructure as well as economic, demographic, housing, and sociological characteristics, we seek to better understand the geographic and socioeconomic distribution of Internet availability in New York City during the darkest days of the Covid-19 pandemic.
+
+<!--chapter:end:index.Rmd-->
+
+---
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+# Proposal
+
+**Problem Statement**
+
+Is there a trend in New York City Internet access and adoption based on socioeconomic characteristics?
+
+## Research topic
+
+**Inspiration and Approach**
+
+Modern American society has reached a point where the Internet is a driver of the economy and increasingly a necessity of modern life.
+Consequently, there has been a rapid expansion of Internet infrastructure and availability around the country.
+However, this expansion has not progressed uniformly across society.
+For this reason our hypothesis is that there may be inequity in Internet availability and adoption, especially in a city as stratified as New York City.
+We intend to explore how Internet availability, adoption, and usage vary across New York City.
+
+To identify and analyse the problem statement, we intend to use NYC's [Internet Master Plan: Adoption and Infrastructure Data by Neighborhood](https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk) data to look at dozens of variables related to Internet speed, reliability, usage, and physical infrastructure at a neighborhood level.
+Collected by NYC's Office of Technology and Innovation (OTI), this dataset contains detailed breakdowns of the state of Internet infrastructure and usage by city-recognized neighborhood.
+These range from obvious indicators of Internet usage ("Mobile Dependent Households (Percentage of Households)") to detailed accountings of infrastructure ("Number of Free Public Wi-Fi Access Points in a Pedestrian Corridor") to *really* detailed accountings of infrastructure ("Density of Poles Reserved and with Equipment Installed for Mobile Telecom Franchise"). As most digital public infrastructure must go through OTI for permits and oversight, we expect this data to offer an accurate accounting of the city's digital infrastructure. Furthermore, since OTI last updated this dataset in March of 2021, we expect this dataset to offer insights into Internet access during the Covid-19 pandemic, when the importance of online connectivity was at an all-time high.
+
+In order to understand more about the neighborhoods making up the rows of the Internet Master Plan dataset, we intend to combine it with NYC's [Demographic Profiles of ACS 5 Year Estimates at the Neighborhood Tabulation Area (NTA) level](https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn).
+Collected by the Department of City Planning (DCP), this dataset describes in detail the unique demographic, economic, housing, and social characteristics of every neighborhood within the Five Boroughs.
+Keyed on the same Neighborhood Tabulation Area codes as the Internet dataset, this data answers questions about each neighborhood's racial, ethnic, and linguistic diversity; their income and wealth distributions; their housing stock, rents, and densities; and their familial, educational, and disability chararacteristics.
+These categorical and continuous variables will add valuable context to each neighborhood's Internet availability and adoption --- giving us an opportunity to explore and visualize patterns and correlations between the two.
+One limitation of this dataset is its recency.
+Aggregated over five years in the mid 2010s, this data is 5 years staler than the Internet Master Plan data.
+While this may bias our findings as they relate to neighborhoods that have undergone rapid demographic change during that interval, we do not expect this to invalidate our overall findings.
+
+## Data availability
+
+**Dataset Sources**
+
+-   Internet Master Plan: Adoption and Infrastructure Data by Neighborhood: <https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk>
+-   Demographic Profiles of ACS 5 Year Estimates at the Neighborhood Tabulation Area (NTA) level <https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn>
+
+Both datasets are available on [NYC OpenData](https://opendata.cityofnewyork.us) either as a .csv file or as a zipped folder of .xlsx files.
+
+-   The Internet and demographic datasets both have 195 neighborhood rows with around 100 and around 4,000 variable columns, respectively.
+-   Per-factor statistics breakdowns on many-factored categorical data cause the demographic dataset's high width.\
+-   While we considered using several more recent NYC demographic datasets, we chose this one because of its thoroughness and mutual Neighborhood Tabulation Area structure with the Internet dataset.
+-   Since they are both under 6 MB, we were able to download the files using conventional HTTPS file downloads. To preprocess our data, we will read in the csv and excel files and combine them all on NTA code before writing the result out as a single csv file.
+-   This will enable us to effectively analyze and visualize any combination of the many categorical and continuous variables about Internet connectivity or socioeconomic demographics for all neighborhoods in New York City.
+
+**Statistics about the Internet Master Plan dataset:** - Includes Key indicators of broadband adoption, service and infrastructure in New York City.
+
+-   Data Provided by - Office of Technology and Innovation (OTI)
+-   Dataset Owner - NYC OpenData
+-   Update Frequency - Annually
+-   Date Made Public - 12/09/2019
+-   Metadata Last Updated - September 23, 2022
+
+**Statistics about the Demographic Profiles dataset:** - Includes 4 profiles include demographics, economic, housing and sociological.
+
+-   Data Provided by - Department of City Planning (DCP)
+-   Dataset Owner - NYC OpenData
+-   Update Frequency - Annually
+-   Date Made Public - 05/29/2018
+-   Last Updated - March 4, 2020
+
+Together, these two datasets should allow us to explore how and why some New Yorkers enjoy world-class, ubiquitous access to the so-called information superhighway, while others still struggle to find any on ramps.
+
+<!--chapter:end:proposal.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Data Sources
+
+## Neighborhood Internet Infrastructure Data
+
+### Overview
+
+We used NYC's [Internet Master Plan: Adoption and Infrastructure Data by Neighborhood](https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk) data to look at dozens of variables related to Internet speed, reliability, usage, and physical infrastructure at a neighborhood level. Collected by NYC's Office of Technology and Innovation (OTI), this dataset contains detailed breakdowns of the state of Internet infrastructure and usage by city-recognized neighborhood. These range from obvious indicators of Internet usage ("Mobile Dependent Households (Percentage of Households)") to detailed accountings of infrastructure ("Number of Free Public Wi-Fi Access Points in a Pedestrian Corridor") to *really* detailed accountings of infrastructure ("Density of Poles Reserved and with Equipment Installed for Mobile Telecom Franchise"). As most digital public infrastructure must go through OTI for permits and oversight, we expect this data to offer an accurate accounting of the city's digital infrastructure. Furthermore, since OTI last updated this dataset in March of 2021, we expect this dataset to offer insights into Internet access during the Covid-19 pandemic, when the importance of online connectivity was at an all-time high.
+
+### Details
+
+Overall size: 195 neighborhood rows by 77 feature columns
+
+Online availability: .csv file on [NYC OpenData](https://opendata.cityofnewyork.us)
+
+Provider: NYC Office of Technology and Innovation (OTI)
+
+Owner: NYC OpenData
+
+Update Frequency: Annually
+
+Date Made Public: December 9, 2019
+
+Metadata Last Updated: September 23, 2022
+
+## Neighborhood Sociological, Demographic, Housing, and Economic Data
+
+### Overview
+
+In order to understand more about the neighborhoods making up the rows of the Internet Master Plan dataset, we combined it with NYC's [Demographic Profiles of ACS 5 Year Estimates at the Neighborhood Tabulation Area (NTA) level](https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn). Collected by the Department of City Planning (DCP), this dataset describes in detail the unique demographic, economic, housing, and social characteristics of every neighborhood within the Five Boroughs. Keyed on the same Neighborhood Tabulation Area codes as the Internet dataset, this data answers questions about each neighborhood's racial, ethnic, and linguistic diversity; their income and wealth distributions; their housing stock, rents, and densities; and their familial, educational, and disability characteristics.
+
+These categorical and continuous variables will add valuable context to each neighborhood's Internet availability and adoption --- giving us an opportunity to explore and visualize patterns and correlations between the two. One limitation of this dataset is its recency. Aggregated over five years in the mid 2010s, this data is 5 years staler than the Internet Master Plan data. While this may bias our findings as they relate to neighborhoods that have undergone rapid demographic change during that interval, we do not expect this to invalidate our overall findings. We considered using more recent neighborhood characteristic datasets, however these were not broken down along the same neighborhood boundaries as the Internet infrastructure dataset. This caused a messy join resulting in unnecessarily missing data. For this reason, we elected to use the slightly staler data which joined perfectly with the rows of the Internet dataset.
+
+### Details
+
+Overall size:
+
+-   Demographic: 195 neighborhood rows by 484 feature columns
+
+-   Economic: 195 neighborhood rows by 659 feature columns
+
+-   Housing: 195 neighborhood rows by 524 feature columns
+
+-   Sociological: 195 neighborhood rows by 2,714 feature columns
+
+Provider: Department of City Planning (DCP)
+
+Owner: NYC OpenData
+
+Update Frequency: Annually
+
+Date Made Public: May 29, 2018
+
+Last Updated: March 4, 2020
+
+There are several causes for the high width of these datasets:
+
+1.  Nearly every characteristic has 4 versions: a raw count, a margin of error, a percentage of overall neighborhood population, and a margin of error of the percentage.
+
+2.  Many features, especially in the sociological dataset, are broken down on a per-factor level. In the most extreme case, this results in 4 columns (raw, percentage, and margins of error) for every country from which a New Yorker has emigrated.
+
+# Data Cleaning/Transformation
+
+We intentionally chose these datasets because of their interoperability. Because they use the same neighborhood definitions and unique identifiers, cleaning and joining these two datasets together was a relatively straightforward process. The code for this cleaning/transformation is located in /preprocessing.ipynb. Data can be found in /data/raw/ and data/clean/.
+
+## Cleaning Up Join Columns
+
+The Internet Dataset calls each neighborhood's unique code a "Neighborhood Tabulation Area Code (NTA Code)", while the housing/economic/demographic/social dataset refers to it as a "GeoID". Due to the former's unwieldiness, we regularized both to use "GeoID". We also standardized both to use "Borough" rather than "Borough Name". Finally, we changed all instances of "Borough": "Bronx" to be "The Bronx" in the Internet dataset to match the style of the socioeconomic data. The result was a series of simple left joins between 5 dataframes with perfectly matching "GeoID" and "Borough" columns.
+
+## Feature Reduction
+
+Joining these datasets together as-is resulted in over 4,000 columns. As previously discussed, many of these were factor-level breakdowns of high-cardinality categorical variables (such as country of origin or language spoken at home). Most of these were not useful for our analysis, and so we decided to prune and aggregate them into data we could analyze easily in R. In general, we settled on using predominantly percentage-based variables whenever appropriate in order to better compare across neighborhoods. We also created several new columns by aggregating across existing ones. In general, this was done to assign each neighborhood a single value/category where it previously had several factor-level breakdowns, in order to better compare across neighborhoods.
+
+### Internet
+
+Of the 77 columns in the Internet dataset, we settled on the following columns for our analysis:
+
+-   "GeoID"
+
+-   "Borough"
+
+-   "neighborhood_name"
+
+-   "Total Population"
+
+-   "Population Density (per Sq. Mi.)"
+
+-   "Total Number of Households"
+
+-   "Home Broadband Adoption %"
+
+-   "Mobile Broadband Adoption %"
+
+-   "Mobile Dependent Households %"
+
+-   "Residential Broadband Choice Average by NTA"
+
+-   "Blocks with ISP Reported Speed Availability of \>=900 Mbps %"
+
+-   "Public Wi-Fi in NYC Count"
+
+-   "NYC Internet Master Plan Open Access Infrastructure Cost Comparison Coefficient"
+
+### Sociological
+
+Of the 2,714 columns in the Sociological dataset, we settled on the following columns for our analysis:
+
+-   "GeoID"
+
+-   "Borough"
+
+-   "English only language %"
+
+-   "Language other than English %"
+
+-   "Native born in US %"
+
+-   "Foreign born %"
+
+-   "Completed Bachelors degree or higher %"
+
+### Demographic
+
+Of the 484 columns in the Demographic dataset, we settled on the following columns for our analysis:
+
+-   "GeoID"
+
+-   "Borough"
+
+-   "Population under 18 years %"
+
+-   "Population over 64 years %"
+
+as well as a new column we created, "plurality_racial_group", which we made by finding the highest-population racial group in each neighborhood. In effect, this converted 6 numerical columns into one categorical one.
+
+### Economic
+
+Of the 659 columns in the Economic dataset, we settled on the following columns for our analysis:
+
+-   "GeoID"
+
+-   "Borough"
+
+-   "Per Capita Income (in \$)"
+
+-   "Families below poverty level %"
+
+-   "Population employed in labor force %"
+
+as well as two new columns we created, "Work from Home - Capable" and "Work from Home - Incapable", by adding up the proportions of workers in roles we deemed potentially doable from home via the Internet. We settled on management, business, sciences, arts, sales, and office workers as being WFH-capable and service, natural resources, construction, maintenance, production, and transportation workers as being WFH-incapable. We recognize that not all workers in the former can or do work from home, while some in the latter may.
+
+### Housing
+
+Of the 524 columns in the Housing dataset, we settled on the following columns for our analysis:
+
+-   "GeoID"
+
+-   "Borough"
+
+-   "Median House gross rent (in \$)"
+
+-   "Median House value (in \$)"
+
+-   "Owner occupied Housing unit %"
+
+-   "Renter occupied Housing unit %"
+
+-   "Total occupied Housing unit %"
+
+# Missing Value Analysis
+
+```{r}
+library(ggplot2)
+data <- read.csv("./data/clean/combined_dataset.csv")
+data$na_count <- rowSums(is.na(data))
+data$Neighborhood.Name <- factor(data$Neighborhood.Name,
+                  levels = data$Neighborhood.Name[order(data$na_count, decreasing = FALSE)])
+row_na_counts <- ggplot(
+  filter(data, na_count > 0),
+  aes(Neighborhood.Name, na_count)
+) +
+  geom_bar(stat='identity') +
+  coord_flip() +
+  labs(title="Missing Fields by Neighborhood", x="Neighborhood", y="Missing Fields") +
+  theme_bw()
+
+row_na_counts
+
+```
+
+Only 8 neighborhoods are missing any data in our chosen fields. Of them, 5 are the boroughs' parks/cemeteries, one is the city's airports, and one is the city's primary jail, Rikers Island. These are clearly not normal neighborhoods with normal neighborhood populations, so these omissions are logical. Stuyvesant Town-Cooper Village, the centrally designed complex of apartments in the Lower East Side unique for its lack of adherence to the Manhattan street grid, is an entirely rental apartment complex. As such, it has no median home price.
+
+<!--chapter:end:data.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
 # Results
 
 ```{r, echo=FALSE, include=FALSE}
@@ -20,9 +325,6 @@ library(RColorBrewer)
 library(ggrepel)
 library(forcats)
 library(tidyr)
-library(dplyr)
-library(vcd)
-library(ggthemes)
 # import data
 data = read.csv(file='data/clean/combined_dataset.csv')
 ```
@@ -355,6 +657,64 @@ This graph represents families below the poverty line in each neighborhood compa
 
 As we can see from the chart The Bronx seems to be isolated from the other boroughs. No neighborhood in The Bronx has complete access to internet speeds greater than 900 Mbps. Also, we see neighborhoods int he Bronx being further right on the graph than neighborhoods in other boroughs. This signifies more families below the poverty line compared to the other boroughs. These two factors again reinforce the idea that economic status and internet adoption are correlated.
 
+Sources:
+https://www.census.gov/topics/income-poverty/poverty/guidance/poverty-measures.html#:~:text=Step%201%3A%20Determine%20the%20family's,threshold%20(below)%20is%20%2433%2C148.
+
+<!--chapter:end:results.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Interactive component
+
+Building Interactive components in D3.js, we wish to demonstrate the interactivity and visualization capability particularly looking at the graphs of total NYC Neighborhood population along with Home Broadband User percentage in different boroughs.To limit the number of neighborhood and quick identification, we have a feature of Sort by Population & Sort by Percentage for better illustration.
+
+The audience is free to sort them and hover on the bars for absorbing quick insights and navigating the visualizations.
+
+Really interesting and cool to see the Upper West Side (composing our Columbia University) at the forefront !
+
+<iframe src="NYC_interactive.html" width="785" height="6000"></iframe>
+
+<!--chapter:end:interactive.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Conclusion
+<<<<<<< ECON_RESULTS
+In the above analysis we have explore the relation of internet availability and various socioeconomic features of neighborhoods throughout the five boroughs of New York City. In this analysis we have discovered some of concerning discrepancies with internet availability, interesting trends regarding the distribution of people and internet, and some statistics that seem encouraging regarding Mayor de Blasio's Internet Master Plan announced in 2020.
+
+Regarding internet coverage around the city we can see that the best internet coverage is in Manhattan. Staten Island and Brooklyn have mid to high level internet adoption while Queens comes in slightly higher than the Bronx, but both at the bottom of the list. We came to this conclusion using data on internet adoption and availability, internet speed availability, public hot spot availability and mobile internet dependency. 
+
+When looking at the distribution of of internet across New York City, one of the most concerning findings is the relation of mean income and internet availability and adoption. Referring to the graph above we can see that overall, a higher income in a neighborhood correlates with better internet availability and adoption. This signifies a continued socioeconomic imbalance of internet adoption in New York City. This trend is especially evident in The Bronx with the highest poverty rates, lowest income and the lowest internet adoptiona nd availability, contrasted with Manhattan, with the highest income levels as well as the best internet coverage and adoption. 
+=======
+Conclusion can start here .....
+
+Below this is just for review on potential charts to keep
+
+```{r}
+
+library(forcats)
+library(tidyr)
+library(dplyr)
+library(RColorBrewer)
+library(ggpubr)
+library(ggplot2)
+library(ggridges)
+library(GGally)
+library(ggrepel)
+library(vcd)
+library(ggthemes)
+
+```
 
 ```{r}
 data = read.csv(file='data/clean/combined_dataset_no_weird.csv')
@@ -391,9 +751,6 @@ data_snap$Home.Broadband.Adoption.. <- data_snap$Home.Broadband.Adoption.. * 100
 ```
 
 ```{r}
-
-## Do the people in NYC who we are living in rented stays have access to better internet facilities?
-
 # Internet Access Ratings around Rented Stays
 iar <- ggplot(data, aes(fill=Borough, x=Residential.Broadband.Choice.Average.by.NTA, y=Renter.occupied.Housing.unit..)) +
     geom_line(aes(color=Borough), alpha=.5, size =8) +
@@ -519,7 +876,6 @@ ppcoord_plot
 ```
 
 
-Sources:
-https://www.census.gov/topics/income-poverty/poverty/guidance/poverty-measures.html#:~:text=Step%201%3A%20Determine%20the%20family's,threshold%20(below)%20is%20%2433%2C148.
 
+<!--chapter:end:conclusion.Rmd-->
 

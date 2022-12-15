@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Data Sources | NYC Neighborhood Internet Adoption</title>
+  <meta name="description" content="Chapter 3 Data Sources | NYC Neighborhood Internet Adoption" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Data Sources | NYC Neighborhood Internet Adoption" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Data Sources | NYC Neighborhood Internet Adoption" />
+  
+  
+  
+
+<meta name="author" content="Daniel de Castro, Sushant Prabhu, Kiyan Mohebbizadeh" />
+
+
+<meta name="date" content="2022-12-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="proposal.html"/>
+<link rel="next" href="data-cleaningtransformation.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">NYC Neighborhood Internet Adoption</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="proposal.html"><a href="proposal.html"><i class="fa fa-check"></i><b>2</b> Proposal</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="proposal.html"><a href="proposal.html#research-topic"><i class="fa fa-check"></i><b>2.1</b> Research topic</a></li>
+<li class="chapter" data-level="2.2" data-path="proposal.html"><a href="proposal.html#data-availability"><i class="fa fa-check"></i><b>2.2</b> Data availability</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>3</b> Data Sources</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-sources.html"><a href="data-sources.html#neighborhood-internet-infrastructure-data"><i class="fa fa-check"></i><b>3.1</b> Neighborhood Internet Infrastructure Data</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data-sources.html"><a href="data-sources.html#overview"><i class="fa fa-check"></i><b>3.1.1</b> Overview</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-sources.html"><a href="data-sources.html#details"><i class="fa fa-check"></i><b>3.1.2</b> Details</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-sources.html"><a href="data-sources.html#neighborhood-sociological-demographic-housing-and-economic-data"><i class="fa fa-check"></i><b>3.2</b> Neighborhood Sociological, Demographic, Housing, and Economic Data</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data-sources.html"><a href="data-sources.html#overview-1"><i class="fa fa-check"></i><b>3.2.1</b> Overview</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-sources.html"><a href="data-sources.html#details-1"><i class="fa fa-check"></i><b>3.2.2</b> Details</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html"><i class="fa fa-check"></i><b>4</b> Data Cleaning/Transformation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#cleaning-up-join-columns"><i class="fa fa-check"></i><b>4.1</b> Cleaning Up Join Columns</a></li>
+<li class="chapter" data-level="4.2" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#feature-reduction"><i class="fa fa-check"></i><b>4.2</b> Feature Reduction</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#internet"><i class="fa fa-check"></i><b>4.2.1</b> Internet</a></li>
+<li class="chapter" data-level="4.2.2" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#sociological"><i class="fa fa-check"></i><b>4.2.2</b> Sociological</a></li>
+<li class="chapter" data-level="4.2.3" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#demographic"><i class="fa fa-check"></i><b>4.2.3</b> Demographic</a></li>
+<li class="chapter" data-level="4.2.4" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#economic"><i class="fa fa-check"></i><b>4.2.4</b> Economic</a></li>
+<li class="chapter" data-level="4.2.5" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#housing"><i class="fa fa-check"></i><b>4.2.5</b> Housing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="missing-value-analysis.html"><a href="missing-value-analysis.html"><i class="fa fa-check"></i><b>5</b> Missing Value Analysis</a></li>
+<li class="chapter" data-level="6" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>6</b> Results</a></li>
+<li class="chapter" data-level="7" data-path="racial-stratification-in-internet-infrastructure.html"><a href="racial-stratification-in-internet-infrastructure.html"><i class="fa fa-check"></i><b>7</b> Racial Stratification in Internet Infrastructure</a></li>
+<li class="chapter" data-level="8" data-path="section.html"><a href="section.html"><i class="fa fa-check"></i><b>8</b> </a></li>
+<li class="chapter" data-level="9" data-path="the-golden-door-to-cyberspace-internet-infrastructure-of-new-yorks-foreign-born.html"><a href="the-golden-door-to-cyberspace-internet-infrastructure-of-new-yorks-foreign-born.html"><i class="fa fa-check"></i><b>9</b> The Golden Door to Cyberspace: Internet Infrastructure of New York’s Foreign-Born</a></li>
+<li class="chapter" data-level="10" data-path="trying-to-learn-remotely.html"><a href="trying-to-learn-remotely.html"><i class="fa fa-check"></i><b>10</b> Trying to Learn Remotely</a></li>
+<li class="chapter" data-level="11" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>11</b> Interactive component</a></li>
+<li class="chapter" data-level="12" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>12</b> Conclusion</a></li>
+<li class="chapter" data-level="13" data-path="when-looking-at-the-distribution-of-of-internet-across-new-york-city-one-of-the-most-concerning-findings-is-the-relation-of-mean-income-and-internet-availability-and-adoption.-referring-to-the-graph-above-we-can-see-that-overall-a-higher-income-in-a-neighborhood-correlates-with-better-internet-availability-and-adoption.-this-signifies-a-continued-socioeconomic-imbalance-of-internet-adoption-in-new-york-city.-this-trend-is-especially-evident-in-the-bronx-with-the-highest-poverty-rates-lowest-income-and-the-lowest-internet-adoptiona-nd-availability-contrasted-with-manhattan-with-the-highest-income-levels-as-well-as-the-best-internet-coverage-and-adoption..html"><a href="when-looking-at-the-distribution-of-of-internet-across-new-york-city-one-of-the-most-concerning-findings-is-the-relation-of-mean-income-and-internet-availability-and-adoption.-referring-to-the-graph-above-we-can-see-that-overall-a-higher-income-in-a-neighborhood-correlates-with-better-internet-availability-and-adoption.-this-signifies-a-continued-socioeconomic-imbalance-of-internet-adoption-in-new-york-city.-this-trend-is-especially-evident-in-the-bronx-with-the-highest-poverty-rates-lowest-income-and-the-lowest-internet-adoptiona-nd-availability-contrasted-with-manhattan-with-the-highest-income-levels-as-well-as-the-best-internet-coverage-and-adoption..html"><i class="fa fa-check"></i><b>13</b> When looking at the distribution of of internet across New York City, one of the most concerning findings is the relation of mean income and internet availability and adoption. Referring to the graph above we can see that overall, a higher income in a neighborhood correlates with better internet availability and adoption. This signifies a continued socioeconomic imbalance of internet adoption in New York City. This trend is especially evident in The Bronx with the highest poverty rates, lowest income and the lowest internet adoptiona nd availability, contrasted with Manhattan, with the highest income levels as well as the best internet coverage and adoption.</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">NYC Neighborhood Internet Adoption</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-sources" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Data Sources<a href="data-sources.html#data-sources" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="neighborhood-internet-infrastructure-data" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Neighborhood Internet Infrastructure Data<a href="data-sources.html#neighborhood-internet-infrastructure-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="overview" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Overview<a href="data-sources.html#overview" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We used NYC’s <a href="https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk">Internet Master Plan: Adoption and Infrastructure Data by Neighborhood</a> data to look at dozens of variables related to Internet speed, reliability, usage, and physical infrastructure at a neighborhood level. Collected by NYC’s Office of Technology and Innovation (OTI), this dataset contains detailed breakdowns of the state of Internet infrastructure and usage by city-recognized neighborhood. These range from obvious indicators of Internet usage (“Mobile Dependent Households (Percentage of Households)”) to detailed accountings of infrastructure (“Number of Free Public Wi-Fi Access Points in a Pedestrian Corridor”) to <em>really</em> detailed accountings of infrastructure (“Density of Poles Reserved and with Equipment Installed for Mobile Telecom Franchise”). As most digital public infrastructure must go through OTI for permits and oversight, we expect this data to offer an accurate accounting of the city’s digital infrastructure. Furthermore, since OTI last updated this dataset in March of 2021, we expect this dataset to offer insights into Internet access during the Covid-19 pandemic, when the importance of online connectivity was at an all-time high.</p>
+</div>
+<div id="details" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Details<a href="data-sources.html#details" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Overall size: 195 neighborhood rows by 77 feature columns</p>
+<p>Online availability: .csv file on <a href="https://opendata.cityofnewyork.us">NYC OpenData</a></p>
+<p>Provider: NYC Office of Technology and Innovation (OTI)</p>
+<p>Owner: NYC OpenData</p>
+<p>Update Frequency: Annually</p>
+<p>Date Made Public: December 9, 2019</p>
+<p>Metadata Last Updated: September 23, 2022</p>
+</div>
+</div>
+<div id="neighborhood-sociological-demographic-housing-and-economic-data" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Neighborhood Sociological, Demographic, Housing, and Economic Data<a href="data-sources.html#neighborhood-sociological-demographic-housing-and-economic-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="overview-1" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Overview<a href="data-sources.html#overview-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In order to understand more about the neighborhoods making up the rows of the Internet Master Plan dataset, we combined it with NYC’s <a href="https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn">Demographic Profiles of ACS 5 Year Estimates at the Neighborhood Tabulation Area (NTA) level</a>. Collected by the Department of City Planning (DCP), this dataset describes in detail the unique demographic, economic, housing, and social characteristics of every neighborhood within the Five Boroughs. Keyed on the same Neighborhood Tabulation Area codes as the Internet dataset, this data answers questions about each neighborhood’s racial, ethnic, and linguistic diversity; their income and wealth distributions; their housing stock, rents, and densities; and their familial, educational, and disability characteristics.</p>
+<p>These categorical and continuous variables will add valuable context to each neighborhood’s Internet availability and adoption — giving us an opportunity to explore and visualize patterns and correlations between the two. One limitation of this dataset is its recency. Aggregated over five years in the mid 2010s, this data is 5 years staler than the Internet Master Plan data. While this may bias our findings as they relate to neighborhoods that have undergone rapid demographic change during that interval, we do not expect this to invalidate our overall findings. We considered using more recent neighborhood characteristic datasets, however these were not broken down along the same neighborhood boundaries as the Internet infrastructure dataset. This caused a messy join resulting in unnecessarily missing data. For this reason, we elected to use the slightly staler data which joined perfectly with the rows of the Internet dataset.</p>
+</div>
+<div id="details-1" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Details<a href="data-sources.html#details-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Overall size:</p>
+<ul>
+<li><p>Demographic: 195 neighborhood rows by 484 feature columns</p></li>
+<li><p>Economic: 195 neighborhood rows by 659 feature columns</p></li>
+<li><p>Housing: 195 neighborhood rows by 524 feature columns</p></li>
+<li><p>Sociological: 195 neighborhood rows by 2,714 feature columns</p></li>
+</ul>
+<p>Provider: Department of City Planning (DCP)</p>
+<p>Owner: NYC OpenData</p>
+<p>Update Frequency: Annually</p>
+<p>Date Made Public: May 29, 2018</p>
+<p>Last Updated: March 4, 2020</p>
+<p>There are several causes for the high width of these datasets:</p>
+<ol style="list-style-type: decimal">
+<li><p>Nearly every characteristic has 4 versions: a raw count, a margin of error, a percentage of overall neighborhood population, and a margin of error of the percentage.</p></li>
+<li><p>Many features, especially in the sociological dataset, are broken down on a per-factor level. In the most extreme case, this results in 4 columns (raw, percentage, and margins of error) for every country from which a New Yorker has emigrated.</p></li>
+</ol>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="proposal.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-cleaningtransformation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/danieldc98/NYCneighborhoodInternetAdoption/edit/main/data.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/danieldc98/NYCneighborhoodInternetAdoption/blob/main/data.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

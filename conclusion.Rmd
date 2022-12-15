@@ -10,4 +10,10 @@ These trend show that areas such as the Bronx, with the highest poverty rates an
 
 Our findings show that New York City has yet to meet Mayor de Blasio's Internet Master Plan goals of equitable internet access across the city.  While the COVID-19 pandemic may have stifled progress towards carrying out the plan, the "aggressive infrastructure bill" has failed to meet its goals thus far. 
 
+We learnt a lot of useful lessons while working on this NYC Neighborhood Internet adoption project not only developing our technical skill set in R but also identifying the key drivers for the internet adoption in different boroughs. Gaining valuable insights into NYC demographics, promoters and detractors features, internet prevalence statistics, democratized access and learning about bias by building data stories was both challenging and interesting.
+As it is said, we are surrounded by data and we starve for insights, thinking and navigating through this project helped us learn a lot.
+
 There are some limitations to this study, Data availability and accuracy is always a challenge. In this case the internet data is from 2021. There is a chance that there have been some major improvements in internet infrastructure since then. Also, New York City is a rapidly changing city, especially coming out of the pandemic so there is a chance that our demographic data is also out of date. One way to improve this analysis would be to compare and contrast previous years of internet data with this years to see if there has been a change in the internet adoption and accessibility since the announcement of the "Internet Master Plan" since its announcement.
+
+For future directions on this project, we anticipate to track the internet data movements and demographic shifts in the post Covid era and analyse the future proposals as part of the infrastructure bill resolutions' impact on our future generations in this city of NYC and largely the whole of the USA.
+

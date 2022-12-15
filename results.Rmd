@@ -25,6 +25,8 @@ library(vcd)
 library(ggthemes)
 # import data
 data = read.csv(file='data/clean/combined_dataset.csv')
+library(vcd)
+library(ggthemes)
 ```
 Home Internet Adoption Map:
 ```{r, echo=FALSE}
@@ -164,6 +166,169 @@ ggplot(current, aes(x=Families.below.poverty.level.., y=Blocks.with.ISP.Reported
 This graph represents families below the poverty line in each neighborhood compared to high speed internet availability. According to the US Census, the poverty line in the United States is annual income below $33,000. As for the y-axis variable, this represents the percentage of blocks in a neighborhood that have access to internet speeds of 900 Mbps or higher. This high speed internet is crucial for businesses operating several internet-dependent pieces of technology at once as well as any household with a large number of connected devices. 
 
 As we can see from the chart The Bronx seems to be isolated from the other boroughs. No neighborhood in The Bronx has complete access to internet speeds greater than 900 Mbps. Also, we see neighborhoods int he Bronx being further right on the graph than neighborhoods in other boroughs. This signifies more families below the poverty line compared to the other boroughs. These two factors again reinforce the idea that economic status and internet adoption are correlated.
+
+
+```{r}
+data = read.csv(file='data/clean/combined_dataset_no_weird.csv')
+
+data_snap <- select(data, c('Borough',
+                          'Neighborhood.Name',
+                          'Total.Population',
+                          'Total.Number.of.Households',
+                          'Per.Capita.Income..in...',
+                          'Home.Broadband.Adoption..', 
+                          'Residential.Broadband.Choice.Average.by.NTA',
+                          'Mobile.Dependent.Households..Percentage.of.Households.' ,
+                          'Public.Wi.Fi.in.NYC.Count', 
+                          'Mobile.Broadband.Adoption..',
+                          'English.only.language..',
+                          'Language.other.than.English..',
+                          'Native.born.in.US..',
+                          'Foreign.born..',
+                          'Completed.Bachelors.degree.or.higher..',
+                          'Median.House.gross.rent..in...',
+                          'Median.House.value..in...', 
+                          'Owner.occupied.Housing.unit..',
+                          'Total.occupied.Housing.unit..',
+                          'Renter.occupied.Housing.unit..',
+                          'Work.from.Home...Capable',
+                          'Work.from.Home...Incapable',
+                          'plurality_racial_group'
+                          ))
+data_snap$Per.Capita.Income..in... <- data_snap$Per.Capita.Income..in.../1000
+data_snap$Mobile.Dependent.Households..Percentage.of.Households. <- data_snap$Mobile.Dependent.Households..Percentage.of.Households. * 100
+data_snap$Mobile.Broadband.Adoption.. <- data_snap$Mobile.Broadband.Adoption.. * 100
+data_snap$Home.Broadband.Adoption.. <- data_snap$Home.Broadband.Adoption.. * 100
+
+```
+
+```{r}
+
+## Do the people in NYC who we are living in rented stays have access to better internet facilities?
+
+# Internet Access Ratings around Rented Stays
+iar <- ggplot(data, aes(fill=Borough, x=Residential.Broadband.Choice.Average.by.NTA, y=Renter.occupied.Housing.unit..)) +
+    geom_line(aes(color=Borough), alpha=.5, size =8) +
+    ggtitle("Internet Access Ratings around Rented Stays") +
+    xlab("Region Broadband Rating by NTA") +
+    ylab("Rented Housing Units in %") +
+    theme_economist() + 
+    scale_color_economist() +
+    theme(axis.title = element_text(size = 5),
+    axis.text = element_text(size = 5))
+
+iar
+```
+Above plot analyses the broadband effectiveness in and around rented stays. Students, employed or unemployed people need to ensure the rent they pay give them the best facilities that's available in the region. As most of the people are immigrants, their internet connectivity concern may have a role in determining their quality of life as they may choose to live away from home.
+We can observe the Brooklyn borough has wide variance in the internet connectivity spread and broadband rating in neighborhoods, however Manhattan on the other end has pretty much better access and connectivity due to more activity and internet dependent businesses that prevail in the area.The Staten island has an average NTA rating of 1.8 which is less than average of other boroughs like the Queens and Manhattan but far better than the Bronx area.
+
+
+```{r}
+# Borough wise Household Distribution
+bhd <- ggplot(data, aes(x=Borough, y=Total.Number.of.Households)) +
+   geom_boxplot() + facet_wrap(~ plurality_racial_group) +
+   theme_economist() + 
+   scale_color_economist() +
+   theme(axis.title = element_text(size = 7),
+        axis.text = element_text(size = 7))
+
+bhd
+```
+
+
+```{r}
+pcolors <- wsj_pal(palette = "colors6")
+freq_count <- data %>%
+  group_by(Borough,plurality_racial_group) %>%
+  summarize(Freq = n())
+
+# Basic Mosaic Plot of Racial groups residing in different boroughs
+fig_mos <- vcd::mosaic( plurality_racial_group ~ Borough,data = freq_count,
+             set_labels=list(plurality_racial_group = c("W_e","H/L","A_n","B/A_n"),
+                             highlighting_fill = pcolors,
+                             Borough = c("B","M","Q","SI","Bx")),direction = c("v","h"))
+
+fig_mos
+
+```
+
+```{r}
+# Enhanced Mosaic Plot of Racial groups residing in different boroughs
+cex.axis = 0.5
+adv_mos <- mosaicplot(data$Borough ~ data$plurality_racial_group, 
+           main = "Mosaic Distribution of Racial Groups",
+           sub = "",
+           ylab = "Plurality Racial Groups",
+           xlab = "Boroughs",
+           las = 1,
+           border = "chocolate",
+           cex.axis = 0.5,
+           shade = TRUE)
+
+adv_mos
+```
+
+```{r}
+# Democratized Internet Access Spread
+dias <- ggplot(data, aes(Home.Broadband.Adoption..,Total.Number.of.Households)) +
+  geom_point(aes(color = plurality_racial_group)) +
+  theme_grey(10) +
+  facet_grid(~Borough) +
+  theme(strip.text = element_text(size = 10, color = "blue"),legend.position = "bottom") +
+  xlab("Broadband Adoption %") +
+  ylab("Number of Households in various neighborhoods") +
+  ggtitle("Check for Democratized Internet Access Spread") +
+  theme_wsj(base_size = 7,) +
+  scale_colour_wsj("colors6") +
+  theme(axis.title=element_text(size=7))
+
+dias
+```
+
+```{r}
+# Home Internet Users Lifestyle
+wsj_plot <- ggplot(data, aes(fill=Borough, y=Home.Broadband.Adoption.., x=Median.House.gross.rent..in...)) +
+    geom_line(aes(color=Borough), alpha=.5, size =2) +
+    ggtitle("Home Internet Users Lifestyle") +
+    ylab("Percentage of Home Broadband Users (%) ") +
+    xlab("House Gross Rent (in $)") +
+    theme_wsj(base_size = 10,) +
+    scale_colour_wsj("colors6") +
+    theme(axis.title=element_text(size=9))
+
+wsj_plot
+
+```
+
+```{r}
+
+# Broadband Ratings in HCOL & LCOL
+wsj_plot2 <- ggplot(data, aes(fill=Borough, x=Residential.Broadband.Choice.Average.by.NTA, y=Median.House.value..in...)) +
+    geom_point(aes(color=Borough), alpha=.5, size =7) +
+    ggtitle("Broadband Ratings in HCOL & LCOL") +
+    xlab("Broadband Rating by NTA ") +
+    ylab("House Value (in $)") +
+    theme_wsj(base_size = 9,) +
+    scale_colour_wsj("colors6") +
+    theme(axis.title=element_text(size=9))
+
+wsj_plot2
+
+```
+
+
+```{r}
+
+# Parallel Coordinates Plot of Variables
+ppcoord_plot <- ggparcoord(data, columns = c(4,7,6,8), alphaLines = 0.5,scale = "uniminmax", splineFactor = 10, showPoints = TRUE) +
+  theme(legend.position = "none",plot.title = element_text(hjust = 0.2)) +
+  scale_color_manual(values = c("grey70")) +
+  ggtitle("Parallel plot of different variables for Internet Households") +
+  geom_vline(xintercept = 1:4, color = "black") +
+  theme(axis.text.x = element_text(angle=10))
+
+ppcoord_plot
+```
 
 
 ```{r}

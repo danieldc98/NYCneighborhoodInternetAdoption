@@ -21,7 +21,7 @@
       text-align: center;
       text-decoration: none;
       display: inline-block;
-      font-size: 14px;
+      font-size: 12px;
       margin: 3px 1px;
       transition-duration: 0.2s;
       cursor: pointer;
@@ -32,14 +32,14 @@
       background-color: white;
       color: black;
       font-family: Arial;
-      border: 3px solid #ffa64d;
+      border: 2px solid #ffa64d;
     }
 
     .val-label {
       background-color: white;
       color: black;
       font-family: Arial;
-      border: 3px solid #ffa64d;
+      border: 2px solid #ffa64d;
     }
 
     .leftbutton {
@@ -109,8 +109,8 @@
 
   <script>
 
-  var w = 700;
-  var h = 5300;
+  var w = 775;
+  var h = 6000;
   var margin = {top: 50, right: 50, bottom: 50, left: 400};
   var innerWidth = w - margin.left - margin.right;
   var innerHeight = h - margin.top - margin.bottom;
@@ -240,7 +240,7 @@
             .data(data)
         		.enter()
             .append("text")
-            .style("font-size", "14px")
+            .style("font-size", "12px")
             .attr("font-family","Arial")
             .classed("bar-label", true)
 
@@ -256,7 +256,7 @@
         .data(data)
         .enter()
             .append("text")
-            .style("font-size", "14px")
+            .style("font-size", "11px")
             .classed("val-label", true)
 
             .attr("y", function(d,i){
@@ -282,7 +282,7 @@
         .data(data)
         .enter()
             .append("text")
-            .style("font-size", "14px")
+            .style("font-size", "11px")
             .attr("font-family","Arial")
             .classed("val-label", true)
 

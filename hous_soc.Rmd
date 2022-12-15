@@ -55,14 +55,14 @@ data_snap$Home.Broadband.Adoption.. <- data_snap$Home.Broadband.Adoption.. * 100
 
 # Internet Access Ratings around Rented Stays
 iar <- ggplot(data, aes(fill=Borough, x=Residential.Broadband.Choice.Average.by.NTA, y=Renter.occupied.Housing.unit..)) +
-    geom_line(aes(color=Borough), alpha=.6, size = 8) +
+    geom_line(aes(color=Borough), alpha=.5, size =8) +
     ggtitle("Internet Access Ratings around Rented Stays") +
     xlab("Region Broadband Rating by NTA") +
     ylab("Rented Housing Units in %") +
     theme_economist() + 
     scale_color_economist() +
-    theme(axis.title = element_text(size = 7),
-    axis.text = element_text(size = 7))
+    theme(axis.title = element_text(size = 5),
+    axis.text = element_text(size = 5))
 
 iar
 ```

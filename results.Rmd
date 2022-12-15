@@ -48,12 +48,12 @@ leaflet(map_data) %>%
                             "Borough:", map_data@data$boroname, "<br>",
                             "Internet Adoption Rate:", paste(map_data@data$points*100, '%', sep=''), "<br>"),
               fillColor = ~pal(map_data@data$boroname),
-              fillOpacity = map_data@data$points^3,
+              fillOpacity = map_data@data$points^3 + .1,
               highlightOptions = highlightOptions(weight = 3),
                                   color = "Black",
                                   weight = 1) %>%
   addProviderTiles("CartoDB.Positron") %>%
-  addLegend("bottomright", pal = pal, values = ~map_data@data$boroname)
+  addLegend("bottomright", pal = pal, values = ~map_data@data$boroname, title="Boroughs")
 ```
 
 ```{r}

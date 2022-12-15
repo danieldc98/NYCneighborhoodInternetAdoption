@@ -1,3 +1,8 @@
 # Interactive component
 
+Interactive component in D3.js we wish to demonstrate the interactivity and visualization capbility particulation looking at the graphs of total NYC Neighborhood population along with Home Broadband User percentage in different boroughs.To limit the number of neighborhood and quick identification we have a feature of Sort by Population & Sort by Percentage for better and quick illustration.
 
+The audience is free to sort them and hover on the bars for quick navigation and insights.
+Really interesting and cool to see the Upper West Side (composing of Columbia University) rocking it !
+
+<iframe src="NYC.html" width="800" height="6000"></iframe>

@@ -42,14 +42,16 @@ leaflet(map_data) %>%
                             "Borough:", map_data@data$boroname, "<br>",
                             "Internet Adoption Rate:", paste(map_data@data$points*100, '%', sep=''), "<br>"),
               fillColor = ~pal(map_data@data$boroname),
-              fillOpacity = map_data@data$points^3,
+              fillOpacity = map_data@data$points^3 + .1,
               highlightOptions = highlightOptions(weight = 3),
                                   color = "Black",
                                   weight = 1) %>%
   addProviderTiles("CartoDB.Positron") %>%
-  addLegend("bottomright", pal = pal, values = ~map_data@data$boroname)
+  addLegend("bottomright", pal = pal, values = ~map_data@data$boroname, title='Boroughs')
 ```
+This map shows New York City. The five boroughs are color coded and each neighborhood is defined by a black line. The shading of the neighborhoods is based on the internet adoption rate in that neighborhood. The internet adoption rate is the percent of households that have internet available to them within the household. The darker the the neighborhood is shaded the higher the internet adoption rate is for that neighborhood.
 
+When looking at the map we can see a few trends form. First and foremost we can see that overall, Manhattan is uniformly shaded the darkest. We can also see that the The Bronx and Queens generally have a lighter makeup. And finally, Brooklyn and Staten Island have a mix of mid to high levels of internet adoption. One neighborhood is an outlier however, the "Airport" neighborhood in Queens has 0% adoption, this is because there are no households to consider in this part of the city.
 
 Income and Internet Trends:
 ```{r, echo=FALSE}

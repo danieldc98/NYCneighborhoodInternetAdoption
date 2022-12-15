@@ -14,8 +14,6 @@ library(ggplot2)
 library(tigris)
 library(RColorBrewer)
 library(ggpubr)
-<<<<<<< Updated upstream
-=======
 library(ggridges)
 library(GGally)
 library(RColorBrewer)
@@ -25,7 +23,6 @@ library(tidyr)
 library(dplyr)
 library(vcd)
 library(ggthemes)
->>>>>>> Stashed changes
 # import data
 data = read.csv(file='data/clean/combined_dataset.csv')
 ```

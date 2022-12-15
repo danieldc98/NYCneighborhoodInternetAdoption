@@ -19,5 +19,10 @@ economic
 housing
 missing-value-analysis
 results
+racial-stratification-in-internet-infrastructure
+section
+the-golden-door-to-cyberspace-internet-infrastructure-of-new-yorks-foreign-born
+trying-to-learn-remotely
 interactive-component
 conclusion
+when-looking-at-the-distribution-of-of-internet-across-new-york-city-one-of-the-most-concerning-findings-is-the-relation-of-mean-income-and-internet-availability-and-adoption.-referring-to-the-graph-above-we-can-see-that-overall-a-higher-income-in-a-neighborhood-correlates-with-better-internet-availability-and-adoption.-this-signifies-a-continued-socioeconomic-imbalance-of-internet-adoption-in-new-york-city.-this-trend-is-especially-evident-in-the-bronx-with-the-highest-poverty-rates-lowest-income-and-the-lowest-internet-adoptiona-nd-availability-contrasted-with-manhattan-with-the-highest-income-levels-as-well-as-the-best-internet-coverage-and-adoption.

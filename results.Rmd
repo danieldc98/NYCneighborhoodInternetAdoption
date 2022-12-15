@@ -24,7 +24,9 @@ library(tidyr)
 library(ggthemes)
 data = read.csv(file='data/clean/combined_dataset.csv')
 ```
-Home Internet Adoption Map:
+
+# Mapping Home Internet Adoption
+
 ```{r, echo=FALSE}
 # import map data
 nyc_neighborhoods <- readOGR('data/map/NTA_map.geojson')
@@ -47,7 +49,7 @@ leaflet(map_data) %>%
   addTiles() %>%
   addPolygons(popup = paste("Neighborhood:", map_data@data$ntaname, "<br>",
                             "Borough:", map_data@data$boroname, "<br>",
-                            "Internet Adoption Rate:", paste(map_data@data$points*100, '%', sep=''), "<br>"),
+                            "Home Broadband Adoption Rate:", paste(map_data@data$points*100, '%', sep=''), "<br>"),
               fillColor = ~pal(map_data@data$boroname),
               fillOpacity = map_data@data$points^3 + .1,
               highlightOptions = highlightOptions(weight = 3),
@@ -75,9 +77,9 @@ broadband_vs_race <- ggplot(
   data, aes(x=100*Home.Broadband.Adoption.., y=fct_rev(plurality_racial_group))
 ) +
   geom_density_ridges(scale = 2) +
-  theme_bw() +
+  theme_bw(15) +
   labs(
-    title="Adoption of Home Broadband by Neighborhood Racial Plurality",
+    title="Adoption of Home Broadband\nby Neighborhood Racial Plurality",
     x="% Households with Wired Broadband Internet",
     y="Plurality Racial Group"
   )
@@ -91,9 +93,9 @@ While at least half of households in almost every neighborhood in the city have 
 ```{r}
 mobile_reliant_vs_race <- ggplot(data, aes(x=100*Mobile.Dependent.Households..Percentage.of.Households., y=fct_rev(plurality_racial_group))) +
   geom_density_ridges(scale = 2) +
-  theme_bw() +
+  theme_bw(15) +
   labs(
-    title="Mobile-Dependence by Neighborhood Racial Plurality",
+    title="Mobile-Dependence\nby Neighborhood Racial Plurality",
     x="% Households Reliant on Wireless Mobile Internet",
     y="Plurality Racial Group"
   )
@@ -106,26 +108,24 @@ As can be expected, neighborhoods with a lower portion of households with a wire
 
 Mayor de Blasio opened New York City's *Internet Master Plan*'s with a letter. In it, he lamented that "this digital divide, like so many other aspects of life in New York City, leaves a significant part of our population at a major disadvantage." One year after the letter's publishing, the *Plan*-directed survey of Internet access revealed that the city still has more of a gap to close the divide along all too familiar racial lines.
 
-# 
-
 # The Golden Door to Cyberspace: Internet Infrastructure of New York's Foreign-Born
 
 New York City has always prided itself on its global connectivity. For over a century since the poet Emma Lazarus wrote of the city's beloved Lady Liberty "From her beacon-hand / Glows world-wide welcome", people from around the globe have made New York their home. Today's city population was born in over 150 countries. Like many people moving to unfamiliar places, many chose to live around those of similar backgrounds. As a consequence, 34% of the median City neighborhood, Bay Ridge, Brooklyn, was born outside of the United States. In over two dozen neighborhoods more than half of the population was born abroad. 10% of residents were born elsewhere even in the quiet suburb Rossville-Woodrow near Staten Island's southwestern tip, which has the second-lowest proportion of foreign-born residents of any City neighborhood. While immigrants make up a portion of all New York neighborhood populations, the make a more significant contribution to some neighborhood populations than to others.
 
 ```{r}
 data3 <- data %>% rename(
-  Pct.Foreign.Born = Foreign.born..,
-  Home.Broadband.Adoption = Home.Broadband.Adoption..,
-  Mobile.Dependent = Mobile.Dependent.Households..Percentage.of.Households.,
-  Broadband.Providers = Residential.Broadband.Choice.Average.by.NTA,
+  Foreign.Born = Foreign.born..,
+  Br.Band.Rate = Home.Broadband.Adoption..,
+  Mob.Dep = Mobile.Dependent.Households..Percentage.of.Households.,
+  Br.Band.Provs = Residential.Broadband.Choice.Average.by.NTA,
   Public.Hotspots = Public.Wi.Fi.in.NYC.Count,
-  Broadband.Providers = Residential.Broadband.Choice.Average.by.NTA,
+  Br.Band.Provs = Residential.Broadband.Choice.Average.by.NTA,
   Mobile.Broadband = Mobile.Broadband.Adoption..
 )
 
 data3$foreign.quantile <- cut(
-  data3$Pct.Foreign.Born,
-  quantile(data3$Pct.Foreign.Born),
+  data3$Foreign.Born,
+  quantile(data3$Foreign.Born),
   include.lowest=TRUE,
   labels=FALSE,
   breaks=10,
@@ -133,24 +133,24 @@ data3$foreign.quantile <- cut(
 
 par_coord_necessary = c(
   "foreign.quantile",
-  "Pct.Foreign.Born",
-  "Mobile.Dependent",
-  "Home.Broadband.Adoption",
-  "Broadband.Providers"
+  "Foreign.Born",
+  "Mob.Dep",
+  "Br.Band.Rate",
+  "Br.Band.Provs"
 )
 par_coord_cols = par_coord_necessary[
   !par_coord_necessary %in% c("foreign.quantile")
 ]
 data3 <- data3 %>% select(all_of(par_coord_necessary))
-data3
+
 data3 <- data3 %>%
   group_by(foreign.quantile) %>%
   summarise_at(
     c(
-      "Pct.Foreign.Born",
-      "Mobile.Dependent",
-      "Home.Broadband.Adoption",
-      "Broadband.Providers"
+      "Foreign.Born",
+      "Mob.Dep",
+      "Br.Band.Rate",
+      "Br.Band.Provs"
   ),
   mean
 )
@@ -166,11 +166,11 @@ foreign_born_par_coord <- ggparcoord(
   mapping=aes(color=as.factor(foreign.quantile))
 ) +
   labs(
-    title="Broadband Availability and Adoption in Foreign/Native-Born Neighborhoods",
+    title="Broadband Availability and Adoption\nin Foreign/Native-Born Neighborhoods",
     y="Scaled Value"
   ) +
   guides(color = guide_legend(title = "% Foreign-Born Decile", reverse=TRUE)) +
-  theme_bw() +
+  theme_bw(12) +
   scale_color_brewer(type="div", palette="RdYlBu", direction=1)
 foreign_born_par_coord
 ```
@@ -194,13 +194,12 @@ data4 <- data %>% rename(
   Broadband.Providers = Residential.Broadband.Choice.Average.by.NTA,
   Mobile.Broadband = Mobile.Broadband.Adoption..
 )
-data4$working.age <- 100 - data4$minors - data4$retired
 
 children_vs_broadband <- ggplot(data4, aes(x=minors, y=100*Home.Broadband.Adoption)) +
   geom_point(aes(colour=Borough)) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   geom_text_repel(label=data4$Neighborhood.Name, max.overlaps=12, size=2) +
-  theme_bw() +
+  theme_bw(14) +
   labs(
     title="Children's Access to Home Broadband",
     x="Neighborhood Population Younger than 18 (%)",
@@ -217,7 +216,7 @@ children_vs_hotspots <- ggplot(data4, aes(x=minors, y=Public.Hotspots)) +
   geom_point(aes(colour=Borough)) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   geom_text_repel(label=data4$Neighborhood.Name, max.overlaps=12, size=2) +
-  theme_bw() +
+  theme_bw(14) +
   labs(
     title="Children's Access to Public Wi-Fi",
     x="Neighborhood Population Younger than 18 (%)",
@@ -235,7 +234,7 @@ children_vs_hotspots_no_manhattan <- ggplot(data5, aes(x=minors, y=Public.Hotspo
   geom_point(aes(colour=Borough)) +
   geom_smooth(method='glm', size=.5, se=FALSE, color='black') +
   geom_text_repel(label=data5$Neighborhood.Name, max.overlaps=4, size=2) +
-  theme_bw() +
+  theme_bw(14) +
   labs(
     title="Children's Access to Public Wi-Fi (Outer Boroughs)",
     x="Neighborhood Population Younger than 18 (%)",
@@ -247,8 +246,8 @@ children_vs_hotspots_no_manhattan
 
 Even excluding the high number of public hotspots in the city's Manhattan central business districts, public network connections were still more likely to be in neighborhoods with a smaller portion of children. The result was a city Internet infrastructure ill-equipped to accommodate students' transition to virtual learning.
 
+# Trends between Income and Internet
 
-Income and Internet Trends:
 ```{r, echo=FALSE}
 current <- select(data, c('Borough',
                           'Per.Capita.Income..in...',
@@ -329,15 +328,16 @@ annotate_figure(figure,
                 top = text_grob("Income and Internet Trends", size=20, face = "bold"))
 ```
 
-In the above graphs we can see a comparison of income levels (by borough) and several internet availability measures. The black line on each graph represents the trend between income and the respective measure of internet. The colors represent the boroughs and each dot is a neighborhood within the borough. 
+In the above graphs we can see a comparison of income levels (by borough) and several internet availability measures. The black line on each graph represents the trend between income and the respective measure of internet. The colors represent the boroughs and each dot is a neighborhood within the borough.
 
 As we can see from the data, Manhattan seems to be the borough with the highest income. The green dots tend to be further right and away from the other boroughs demonstrating that trend. The rest of the boroughs are relatively close together regarding their income. We see this in looking at the clusters in each graph.
 
-Now, looking at internet trends with regards to internet availability, there are some significant patterns to be aware of. First of all, when looking at the black trend line we can see that they are all positive trends except the top right graph representing mobile dependent households. For the other five comparisons, this signifies that higher incomes are correlated with better internet. Whether it be more public Wi-Fi hot-spots, faster internet, more selection with internet providers, or higher mobile and household internet adoption. As for the top right graph showing the negative trend. This is because mobile dependency is the inverse of better internet coverage. If more households are mobile dpendent it means they do not have internet in their and therefore a lower internet adoption rate. 
+Now, looking at internet trends with regards to internet availability, there are some significant patterns to be aware of. First of all, when looking at the black trend line we can see that they are all positive trends except the top right graph representing mobile dependent households. For the other five comparisons, this signifies that higher incomes are correlated with better internet. Whether it be more public Wi-Fi hot-spots, faster internet, more selection with internet providers, or higher mobile and household internet adoption. As for the top right graph showing the negative trend. This is because mobile dependency is the inverse of better internet coverage. If more households are mobile dpendent it means they do not have internet in their and therefore a lower internet adoption rate.
 
 Looking at these trends we can see that internet adoption is positively correlated to income level. As the higher the income the more available internet is in each neighborhood.
 
 Significant Trend in The Bronx:
+
 ```{r, echo=FALSE}
 current = select(data, c('Borough', 'Families.below.poverty.level..', 'Blocks.with.ISP.Reported.Speed.Availability.of...900.Mbps.in..'))
 
@@ -348,12 +348,12 @@ ggplot(current, aes(x=Families.below.poverty.level.., y=Blocks.with.ISP.Reported
   xlab('Families Below Poverty Line') +
   ylab('% Internet availability > 900 Mbps') +
   ggtitle('Poverty Level and Fast Speed Internet') +
-  theme_bw()
+  theme_bw(15)
 ```
-This graph represents families below the poverty line in each neighborhood compared to high speed internet availability. According to the US Census, the poverty line in the United States is annual income below $33,000. As for the y-axis variable, this represents the percentage of blocks in a neighborhood that have access to internet speeds of 900 Mbps or higher. This high speed internet is crucial for businesses operating several internet-dependent pieces of technology at once as well as any household with a large number of connected devices. 
+
+This graph represents families below the poverty line in each neighborhood compared to high speed internet availability. According to the US Census, the poverty line in the United States is annual income below \$33,000. As for the y-axis variable, this represents the percentage of blocks in a neighborhood that have access to internet speeds of 900 Mbps or higher. This high speed internet is crucial for businesses operating several internet-dependent pieces of technology at once as well as any household with a large number of connected devices.
 
 As we can see from the chart The Bronx seems to be isolated from the other boroughs. No neighborhood in The Bronx has complete access to internet speeds greater than 900 Mbps. Also, we see neighborhoods int he Bronx being further right on the graph than neighborhoods in other boroughs. This signifies more families below the poverty line compared to the other boroughs. These two factors again reinforce the idea that economic status and internet adoption are correlated.
-
 
 ```{r}
 data = read.csv(file='data/clean/combined_dataset_no_weird.csv')
@@ -389,42 +389,63 @@ data_snap$Home.Broadband.Adoption.. <- data_snap$Home.Broadband.Adoption.. * 100
 
 ```
 
-## Do the people in NYC who we are living in rented stays have access to better internet facilities?
+## Do the people in NYC living in rented stays have access to better internet facilities?
 
 ```{r}
 
 # Internet Access Ratings around Rented Stays
 iar <- ggplot(data, aes(fill=Borough, x=Residential.Broadband.Choice.Average.by.NTA, y=Renter.occupied.Housing.unit..)) +
-    geom_line(aes(color=Borough), alpha=.5, size =8) +
+    geom_line(aes(color=Borough), alpha=.5, size =2) +
     ggtitle("Internet Access Ratings around Rented Stays") +
     xlab("Region Broadband Rating by NTA") +
     ylab("Rented Housing Units in %") +
-    theme_economist() + 
-    scale_color_economist() +
-    theme(axis.title = element_text(size = 5),
-    axis.text = element_text(size = 5))
+    theme_bw(15)
+    # scale_color_economist() +
+    # theme(axis.title = element_text(size = 5),
+    # axis.text = element_text(size = 5))
 
 iar
 ```
 
-Above plot analyses the broadband effectiveness in and around rented stays. Students, employed or unemployed people need to ensure the rent they pay give them the best facilities that's available in the region. As most of the people are immigrants, their internet connectivity concern may have a role in determining their quality of life as they may choose to live away from home.
-We can observe the Brooklyn borough has wide variance in the internet connectivity spread and broadband rating in neighborhoods, however Manhattan on the other end has pretty much better access and connectivity due to more activity and internet dependent businesses that prevail in the area.The Staten island has an average NTA rating of 1.8 which is less than average of other boroughs like the Queens and Manhattan but far better than the Bronx area.
+Above plot analyses the broadband effectiveness in and around rented stays. Students, employed or unemployed people need to ensure the rent they pay give them the best facilities that's available in the region. As most of the people are immigrants, their internet connectivity concern may have a role in determining their quality of life as they may choose to live away from home. We can observe the Brooklyn borough has wide variance in the internet connectivity spread and broadband rating in neighborhoods, however Manhattan on the other end has pretty much better access and connectivity due to more activity and internet dependent businesses that prevail in the area.The Staten island has an average NTA rating of 1.8 which is less than average of other boroughs like the Queens and Manhattan but far better than the Bronx area.
 
-
-## How does the NYC household racial ethnicity distribution look like ?
+## What does the NYC household racial ethnicity distribution look like?
 
 ```{r}
 
 # Borough wise Household Distribution
-bhd <- ggplot(data, aes(x=Borough, y=Total.Number.of.Households)) +
+short_borough_names_data <- data
+short_borough_names_data$Borough <- ifelse(
+  short_borough_names_data$Borough == "Manhattan",
+  "Mn",
+  ifelse(
+    short_borough_names_data$Borough == "Brooklyn",
+    "Bk",
+    ifelse(
+      short_borough_names_data$Borough == "The Bronx",
+      "Bx",
+      ifelse(
+        short_borough_names_data$Borough == "Queens",
+        "Qn",
+        "Si"
+      )
+    )
+  )
+)
+bhd <- ggplot(short_borough_names_data, aes(x=Borough, y=Total.Number.of.Households/1000)) +
    geom_boxplot() + facet_wrap(~ plurality_racial_group) +
-   theme_economist() + 
-   scale_color_economist() +
-   theme(axis.title = element_text(size = 7),
-        axis.text = element_text(size = 7))
+   theme_bw(13) +
+   labs(
+     title="Neighborhood Racial Plurality Distribution across Boroughs",
+     x="Borough",
+     y="Thousand Households"
+   )
+   # theme(axis.title = element_text(size = 7),
+   #      axis.text = element_text(size = 7))
 
 bhd
 ```
+
 ```{r}
 # Enhanced Mosaic Plot of Racial groups residing in different boroughs
 cex.axis = 0.5
@@ -441,45 +462,44 @@ adv_mos <- mosaicplot(data$Borough ~ data$plurality_racial_group,
 adv_mos
 ```
 
-The neighborhood Internet infrastructure typically utilized across different racial groups vary significantly.
-Double clicking on it, neighborhoods in a smaller borough with highly populated individuals get better access to infrastructure facilities, the above does showcase racial disparity . Couple of boroughs including Manhattan has fewer Hispanic groups compared to Black or African American neighborhoods, and the highest fraction of households in White groups depend and prominently access better Internet facilities than any other racial-plurality neighborhoods in NYC.
+The neighborhood Internet infrastructure typically utilized across different racial groups vary significantly. Double clicking on it, neighborhoods in a smaller borough with highly populated individuals get better access to infrastructure facilities, the above does showcase racial disparity . Couple of boroughs including Manhattan has fewer Hispanic groups compared to Black or African American neighborhoods, and the highest fraction of households in White groups depend and prominently access better Internet facilities than any other racial-plurality neighborhoods in NYC.
 
 The mosaic plot also clearly demonstrates the spread and distribution in a very visual and effective manner to identify and learn the ethnicity distribution across neighborhoods affecting their social lifestyle.
 
 ## Are we democratizing Internet Access to Everyone
+
 ```{r}
 # Democratized Internet Access Spread
-dias <- ggplot(data, aes(Home.Broadband.Adoption..,Total.Number.of.Households)) +
+dias <- ggplot(short_borough_names_data, aes(Home.Broadband.Adoption..,Total.Number.of.Households/1000)) +
   geom_point(aes(color = plurality_racial_group)) +
-  theme_grey(10) +
   facet_grid(~Borough) +
-  theme(strip.text = element_text(size = 10, color = "blue"),legend.position = "bottom") +
+  # theme(strip.text = element_text(size = 10, color = "blue"), legend.direction = "horizontal", legend.position = "bottom") +
   xlab("Broadband Adoption %") +
-  ylab("Number of Households in various neighborhoods") +
+  ylab("Number of Households (thousands)") +
   ggtitle("Check for Democratized Internet Access Spread") +
-  theme_wsj(base_size = 7,) +
-  scale_colour_wsj("colors6") +
-  theme(axis.title=element_text(size=7))
+  theme_bw(15) +
+  theme(legend.position="bottom", ) +
+  guides(colour = guide_legend(nrow = 2), title = "Plurality Racial Group")
+  # scale_colour_wsj("colors6") + 
+  # theme(axis.title=element_text(size=7))
 
 dias
 ```
 
-This graph represents families in each neighborhood belonging to various ethnicity compared to high speed internet availability access . High speed access to rich and low speed to others isn't democratizing internet access to everyone, isn't it ? High speed internet is paramount for any household be  it any ethnicity.
-Lot of Hispanic Latino individual neighborhoods have less internet adoption rate in the Bronx and other high visible boroughs like Manhattan.
-Are we taking the steps in the right direction to democratize internet access ? We continue to identify the patterns and disparities.
+This graph represents families in each neighborhood belonging to various ethnicity compared to high speed internet availability access . High speed access to rich and low speed to others isn't democratizing internet access to everyone, isn't it ? High speed internet is paramount for any household be it any ethnicity. Lot of Hispanic Latino individual neighborhoods have less internet adoption rate in the Bronx and other high visible boroughs like Manhattan. Are we taking the steps in the right direction to democratize internet access ? We continue to identify the patterns and disparities.
 
 ## Will the rent you pay guarantee effective high internet ?
 
 ```{r}
 # Home Internet Users Lifestyle
 wsj_plot <- ggplot(data, aes(fill=Borough, y=Home.Broadband.Adoption.., x=Median.House.gross.rent..in...)) +
-    geom_line(aes(color=Borough), alpha=.5, size =2) +
+    geom_line(aes(color=Borough), alpha=.5, size =1.5) +
     ggtitle("Home Internet Users Lifestyle") +
     ylab("Percentage of Home Broadband Users (%) ") +
     xlab("House Gross Rent (in $)") +
-    theme_wsj(base_size = 10,) +
-    scale_colour_wsj("colors6") +
-    theme(axis.title=element_text(size=9))
+    theme_bw(14)
+    # scale_colour_wsj("colors6") +
+    # theme(axis.title=element_text(size=9))
 
 wsj_plot
 
@@ -487,18 +507,19 @@ wsj_plot
 
 Finding a place to stay and rent in NYC is already tough, add it to the plethora of facilities one expects to pay to leverage services like internet. The above plot insight-fully showcases that be it 1000\$ or 3000\$ rent stay, people still lack internet services to a great extent. There are still 20-30% of individuals and neighborhoods that lack better facilities of high speed internet in Queens and Brooklyn boroughs. Paying more rent may guranatee a better lifestyle but doesn't guarantee one a better high speed internet availability all the time.
 
-## How Satisfied are internet users in HCOL (High cost of living) & LCOL (low cost of living) neighborhood areas ? 
+## How Satisfied are internet users in HCOL (High cost of living) & LCOL (low cost of living) neighborhood areas ?
+
 ```{r}
 
 # Broadband Ratings in HCOL & LCOL
-wsj_plot2 <- ggplot(data, aes(fill=Borough, x=Residential.Broadband.Choice.Average.by.NTA, y=Median.House.value..in...)) +
-    geom_point(aes(color=Borough), alpha=.5, size =7) +
+wsj_plot2 <- ggplot(data, aes(fill=Borough, x=Residential.Broadband.Choice.Average.by.NTA, y=Median.House.value..in.../1000000)) +
+    geom_point(aes(color=Borough), alpha=.5, size =4) +
     ggtitle("Broadband Ratings in HCOL & LCOL") +
     xlab("Broadband Rating by NTA ") +
-    ylab("House Value (in $)") +
-    theme_wsj(base_size = 9,) +
-    scale_colour_wsj("colors6") +
-    theme(axis.title=element_text(size=9))
+    ylab("House Value (Million $)") +
+    theme_bw(14) +
+    scale_colour_wsj("colors6")
+    # theme(axis.title=element_text(size=9))
 
 wsj_plot2
 
@@ -507,20 +528,20 @@ wsj_plot2
 Brooklyn demonstrates the widespread variance in the internet availability given the high valued houses they live in. On the other hand the region of The Bronx, people are averagely happy with the services provided. However, Manhattan being so much densely populated does showcase a link between better facilities for higher house values. Looking at this graph, certainly there is direct correlation on internet access in high cost of living neighbourhoods in the dense boroughs.
 
 ## Are we moving to a mobile first era or households still rely on the high speed home internet ?
+
 ```{r}
 
 # Parallel Coordinates Plot of Variables
 ppcoord_plot <- ggparcoord(data, columns = c(4,7,6,8), alphaLines = 0.5,scale = "uniminmax", splineFactor = 10, showPoints = TRUE) +
+  theme_bw(12) +
   theme(legend.position = "none",plot.title = element_text(hjust = 0.2)) +
   scale_color_manual(values = c("grey70")) +
   ggtitle("Parallel plot of different variables for Internet Households") +
-  geom_vline(xintercept = 1:4, color = "black") +
-  theme(axis.text.x = element_text(angle=10))
+  geom_vline(xintercept = 1:4, color = "black")
 
 ppcoord_plot
 ```
 
 The above is a rhetorical introspection on what the future holds for NYC and the neighborhoods. The total population seemingly has direct relation to increasing family size, bigger and better homes and lifestyle. This increase in households leads to fewer increase in home broadband connections as compared to the vast increase in mobile broadband users. Across all neighborhoods in NYC 3-5 years down the line, we already are and definitely moving to a mobile first generation where prevalence of mobile phone users and internet access is gonna splurge exponentially. Households will still rely on home broadband for majority of tasks but the future awaits to see the transition and change in human behavior to mobile first.
 
-Sources:
-https://www.census.gov/topics/income-poverty/poverty/guidance/poverty-measures.html#:~:text=Step%201%3A%20Determine%20the%20family's,threshold%20(below)%20is%20%2433%2C148.
+Sources: <https://www.census.gov/topics/income-poverty/poverty/guidance/poverty-measures.html#>:\~:text=Step%201%3A%20Determine%20the%20family's,threshold%20(below)%20is%20%2433%2C148.

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Conclusion | NYC Neighborhood Internet Adoption</title>
-  <meta name="description" content="Chapter 8 Conclusion | NYC Neighborhood Internet Adoption" />
+  <title>Chapter 4 Data Cleaning/Transformation | NYC Neighborhood Internet Adoption</title>
+  <meta name="description" content="Chapter 4 Data Cleaning/Transformation | NYC Neighborhood Internet Adoption" />
   <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Conclusion | NYC Neighborhood Internet Adoption" />
+  <meta property="og:title" content="Chapter 4 Data Cleaning/Transformation | NYC Neighborhood Internet Adoption" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Conclusion | NYC Neighborhood Internet Adoption" />
+  <meta name="twitter:title" content="Chapter 4 Data Cleaning/Transformation | NYC Neighborhood Internet Adoption" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="interactive-component.html"/>
-
+<link rel="prev" href="data-sources.html"/>
+<link rel="next" href="missing-value-analysis.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -136,17 +136,93 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="conclusion" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Conclusion<a href="conclusion.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-
+<div id="data-cleaningtransformation" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Data Cleaning/Transformation<a href="data-cleaningtransformation.html#data-cleaningtransformation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>We intentionally chose these datasets because of their interoperability. Because they use the same neighborhood definitions and unique identifiers, cleaning and joining these two datasets together was a relatively straightforward process. The code for this cleaning/transformation is located in /preprocessing.ipynb. Data can be found in /data/raw/ and data/clean/.</p>
+<div id="cleaning-up-join-columns" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Cleaning Up Join Columns<a href="data-cleaningtransformation.html#cleaning-up-join-columns" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The Internet Dataset calls each neighborhood’s unique code a “Neighborhood Tabulation Area Code (NTA Code)”, while the housing/economic/demographic/social dataset refers to it as a “GeoID”. Due to the former’s unwieldiness, we regularized both to use “GeoID”. We also standardized both to use “Borough” rather than “Borough Name”. Finally, we changed all instances of “Borough”: “Bronx” to be “The Bronx” in the Internet dataset to match the style of the socioeconomic data. The result was a series of simple left joins between 5 dataframes with perfectly matching “GeoID” and “Borough” columns.</p>
+</div>
+<div id="feature-reduction" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Feature Reduction<a href="data-cleaningtransformation.html#feature-reduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Joining these datasets together as-is resulted in over 4,000 columns. As previously discussed, many of these were factor-level breakdowns of high-cardinality categorical variables (such as country of origin or language spoken at home). Most of these were not useful for our analysis, and so we decided to prune and aggregate them into data we could analyze easily in R. In general, we settled on using predominantly percentage-based variables whenever appropriate in order to better compare across neighborhoods. We also created several new columns by aggregating across existing ones. In general, this was done to assign each neighborhood a single value/category where it previously had several factor-level breakdowns, in order to better compare across neighborhoods.</p>
+<div id="internet" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Internet<a href="data-cleaningtransformation.html#internet" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Of the 77 columns in the Internet dataset, we settled on the following columns for our analysis:</p>
+<ul>
+<li><p>“GeoID”</p></li>
+<li><p>“Borough”</p></li>
+<li><p>“neighborhood_name”</p></li>
+<li><p>“Total Population”</p></li>
+<li><p>“Population Density (per Sq. Mi.)”</p></li>
+<li><p>“Total Number of Households”</p></li>
+<li><p>“Home Broadband Adoption %”</p></li>
+<li><p>“Mobile Broadband Adoption %”</p></li>
+<li><p>“Mobile Dependent Households %”</p></li>
+<li><p>“Residential Broadband Choice Average by NTA”</p></li>
+<li><p>“Blocks with ISP Reported Speed Availability of &gt;=900 Mbps %”</p></li>
+<li><p>“Public Wi-Fi in NYC Count”</p></li>
+<li><p>“NYC Internet Master Plan Open Access Infrastructure Cost Comparison Coefficient”</p></li>
+</ul>
+</div>
+<div id="sociological" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Sociological<a href="data-cleaningtransformation.html#sociological" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Of the 2,714 columns in the Sociological dataset, we settled on the following columns for our analysis:</p>
+<ul>
+<li><p>“GeoID”</p></li>
+<li><p>“Borough”</p></li>
+<li><p>“English only language %”</p></li>
+<li><p>“Language other than English %”</p></li>
+<li><p>“Native born in US %”</p></li>
+<li><p>“Foreign born %”</p></li>
+<li><p>“Completed Bachelors degree or higher %”</p></li>
+</ul>
+</div>
+<div id="demographic" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> Demographic<a href="data-cleaningtransformation.html#demographic" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Of the 484 columns in the Demographic dataset, we settled on the following columns for our analysis:</p>
+<ul>
+<li><p>“GeoID”</p></li>
+<li><p>“Borough”</p></li>
+<li><p>“Population under 18 years %”</p></li>
+<li><p>“Population over 64 years %”</p></li>
+</ul>
+<p>as well as a new column we created, “plurality_racial_group”, which we made by finding the highest-population racial group in each neighborhood. In effect, this converted 6 numerical columns into one categorical one.</p>
+</div>
+<div id="economic" class="section level3 hasAnchor" number="4.2.4">
+<h3><span class="header-section-number">4.2.4</span> Economic<a href="data-cleaningtransformation.html#economic" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Of the 659 columns in the Economic dataset, we settled on the following columns for our analysis:</p>
+<ul>
+<li><p>“GeoID”</p></li>
+<li><p>“Borough”</p></li>
+<li><p>“Per Capita Income (in $)”</p></li>
+<li><p>“Families below poverty level %”</p></li>
+<li><p>“Population employed in labor force %”</p></li>
+</ul>
+<p>as well as two new columns we created, “Work from Home - Capable” and “Work from Home - Incapable”, by adding up the proportions of workers in roles we deemed potentially doable from home via the Internet. We settled on management, business, sciences, arts, sales, and office workers as being WFH-capable and service, natural resources, construction, maintenance, production, and transportation workers as being WFH-incapable. We recognize that not all workers in the former can or do work from home, while some in the latter may.</p>
+</div>
+<div id="housing" class="section level3 hasAnchor" number="4.2.5">
+<h3><span class="header-section-number">4.2.5</span> Housing<a href="data-cleaningtransformation.html#housing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Of the 524 columns in the Housing dataset, we settled on the following columns for our analysis:</p>
+<ul>
+<li><p>“GeoID”</p></li>
+<li><p>“Borough”</p></li>
+<li><p>“Median House gross rent (in $)”</p></li>
+<li><p>“Median House value (in $)”</p></li>
+<li><p>“Owner occupied Housing unit %”</p></li>
+<li><p>“Renter occupied Housing unit %”</p></li>
+<li><p>“Total occupied Housing unit %”</p></li>
+</ul>
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="interactive-component.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="data-sources.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="missing-value-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -177,7 +253,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/danieldc98/NYCneighborhoodInternetAdoption/edit/main/conclusion.Rmd",
+"link": "https://github.com/danieldc98/NYCneighborhoodInternetAdoption/edit/main/data.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -185,7 +261,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/danieldc98/NYCneighborhoodInternetAdoption/blob/main/conclusion.Rmd",
+"link": "https://github.com/danieldc98/NYCneighborhoodInternetAdoption/blob/main/data.Rmd",
 "text": null
 },
 "download": null,

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>NYC Borough Population and Internet Usage</title>
+    <script src="https://d3js.org/d3.v7.js"></script>
+    <style>
+
+    h2 {text-align: center;}
+
+    .container{
+    text-align: center;
+    width: 750px;
+    height: 150px;
+    }
+
+    .button {
+      border: none;
+      color: white;
+      padding: 9px 18px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 3px 1px;
+      transition-duration: 0.2s;
+      cursor: pointer;
+      margin: auto;
+    }
+
+    .bar-label {
+      background-color: white;
+      color: black;
+      font-family: Arial;
+      border: 3px solid #ffa64d;
+    }
+
+    .val-label {
+      background-color: white;
+      color: black;
+      font-family: Arial;
+      border: 3px solid #ffa64d;
+    }
+
+    .leftbutton {
+      background-color: white;
+      color: black;
+      border: 3px solid #ffa64d;
+    }
+
+    .leftbutton:hover {
+      background-color: #ffa64d;
+      color: white;
+    }
+
+    .rightbutton {
+      background-color: white;
+      color: black;
+      border: 4px solid #ffc34d;
+    }
+
+    .rightbutton:hover {
+      background-color: #ffc34d;
+      color: white;
+    }
+
+    .row2leftbutton {
+      background-color: white;
+      color: black;
+      border: 4px solid #0000e6;
+    }
+
+    .row2leftbutton:hover {
+      background-color: #0000e6;
+      color: white;
+    }
+
+    .row2rightbutton {
+      background-color: white;
+      color: black;
+      border: 4px solid #c40818;
+    }
+
+    .row2rightbutton:hover {
+      background-color: #c40818;
+      color: white;
+    }
+
+  </style>
+  </head>
+
+  <body>
+
+  <div class="container">
+
+  <h2 style="font-family:Arial;">Total NYC Population and Home Broadband Percentage</h2>
+
+    <button class="button leftbutton" id="label">Show Label of NYC Borough Population</button>
+    <button class="button rightbutton" id="label2">Hide Label of NYC Borough Population</button>
+    <br>
+
+    <br>
+    <button class="button row2leftbutton" id="sort1">Sort by Population</button>
+    <button class="button row2rightbutton" id="sort2">Sort by Percentage</button>
+    <br>
+
+    <br>
+    </div>
+
+  <script>
+
+  var w = 700;
+  var h = 5300;
+  var margin = {top: 50, right: 50, bottom: 50, left: 400};
+  var innerWidth = w - margin.left - margin.right;
+  var innerHeight = h - margin.top - margin.bottom;
+  var dur = 1000;
+
+  var svg = d3.select("body")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h);
+
+  var rowConverter = function (d) {
+  return {
+    neighbor: d['Neighborhood Name'],
+    population: +d['Total Population'],
+    homeba: +d['Home Broadband Adoption %']
+    }
+  };
+
+  d3.csv("https://raw.githubusercontent.com/danieldc98/NYCneighborhoodInternetAdoption/main/data/clean/combined_dataset.csv", rowConverter)
+    .then(function(data) {
+
+    var yScale = d3.scaleBand()
+        .domain(data.map(d => d.neighbor))
+        .range([0, innerHeight])
+        .paddingInner(.1);
+
+    var xScale = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.population)])
+        .range([0, innerWidth]);
+    var xAxis = d3.axisBottom()
+        .scale(xScale);
+    svg.append("g")
+        .attr("class", "xAxis")
+        .attr("transform", `translate (${margin.left}, ${h - margin.bottom})`)
+        .call(xAxis);
+
+    svg.append("text")
+       .attr("class", "x label")
+       .attr("text-anchor", "moddle")
+       .attr("x", innerWidth / 2 + margin.left/2)
+       .attr("y", h - margin.bottom + 40)
+       .style("font-size", "15px")
+       .attr("font-family","Arial")
+       .text("Total NYC Borough Population");
+
+    // X axis
+    var xScale2 = d3.scaleLinear()
+        .domain([0, 100])
+        .range([0, innerWidth]);
+    var xAxis2 = d3.axisTop()
+        .scale(xScale2);
+    svg.append("g")
+        .attr("class", "xAxis")
+        .attr("transform", `translate (${margin.left}, ${margin.top})`)
+        .call(xAxis2);
+
+    svg.append("text")
+       .attr("class", "x label")
+       .attr("text-anchor", "moddle")
+       .attr("x", innerWidth / 2 + margin.left/2 + 40)
+       .attr("y", 25)
+       .style("font-size", "15px")
+       .attr("font-family","Arial")
+       .text("Percentage of Total Home Broadband Users");
+
+    svg.selectAll("myRect")
+       .data(data)
+       .join("rect")
+       .attr("x", xScale(0) + margin.left)
+       .attr("y", d => yScale(d.neighbor) + margin.top)
+       .attr("width", 0)
+       .attr("height", yScale.bandwidth())
+       .attr("fill", "#99c2ff")
+       .on("mouseover",function(){
+      				d3.select(this)
+              	.attr("fill","#002966")
+    				})
+    	 .on("mouseout",function(){
+      				d3.select(this)
+              	.attr("fill","#99c2ff")
+    				})
+    	 .transition("bars")
+						.delay(function(d, i) {
+							return i * 10;
+						})
+						.duration(1000)
+			 .attr("width", d => xScale(d.population))
+
+    svg.selectAll("rect")
+    	 .append("title")
+			 .text(function(d) {
+			   	return d.neighbor + ": " + d.population;
+			 });
+
+    // Dots
+    svg.selectAll("myDot")
+			 .data(data)
+			 .join("circle")
+			 .attr("r", 0)
+			 .attr("cx", d => xScale2(d.homeba * 100) + margin.left)
+       .attr("cy", d => yScale(d.neighbor) + margin.top + 6.5)
+			 .attr("fill", "#fa836b")
+			 .on("mouseover",function(){
+      				d3.select(this)
+              	.attr("fill","#77090e")
+    				})
+    	 .on("mouseout",function(){
+      				d3.select(this)
+              	.attr("fill","#fa836b")
+    				})
+
+    	 .transition("dots")
+						.delay(function(d, i) {
+							return i * 20;
+						})
+						.duration(1000)
+
+			 .attr("r", 2);
+
+		svg.selectAll("circle")
+    	 .append("title")
+			 .text(function(d) {
+			   	return d.neighbor + ": " + d.homeba * 100 + "%";
+			 });
+
+    svg.selectAll(".bar-label")
+            .data(data)
+        		.enter()
+            .append("text")
+            .style("font-size", "14px")
+            .attr("font-family","Arial")
+            .classed("bar-label", true)
+
+						.attr("y", function(d,i){
+                return yScale(d.neighbor) + margin.top + yScale.bandwidth() - 2;
+            })
+            .attr("x", margin.left - 5)
+
+      			.attr("text-anchor","end")
+    				.text(function(d){return d.neighbor})
+
+    svg.selectAll(".val-label")
+        .data(data)
+        .enter()
+            .append("text")
+            .style("font-size", "14px")
+            .classed("val-label", true)
+
+            .attr("y", function(d,i){
+                return yScale(d.neighbor) + margin.top + yScale.bandwidth() - 2;
+            })
+    				.attr("x", margin.left)
+
+						.transition("label")
+						.delay(function(d, i) {
+							return i * 10;
+						})
+						.duration(2000)
+
+     			  .attr("x", function(d,i){
+                return xScale(d.population) + margin.left + 4;
+            })
+    				.attr("text-anchor","start")
+    				.text(function(d){return d.population})
+
+
+    d3.select("#label").on("click", function() {
+      svg.selectAll(".val-label")
+        .data(data)
+        .enter()
+            .append("text")
+            .style("font-size", "14px")
+            .attr("font-family","Arial")
+            .classed("val-label", true)
+
+            .attr("y", function(d,i){
+                return yScale(d.neighbor) + margin.top + yScale.bandwidth() - 2;
+            })
+    				.attr("x", margin.left)
+						.transition("label")
+						.delay(function(d, i) {
+							return i * 10;
+						})
+						.duration(2000)
+     			  .attr("x", function(d,i){
+                return xScale(d.population) + margin.left + 4;
+            })
+    				.attr("text-anchor","start")
+    				.text(function(d){return d.population})
+    })
+
+    d3.select("#label2").on("click", function() {
+      svg.selectAll(".val-label")
+        .remove()
+    })
+
+
+    //Sort by Population
+    d3.select("#sort1").on("click", function() {
+
+      data.sort(function(a, b) {
+        return d3.descending(a.population, b.population)
+      })
+      yScale.domain(data.map(function(d) {
+        return d.neighbor;
+      }));
+
+      svg.selectAll("rect")
+        .transition()
+        .duration(1000)
+        .attr("y", function(d, i) {
+          return yScale(d.neighbor) + margin.top;
+        })
+
+      svg.selectAll(".bar-label")
+        .transition()
+        .duration(1000)
+        .attr("y", function(d, i) {
+          return yScale(d.neighbor) + margin.top + yScale.bandwidth() - 2;
+        })
+
+      svg.selectAll(".val-label")
+        .transition()
+        .duration(1000)
+        .attr("y", function(d, i) {
+          return yScale(d.neighbor) + margin.top + yScale.bandwidth() - 2;
+        })
+
+      svg.selectAll("circle")
+        .transition()
+        .duration(1000)
+        .attr("cy", function(d, i) {
+          return yScale(d.neighbor) + margin.top + 6.5;
+        })
+
+    })
+
+    //Sort by Percentage
+    d3.select("#sort2").on("click", function() {
+
+      data.sort(function(a, b) {
+        return d3.descending(a.homeba * 100, b.homeba * 100)
+      })
+      yScale.domain(data.map(function(d) {
+        return d.neighbor;
+      }));
+
+      svg.selectAll("rect")
+        .transition()
+        .duration(1000)
+        .attr("y", function(d, i) {
+          return yScale(d.neighbor) + margin.top;
+        })
+
+      svg.selectAll(".bar-label")
+        .transition()
+        .duration(1000)
+        .attr("y", function(d, i) {
+          return yScale(d.neighbor) + margin.top + yScale.bandwidth() - 2;
+        })
+
+      svg.selectAll(".val-label")
+        .transition()
+        .duration(1000)
+        .attr("y", function(d, i) {
+          return yScale(d.neighbor) + margin.top + yScale.bandwidth() - 2;
+        })
+
+      svg.selectAll("circle")
+        .transition()
+        .duration(1000)
+        .attr("cy", function(d, i) {
+          return yScale(d.neighbor) + margin.top + 6.5;
+        })
+
+    })
+
+    })
+    </script>
+  </body>
+</html>

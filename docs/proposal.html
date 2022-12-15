@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Proposal | NYC Neighborhood Internet Adoption</title>
   <meta name="description" content="Chapter 2 Proposal | NYC Neighborhood Internet Adoption" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Proposal | NYC Neighborhood Internet Adoption" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Daniel de Castro, Sushant Prabhu, Kiyan Mohebbizadeh" />
 
 
-<meta name="date" content="2022-11-01" />
+<meta name="date" content="2022-12-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="data.html"/>
+<link rel="next" href="data-sources.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,6 +52,16 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
 
 
 
@@ -78,15 +88,35 @@
 <li class="chapter" data-level="2.1" data-path="proposal.html"><a href="proposal.html#research-topic"><i class="fa fa-check"></i><b>2.1</b> Research topic</a></li>
 <li class="chapter" data-level="2.2" data-path="proposal.html"><a href="proposal.html#data-availability"><i class="fa fa-check"></i><b>2.2</b> Data availability</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a>
+<li class="chapter" data-level="3" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>3</b> Data Sources</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a></li>
-<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a></li>
-<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a></li>
+<li class="chapter" data-level="3.1" data-path="data-sources.html"><a href="data-sources.html#neighborhood-internet-infrastructure-data"><i class="fa fa-check"></i><b>3.1</b> Neighborhood Internet Infrastructure Data</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data-sources.html"><a href="data-sources.html#overview"><i class="fa fa-check"></i><b>3.1.1</b> Overview</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-sources.html"><a href="data-sources.html#details"><i class="fa fa-check"></i><b>3.1.2</b> Details</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a></li>
-<li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
-<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="chapter" data-level="3.2" data-path="data-sources.html"><a href="data-sources.html#neighborhood-sociological-demographic-housing-and-economic-data"><i class="fa fa-check"></i><b>3.2</b> Neighborhood Sociological, Demographic, Housing, and Economic Data</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data-sources.html"><a href="data-sources.html#overview-1"><i class="fa fa-check"></i><b>3.2.1</b> Overview</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-sources.html"><a href="data-sources.html#details-1"><i class="fa fa-check"></i><b>3.2.2</b> Details</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html"><i class="fa fa-check"></i><b>4</b> Data Cleaning/Transformation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#cleaning-up-join-columns"><i class="fa fa-check"></i><b>4.1</b> Cleaning Up Join Columns</a></li>
+<li class="chapter" data-level="4.2" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#feature-reduction"><i class="fa fa-check"></i><b>4.2</b> Feature Reduction</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#internet"><i class="fa fa-check"></i><b>4.2.1</b> Internet</a></li>
+<li class="chapter" data-level="4.2.2" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#sociological"><i class="fa fa-check"></i><b>4.2.2</b> Sociological</a></li>
+<li class="chapter" data-level="4.2.3" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#demographic"><i class="fa fa-check"></i><b>4.2.3</b> Demographic</a></li>
+<li class="chapter" data-level="4.2.4" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#economic"><i class="fa fa-check"></i><b>4.2.4</b> Economic</a></li>
+<li class="chapter" data-level="4.2.5" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#housing"><i class="fa fa-check"></i><b>4.2.5</b> Housing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="missing-value-analysis.html"><a href="missing-value-analysis.html"><i class="fa fa-check"></i><b>5</b> Missing Value Analysis</a></li>
+<li class="chapter" data-level="6" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>6</b> Results</a></li>
+<li class="chapter" data-level="7" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>7</b> Interactive component</a></li>
+<li class="chapter" data-level="8" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>8</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -108,29 +138,33 @@
             <section class="normal" id="section-">
 <div id="proposal" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Proposal<a href="proposal.html#proposal" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><strong>Problem Statement to Analyze</strong></p>
-<p>Is there a trend in Internet adoption across New York City based on demographic data?</p>
+<p><strong>Problem Statement</strong></p>
+<p>Is there a trend in New York City Internet access and adoption based on socioeconomic characteristics?</p>
 <div id="research-topic" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Research topic<a href="proposal.html#research-topic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Inspiration and Approach</strong></p>
+<p>Modern American society has reached a point where the Internet is a driver of the economy and increasingly a necessity of modern life.
+Consequently, there has been a rapid expansion of Internet infrastructure and availability around the country.
+However, this expansion has not progressed uniformly across society.
+For this reason our hypothesis is that there may be inequity in Internet availability and adoption, especially in a city as stratified as New York City.
+We intend to explore how Internet availability, adoption, and usage vary across New York City.</p>
 <p>To identify and analyse the problem statement, we intend to use NYC’s <a href="https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk">Internet Master Plan: Adoption and Infrastructure Data by Neighborhood</a> data to look at dozens of variables related to Internet speed, reliability, usage, and physical infrastructure at a neighborhood level.
 Collected by NYC’s Office of Technology and Innovation (OTI), this dataset contains detailed breakdowns of the state of Internet infrastructure and usage by city-recognized neighborhood.
-These range from obvious indicators of Internet usage (“Mobile Dependent Households (Percentage of Households)”) to detailed accountings of infrastructure (“Number of Free Public Wi-Fi Access Points in a Pedestrian Corridor”) to <em>really</em> detailed accountings of infrastructure (“Density of Poles Reserved and with Equipment Installed for Mobile Telecom Franchise”).
-As most digital public infrastructure must go through OTI for permits and oversight, we expect this data to offer an accurate accounting of the city’s digital infrastructure.
-Furthermore, since OTI last updated this dataset in March of 2021, we expect this dataset to offer insights into Internet access during the Covid-19 pandemic, when the importance of online connectivity was at an all-time high.</p>
+These range from obvious indicators of Internet usage (“Mobile Dependent Households (Percentage of Households)”) to detailed accountings of infrastructure (“Number of Free Public Wi-Fi Access Points in a Pedestrian Corridor”) to <em>really</em> detailed accountings of infrastructure (“Density of Poles Reserved and with Equipment Installed for Mobile Telecom Franchise”). As most digital public infrastructure must go through OTI for permits and oversight, we expect this data to offer an accurate accounting of the city’s digital infrastructure. Furthermore, since OTI last updated this dataset in March of 2021, we expect this dataset to offer insights into Internet access during the Covid-19 pandemic, when the importance of online connectivity was at an all-time high.</p>
 <p>In order to understand more about the neighborhoods making up the rows of the Internet Master Plan dataset, we intend to combine it with NYC’s <a href="https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn">Demographic Profiles of ACS 5 Year Estimates at the Neighborhood Tabulation Area (NTA) level</a>.
-Collected by the Department of City Planning (DCP), this dataset describes in detail the unique demographic, economic, housing, and social characteristics of every neighborhood within the Five Boroughs. Keyed on the same Neighborhood Tabulation Area codes as the Internet dataset, this data answers questions about each neighborhood’s racial, ethnic, and linguistic diversity; their income and wealth distributions; their housing stock, rents, and densities; and their familial, educational, and disability chararacteristics.
-These categorical and continuous variables will add valuable context to each neighborhood’s Internet availability and adoption — giving us an opportunity to explore and visualize patterns and correlations between the two. One limitation of this dataset is its recency. Aggregated over five years in the mid 2010s, this data is 5 years staler than the Internet Master Plan data.
+Collected by the Department of City Planning (DCP), this dataset describes in detail the unique demographic, economic, housing, and social characteristics of every neighborhood within the Five Boroughs.
+Keyed on the same Neighborhood Tabulation Area codes as the Internet dataset, this data answers questions about each neighborhood’s racial, ethnic, and linguistic diversity; their income and wealth distributions; their housing stock, rents, and densities; and their familial, educational, and disability chararacteristics.
+These categorical and continuous variables will add valuable context to each neighborhood’s Internet availability and adoption — giving us an opportunity to explore and visualize patterns and correlations between the two.
+One limitation of this dataset is its recency.
+Aggregated over five years in the mid 2010s, this data is 5 years staler than the Internet Master Plan data.
 While this may bias our findings as they relate to neighborhoods that have undergone rapid demographic change during that interval, we do not expect this to invalidate our overall findings.</p>
 </div>
 <div id="data-availability" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> Data availability<a href="proposal.html#data-availability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Dataset Sources</strong></p>
 <ul>
-<li>Internet Master Plan: Adoption and Infrastructure Data by Neighborhood:
-<a href="https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk" class="uri">https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk</a></li>
-<li>Demographic Profiles of ACS 5 Year Estimates at the Neighborhood Tabulation Area (NTA) level
-<a href="https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn" class="uri">https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn</a></li>
+<li>Internet Master Plan: Adoption and Infrastructure Data by Neighborhood: <a href="https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk" class="uri">https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk</a></li>
+<li>Demographic Profiles of ACS 5 Year Estimates at the Neighborhood Tabulation Area (NTA) level <a href="https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn" class="uri">https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn</a></li>
 </ul>
 <p>Both datasets are available on <a href="https://opendata.cityofnewyork.us">NYC OpenData</a> either as a .csv file or as a zipped folder of .xlsx files.</p>
 <ul>
@@ -141,8 +175,7 @@ While this may bias our findings as they relate to neighborhoods that have under
 <li>Since they are both under 6 MB, we were able to download the files using conventional HTTPS file downloads. To preprocess our data, we will read in the csv and excel files and combine them all on NTA code before writing the result out as a single csv file.</li>
 <li>This will enable us to effectively analyze and visualize any combination of the many categorical and continuous variables about Internet connectivity or socioeconomic demographics for all neighborhoods in New York City.</li>
 </ul>
-<p><strong>Statistics about the Internet Master Plan dataset:</strong>
-- Includes Key indicators of broadband adoption, service and infrastructure in New York City.</p>
+<p><strong>Statistics about the Internet Master Plan dataset:</strong> - Includes Key indicators of broadband adoption, service and infrastructure in New York City.</p>
 <ul>
 <li>Data Provided by - Office of Technology and Innovation (OTI)</li>
 <li>Dataset Owner - NYC OpenData</li>
@@ -150,8 +183,7 @@ While this may bias our findings as they relate to neighborhoods that have under
 <li>Date Made Public - 12/09/2019</li>
 <li>Metadata Last Updated - September 23, 2022</li>
 </ul>
-<p><strong>Statistics about the Demographic Profiles dataset:</strong>
-- Includes 4 profiles include demographics, economic, housing and sociological.</p>
+<p><strong>Statistics about the Demographic Profiles dataset:</strong> - Includes 4 profiles include demographics, economic, housing and sociological.</p>
 <ul>
 <li>Data Provided by - Department of City Planning (DCP)</li>
 <li>Dataset Owner - NYC OpenData</li>
@@ -169,7 +201,7 @@ While this may bias our findings as they relate to neighborhoods that have under
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-sources.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

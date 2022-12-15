@@ -5,4 +5,4 @@ Interactive component in D3.js we wish to demonstrate the interactivity and visu
 The audience is free to sort them and hover on the bars for quick navigation and insights.
 Really interesting and cool to see the Upper West Side (composing of Columbia University) rocking it !
 
-<iframe src="NYC.html" width="800" height="6000"></iframe>
+<iframe src="NYC_interactive.html" width="700" height="5300"></iframe>

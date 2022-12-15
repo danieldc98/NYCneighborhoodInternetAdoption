@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>NYC Neighborhood Internet Adoption</title>
   <meta name="description" content="NYC Neighborhood Internet Adoption" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="NYC Neighborhood Internet Adoption" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Daniel de Castro, Sushant Prabhu, Kiyan Mohebbizadeh" />
 
 
-<meta name="date" content="2022-11-01" />
+<meta name="date" content="2022-12-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,16 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
 
 
 
@@ -78,15 +88,35 @@
 <li class="chapter" data-level="2.1" data-path="proposal.html"><a href="proposal.html#research-topic"><i class="fa fa-check"></i><b>2.1</b> Research topic</a></li>
 <li class="chapter" data-level="2.2" data-path="proposal.html"><a href="proposal.html#data-availability"><i class="fa fa-check"></i><b>2.2</b> Data availability</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a>
+<li class="chapter" data-level="3" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>3</b> Data Sources</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a></li>
-<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a></li>
-<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a></li>
+<li class="chapter" data-level="3.1" data-path="data-sources.html"><a href="data-sources.html#neighborhood-internet-infrastructure-data"><i class="fa fa-check"></i><b>3.1</b> Neighborhood Internet Infrastructure Data</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data-sources.html"><a href="data-sources.html#overview"><i class="fa fa-check"></i><b>3.1.1</b> Overview</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-sources.html"><a href="data-sources.html#details"><i class="fa fa-check"></i><b>3.1.2</b> Details</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a></li>
-<li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
-<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="chapter" data-level="3.2" data-path="data-sources.html"><a href="data-sources.html#neighborhood-sociological-demographic-housing-and-economic-data"><i class="fa fa-check"></i><b>3.2</b> Neighborhood Sociological, Demographic, Housing, and Economic Data</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data-sources.html"><a href="data-sources.html#overview-1"><i class="fa fa-check"></i><b>3.2.1</b> Overview</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-sources.html"><a href="data-sources.html#details-1"><i class="fa fa-check"></i><b>3.2.2</b> Details</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html"><i class="fa fa-check"></i><b>4</b> Data Cleaning/Transformation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#cleaning-up-join-columns"><i class="fa fa-check"></i><b>4.1</b> Cleaning Up Join Columns</a></li>
+<li class="chapter" data-level="4.2" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#feature-reduction"><i class="fa fa-check"></i><b>4.2</b> Feature Reduction</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#internet"><i class="fa fa-check"></i><b>4.2.1</b> Internet</a></li>
+<li class="chapter" data-level="4.2.2" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#sociological"><i class="fa fa-check"></i><b>4.2.2</b> Sociological</a></li>
+<li class="chapter" data-level="4.2.3" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#demographic"><i class="fa fa-check"></i><b>4.2.3</b> Demographic</a></li>
+<li class="chapter" data-level="4.2.4" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#economic"><i class="fa fa-check"></i><b>4.2.4</b> Economic</a></li>
+<li class="chapter" data-level="4.2.5" data-path="data-cleaningtransformation.html"><a href="data-cleaningtransformation.html#housing"><i class="fa fa-check"></i><b>4.2.5</b> Housing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="missing-value-analysis.html"><a href="missing-value-analysis.html"><i class="fa fa-check"></i><b>5</b> Missing Value Analysis</a></li>
+<li class="chapter" data-level="6" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>6</b> Results</a></li>
+<li class="chapter" data-level="7" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>7</b> Interactive component</a></li>
+<li class="chapter" data-level="8" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>8</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -109,24 +139,12 @@
 <div id="header">
 <h1 class="title">NYC Neighborhood Internet Adoption</h1>
 <p class="author"><em>Daniel de Castro, Sushant Prabhu, Kiyan Mohebbizadeh</em></p>
-<p class="date"><em>2022-11-01</em></p>
+<p class="date"><em>2022-12-14</em></p>
 </div>
 <div id="introduction" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction<a href="index.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>“How and whom should the Government help get efficient, reliable and super-fast internet access?”</p>
-<p>This burgeoning question definitely gets invoked either directly or indirectly in government’s Multi Billion$ infrastructure programs as part of the broadband infrastructure deployment. To expand the access of the broadband,
-proper planning and detailed split of money and resources needs to be determined.</p>
-<p><strong>Trends Affecting Internet Connectivity</strong></p>
-<p>Modern American society has reached a point where the Internet is a driver of the economy and increasingly a necessity of modern life. Consequently, there has been a rapid expansion of Internet infrastructure and availability around the country. However, this expansion has not progressed uniformly across society.
-Certain digital divides still exist between urban, suburban and rural America.</p>
-<p>Research studies highlight that 72% Rural Americans say that they own a home broadband internet connection however the rural residents go online less frequently than their urban counterparts. [Research survey done of U.S. adults from Jan 25, 2021 to Feb 8, 2021 by Pew Research Center]. Almost half of the people who did not have a broadband connection said they could not afford it. Only 7% blamed the main reason to be, the lack of access to high-speed networks.</p>
-<p>It is less likely that rural adults have multiple devices like smartphone, tablet, laptop and computers in contrast to suburban and urban adults those who own multiple devices or services that help them to go online. 3 out of 10 adults rural community members report owning multiple devices like a desktop / laptop, a smartphone, a home broadband connection &amp; a tablet computer, in comparison to 44% urban &amp; 43% suburban adults. 8 out of 10 people who live in rural communities mentioned they use the internet at least on a daily basis, versus 9 out of 10 of those in urban areas.</p>
-<p><strong>Digital Divide beyond Internet Adoption</strong></p>
-<p>According to a long term study done by the National Telecommunications and Information Administration under the aegis of United States Department of Commerce, analyzed the digital divide by Educational Attainment and Population Density, Family Income, Race &amp; Ethnicity and Location. Internet use at particular locations, and participation in online activities.</p>
-<p>Based on the results they obtained, its evident that there is a continuing need to address the obstacles rural residents face in Internet use. For example, certain homes may need subsidies to make the Internet more affordable, while others may require training sessions on digital literacy to leverage the Internet. Even till this date, few remote rural communities still lack Internet access at all / poor service available or restrictively high priced.</p>
-<p>Around 81% rural areas are plugged into broadband, as against 86% in urban households, as per the Census Bureau data. But 13.6 Million urban households without a connection, is approximately 3 times as big as the 4.6 Million rural households that don’t have one.</p>
-<p><strong>Motivation to Analyze NYC trends</strong></p>
-<p>For all the above reasons stated, and to know more about the internet adoption trends across households in NYC and the wonderful city we are part of, our hypothesis is that there may be inequity in Internet availability and adoption, especially in a city as stratified as New York City. This motivated us to choose and further deepdive on this topic. We intend to explore how Internet availability, adoption, and usage vary across New York City.</p>
+<p>The Internet is a driver of the American economy and increasingly a necessity of modern life. Recognizing this centrality, in January 2020 New York City Mayor de Blasio’s office <a href="https://www.nyc.gov/office-of-the-mayor/news/010-20/de-blasio-administration-releases-internet-master-plan-city-s-broadband-future">released</a> an ambitious plan to “close the digital divide” by bringing “universal broadband” to “all New Yorkers”. Dubbed the <a href="https://www1.nyc.gov/assets/cto/downloads/internet-master-plan/NYC_IMP_1.7.20_FINAL-2.pdf"><em>Internet Master Plan</em></a>, the sixty-eight-page missive details the economic, social, and educational benefits of spreading high-speed Internet access to the 195 neighborhoods that make up the five boroughs, as well as a roadmap to its achievement. While the authors of the <em>Plan</em> called for an aggressive timeline of expanded infrastructural roll out entering full swing sometime in Q1 2022, they had no idea how soon their goals would become vital to the City’s functioning.</p>
+<p>Months after the <em>Plan</em>’s announcement, a wholesale digital migration of professional, educational, and interpersonal life brought about by an unexpected global pandemic rendered online connectivity more important than ever. A year after the onset of stay-at-home orders, virtual learning, and social distancing, the City’s eight million inhabitants were more at the mercy of their Internet infrastructure than ever before. Some, though, faced more daunting obstacles to connectivity than others. The purpose of this project is to better understand the nature of this digital disparity. Using data on neighborhood digital infrastructure as well as economic, demographic, housing, and sociological characteristics, we seek to better understand the geographic and socioeconomic distribution of Internet availability in New York City during the darkest days of the Covid-19 pandemic.</p>
 
 </div>
             </section>

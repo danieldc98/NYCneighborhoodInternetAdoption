@@ -2,7 +2,8 @@ introduction
 proposal
 research-topic
 data-availability
-data-sources
+data
+sources
 neighborhood-internet-infrastructure-data
 overview
 details

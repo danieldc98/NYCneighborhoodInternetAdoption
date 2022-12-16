@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Data | NYC Neighborhood Internet Adoption</title>
   <meta name="description" content="Chapter 3 Data | NYC Neighborhood Internet Adoption" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Data | NYC Neighborhood Internet Adoption" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Daniel de Castro, Sushant Prabhu, Kiyan Mohebbizadeh" />
 
 
-<meta name="date" content="2022-11-01" />
+<meta name="date" content="2022-12-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,16 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
 
 
 
@@ -80,11 +90,38 @@
 </ul></li>
 <li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a></li>
-<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a></li>
-<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a></li>
+<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data.html"><a href="data.html#neighborhood-internet-infrastructure-data"><i class="fa fa-check"></i><b>3.1.1</b> Neighborhood Internet Infrastructure Data</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data.html"><a href="data.html#neighborhood-sociological-demographic-housing-and-economic-data"><i class="fa fa-check"></i><b>3.1.2</b> Neighborhood Sociological, Demographic, Housing, and Economic Data</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#data-cleaningtransformation"><i class="fa fa-check"></i><b>3.2</b> Data Cleaning/Transformation</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data.html"><a href="data.html#cleaning-up-join-columns"><i class="fa fa-check"></i><b>3.2.1</b> Cleaning Up Join Columns</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data.html"><a href="data.html#feature-reduction"><i class="fa fa-check"></i><b>3.2.2</b> Feature Reduction</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data.html"><a href="data.html#internet"><i class="fa fa-check"></i><b>3.2.3</b> Internet</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data.html"><a href="data.html#sociological"><i class="fa fa-check"></i><b>3.2.4</b> Sociological</a></li>
+<li class="chapter" data-level="3.2.5" data-path="data.html"><a href="data.html#demographic"><i class="fa fa-check"></i><b>3.2.5</b> Demographic</a></li>
+<li class="chapter" data-level="3.2.6" data-path="data.html"><a href="data.html#economic"><i class="fa fa-check"></i><b>3.2.6</b> Economic</a></li>
+<li class="chapter" data-level="3.2.7" data-path="data.html"><a href="data.html#housing"><i class="fa fa-check"></i><b>3.2.7</b> Housing</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing Value Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#mapping-home-internet-adoption"><i class="fa fa-check"></i><b>4.1</b> Mapping Home Internet Adoption</a></li>
+<li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#racial-stratification-in-internet-infrastructure"><i class="fa fa-check"></i><b>4.2</b> Racial Stratification in Internet Infrastructure</a></li>
+<li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#the-golden-door-to-cyberspace-internet-infrastructure-of-new-yorks-foreign-born"><i class="fa fa-check"></i><b>4.3</b> The Golden Door to Cyberspace: Internet Infrastructure of New York’s Foreign-Born</a></li>
+<li class="chapter" data-level="4.4" data-path="results.html"><a href="results.html#trying-to-learn-remotely"><i class="fa fa-check"></i><b>4.4</b> Trying to Learn Remotely</a></li>
+<li class="chapter" data-level="4.5" data-path="results.html"><a href="results.html#trends-between-income-and-internet"><i class="fa fa-check"></i><b>4.5</b> Trends between Income and Internet</a></li>
+<li class="chapter" data-level="4.6" data-path="results.html"><a href="results.html#significant-trend-in-the-bronx"><i class="fa fa-check"></i><b>4.6</b> Significant Trend in The Bronx</a></li>
+<li class="chapter" data-level="4.7" data-path="results.html"><a href="results.html#do-the-people-in-nyc-living-in-rented-stays-have-access-to-better-internet-facilities"><i class="fa fa-check"></i><b>4.7</b> Do the people in NYC living in rented stays have access to better internet facilities?</a></li>
+<li class="chapter" data-level="4.8" data-path="results.html"><a href="results.html#what-does-the-nyc-household-racial-ethnicity-distribution-look-like"><i class="fa fa-check"></i><b>4.8</b> What does the NYC household racial ethnicity distribution look like?</a></li>
+<li class="chapter" data-level="4.9" data-path="results.html"><a href="results.html#are-we-democratizing-internet-access-to-everyone"><i class="fa fa-check"></i><b>4.9</b> Are we democratizing Internet Access to Everyone</a></li>
+<li class="chapter" data-level="4.10" data-path="results.html"><a href="results.html#will-the-rent-you-pay-guarantee-effective-high-internet"><i class="fa fa-check"></i><b>4.10</b> Will the rent you pay guarantee effective high internet ?</a></li>
+<li class="chapter" data-level="4.11" data-path="results.html"><a href="results.html#how-satisfied-are-internet-users-in-hcol-high-cost-of-living-lcol-low-cost-of-living-neighborhood-areas"><i class="fa fa-check"></i><b>4.11</b> How Satisfied are internet users in HCOL (High cost of living) &amp; LCOL (low cost of living) neighborhood areas ?</a></li>
+<li class="chapter" data-level="4.12" data-path="results.html"><a href="results.html#are-we-moving-to-a-mobile-first-era-or-households-still-rely-on-the-high-speed-home-internet"><i class="fa fa-check"></i><b>4.12</b> Are we moving to a mobile first era or households still rely on the high speed home internet ?</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
 <li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -110,19 +147,136 @@
 <h1><span class="header-section-number">Chapter 3</span> Data<a href="data.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="sources" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Sources<a href="data.html#sources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Dataset Sources</strong></p>
+<div id="neighborhood-internet-infrastructure-data" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Neighborhood Internet Infrastructure Data<a href="data.html#neighborhood-internet-infrastructure-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="overview" class="section level4 hasAnchor" number="3.1.1.1">
+<h4><span class="header-section-number">3.1.1.1</span> Overview<a href="data.html#overview" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We used NYC’s <a href="https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk">Internet Master Plan: Adoption and Infrastructure Data by Neighborhood</a> data to look at dozens of variables related to Internet speed, reliability, usage, and physical infrastructure at a neighborhood level. Collected by NYC’s Office of Technology and Innovation (OTI), this dataset contains detailed breakdowns of the state of Internet infrastructure and usage by city-recognized neighborhood. These range from obvious indicators of Internet usage (“Mobile Dependent Households (Percentage of Households)”) to detailed accountings of infrastructure (“Number of Free Public Wi-Fi Access Points in a Pedestrian Corridor”) to <em>really</em> detailed accountings of infrastructure (“Density of Poles Reserved and with Equipment Installed for Mobile Telecom Franchise”). As most digital public infrastructure must go through OTI for permits and oversight, we expect this data to offer an accurate accounting of the city’s digital infrastructure. Furthermore, since OTI last updated this dataset in March of 2021, we expect this dataset to offer insights into Internet access during the Covid-19 pandemic, when the importance of online connectivity was at an all-time high.</p>
+</div>
+<div id="details" class="section level4 hasAnchor" number="3.1.1.2">
+<h4><span class="header-section-number">3.1.1.2</span> Details<a href="data.html#details" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Overall size: 195 neighborhood rows by 77 feature columns</p>
+<p>Online availability: .csv file on <a href="https://opendata.cityofnewyork.us">NYC OpenData</a></p>
+<p>Provider: NYC Office of Technology and Innovation (OTI)</p>
+<p>Owner: NYC OpenData</p>
+<p>Update Frequency: Annually</p>
+<p>Date Made Public: December 9, 2019</p>
+<p>Metadata Last Updated: September 23, 2022</p>
+</div>
+</div>
+<div id="neighborhood-sociological-demographic-housing-and-economic-data" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Neighborhood Sociological, Demographic, Housing, and Economic Data<a href="data.html#neighborhood-sociological-demographic-housing-and-economic-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="overview-1" class="section level4 hasAnchor" number="3.1.2.1">
+<h4><span class="header-section-number">3.1.2.1</span> Overview<a href="data.html#overview-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>In order to understand more about the neighborhoods making up the rows of the Internet Master Plan dataset, we combined it with NYC’s <a href="https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn">Demographic Profiles of ACS 5 Year Estimates at the Neighborhood Tabulation Area (NTA) level</a>. Collected by the Department of City Planning (DCP), this dataset describes in detail the unique demographic, economic, housing, and social characteristics of every neighborhood within the Five Boroughs. Keyed on the same Neighborhood Tabulation Area codes as the Internet dataset, this data answers questions about each neighborhood’s racial, ethnic, and linguistic diversity; their income and wealth distributions; their housing stock, rents, and densities; and their familial, educational, and disability characteristics.</p>
+<p>These categorical and continuous variables will add valuable context to each neighborhood’s Internet availability and adoption — giving us an opportunity to explore and visualize patterns and correlations between the two. One limitation of this dataset is its recency. Aggregated over five years in the mid 2010s, this data is 5 years staler than the Internet Master Plan data. While this may bias our findings as they relate to neighborhoods that have undergone rapid demographic change during that interval, we do not expect this to invalidate our overall findings. We considered using more recent neighborhood characteristic datasets, however these were not broken down along the same neighborhood boundaries as the Internet infrastructure dataset. This caused a messy join resulting in unnecessarily missing data. For this reason, we elected to use the slightly staler data which joined perfectly with the rows of the Internet dataset.</p>
+</div>
+<div id="details-1" class="section level4 hasAnchor" number="3.1.2.2">
+<h4><span class="header-section-number">3.1.2.2</span> Details<a href="data.html#details-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Overall size:</p>
 <ul>
-<li>Internet Master Plan: Adoption and Infrastructure Data by Neighborhood:
-<a href="https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk" class="uri">https://data.cityofnewyork.us/City-Government/Internet-Master-Plan-Adoption-and-Infrastructure-D/fg5j-q5nk</a></li>
-<li>Demographic Profiles of ACS 5 Year Estimates at the Neighborhood Tabulation Area (NTA) level
-<a href="https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn" class="uri">https://data.cityofnewyork.us/City-Government/Demographic-Profiles-of-ACS-5-Year-Estimates-at-th/8cwr-7pqn</a></li>
+<li><p>Demographic: 195 neighborhood rows by 484 feature columns</p></li>
+<li><p>Economic: 195 neighborhood rows by 659 feature columns</p></li>
+<li><p>Housing: 195 neighborhood rows by 524 feature columns</p></li>
+<li><p>Sociological: 195 neighborhood rows by 2,714 feature columns</p></li>
+</ul>
+<p>Provider: Department of City Planning (DCP)</p>
+<p>Owner: NYC OpenData</p>
+<p>Update Frequency: Annually</p>
+<p>Date Made Public: May 29, 2018</p>
+<p>Last Updated: March 4, 2020</p>
+<p>There are several causes for the high width of these datasets:</p>
+<ol style="list-style-type: decimal">
+<li><p>Nearly every characteristic has 4 versions: a raw count, a margin of error, a percentage of overall neighborhood population, and a margin of error of the percentage.</p></li>
+<li><p>Many features, especially in the sociological dataset, are broken down on a per-factor level. In the most extreme case, this results in 4 columns (raw, percentage, and margins of error) for every country from which a New Yorker has emigrated.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="data-cleaningtransformation" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Data Cleaning/Transformation<a href="data.html#data-cleaningtransformation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We intentionally chose these datasets because of their interoperability. Because they use the same neighborhood definitions and unique identifiers, cleaning and joining these two datasets together was a relatively straightforward process. The code for this cleaning/transformation is located in /preprocessing.ipynb. Data can be found in /data/raw/ and data/clean/.</p>
+<div id="cleaning-up-join-columns" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Cleaning Up Join Columns<a href="data.html#cleaning-up-join-columns" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Internet Dataset calls each neighborhood’s unique code a “Neighborhood Tabulation Area Code (NTA Code)”, while the housing/economic/demographic/social dataset refers to it as a “GeoID”. Due to the former’s unwieldiness, we regularized both to use “GeoID”. We also standardized both to use “Borough” rather than “Borough Name”. Finally, we changed all instances of “Borough”: “Bronx” to be “The Bronx” in the Internet dataset to match the style of the socioeconomic data. The result was a series of simple left joins between 5 dataframes with perfectly matching “GeoID” and “Borough” columns.</p>
+</div>
+<div id="feature-reduction" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Feature Reduction<a href="data.html#feature-reduction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Joining these datasets together as-is resulted in over 4,000 columns. As previously discussed, many of these were factor-level breakdowns of high-cardinality categorical variables (such as country of origin or language spoken at home). Most of these were not useful for our analysis, and so we decided to prune and aggregate them into data we could analyze easily in R. In general, we settled on using predominantly percentage-based variables whenever appropriate in order to better compare across neighborhoods. We also created several new columns by aggregating across existing ones. In general, this was done to assign each neighborhood a single value/category where it previously had several factor-level breakdowns, in order to better compare across neighborhoods.</p>
+</div>
+<div id="internet" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Internet<a href="data.html#internet" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Of the 77 columns in the Internet dataset, we settled on the following columns for our analysis:</p>
+<ul>
+<li><p>“GeoID”</p></li>
+<li><p>“Borough”</p></li>
+<li><p>“neighborhood_name”</p></li>
+<li><p>“Total Population”</p></li>
+<li><p>“Population Density (per Sq. Mi.)”</p></li>
+<li><p>“Total Number of Households”</p></li>
+<li><p>“Home Broadband Adoption %”</p></li>
+<li><p>“Mobile Broadband Adoption %”</p></li>
+<li><p>“Mobile Dependent Households %”</p></li>
+<li><p>“Residential Broadband Choice Average by NTA”</p></li>
+<li><p>“Blocks with ISP Reported Speed Availability of &gt;=900 Mbps %”</p></li>
+<li><p>“Public Wi-Fi in NYC Count”</p></li>
+<li><p>“NYC Internet Master Plan Open Access Infrastructure Cost Comparison Coefficient”</p></li>
 </ul>
 </div>
-<div id="cleaning-transformation" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Cleaning / transformation<a href="data.html#cleaning-transformation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="sociological" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Sociological<a href="data.html#sociological" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Of the 2,714 columns in the Sociological dataset, we settled on the following columns for our analysis:</p>
+<ul>
+<li><p>“GeoID”</p></li>
+<li><p>“Borough”</p></li>
+<li><p>“English only language %”</p></li>
+<li><p>“Language other than English %”</p></li>
+<li><p>“Native born in US %”</p></li>
+<li><p>“Foreign born %”</p></li>
+<li><p>“Completed Bachelors degree or higher %”</p></li>
+</ul>
+</div>
+<div id="demographic" class="section level3 hasAnchor" number="3.2.5">
+<h3><span class="header-section-number">3.2.5</span> Demographic<a href="data.html#demographic" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Of the 484 columns in the Demographic dataset, we settled on the following columns for our analysis:</p>
+<ul>
+<li><p>“GeoID”</p></li>
+<li><p>“Borough”</p></li>
+<li><p>“Population under 18 years %”</p></li>
+<li><p>“Population over 64 years %”</p></li>
+</ul>
+<p>as well as a new column we created, “plurality_racial_group”, which we made by finding the highest-population racial group in each neighborhood. In effect, this converted 6 numerical columns into one categorical one.</p>
+</div>
+<div id="economic" class="section level3 hasAnchor" number="3.2.6">
+<h3><span class="header-section-number">3.2.6</span> Economic<a href="data.html#economic" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Of the 659 columns in the Economic dataset, we settled on the following columns for our analysis:</p>
+<ul>
+<li><p>“GeoID”</p></li>
+<li><p>“Borough”</p></li>
+<li><p>“Per Capita Income (in $)”</p></li>
+<li><p>“Families below poverty level %”</p></li>
+<li><p>“Population employed in labor force %”</p></li>
+</ul>
+<p>as well as two new columns we created, “Work from Home - Capable” and “Work from Home - Incapable”, by adding up the proportions of workers in roles we deemed potentially doable from home via the Internet. We settled on management, business, sciences, arts, sales, and office workers as being WFH-capable and service, natural resources, construction, maintenance, production, and transportation workers as being WFH-incapable. We recognize that not all workers in the former can or do work from home, while some in the latter may.</p>
+</div>
+<div id="housing" class="section level3 hasAnchor" number="3.2.7">
+<h3><span class="header-section-number">3.2.7</span> Housing<a href="data.html#housing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Of the 524 columns in the Housing dataset, we settled on the following columns for our analysis:</p>
+<ul>
+<li><p>“GeoID”</p></li>
+<li><p>“Borough”</p></li>
+<li><p>“Median House gross rent (in $)”</p></li>
+<li><p>“Median House value (in $)”</p></li>
+<li><p>“Owner occupied Housing unit %”</p></li>
+<li><p>“Renter occupied Housing unit %”</p></li>
+<li><p>“Total occupied Housing unit %”</p></li>
+</ul>
+</div>
 </div>
 <div id="missing-value-analysis" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> Missing value analysis<a href="data.html#missing-value-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">3.3</span> Missing Value Analysis<a href="data.html#missing-value-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Only 8 neighborhoods are missing any data in our chosen fields. Of them, 5 are the boroughs’ parks/cemeteries, one is the city’s airports, and one is the city’s primary jail, Rikers Island. These are clearly not normal neighborhoods with normal neighborhood populations, so these omissions are logical. Stuyvesant Town-Cooper Village, the centrally designed complex of apartments in the Lower East Side unique for its lack of adherence to the Manhattan street grid, is an entirely rental apartment complex. As such, it has no median home price.</p>
 
 </div>
 </div>

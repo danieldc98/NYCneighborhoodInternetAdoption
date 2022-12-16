@@ -172,12 +172,13 @@ Of the 524 columns in the Housing dataset, we settled on the following columns f
 
 ```{r}
 library(ggplot2)
+library(dplyr)
 data <- read.csv("./data/clean/combined_dataset.csv")
 data$na_count <- rowSums(is.na(data))
 data$Neighborhood.Name <- factor(data$Neighborhood.Name,
                   levels = data$Neighborhood.Name[order(data$na_count, decreasing = FALSE)])
 row_na_counts <- ggplot(
-  filter(data, na_count > 0),
+  dplyr::filter(data, na_count > 0),
   aes(Neighborhood.Name, na_count)
 ) +
   geom_bar(stat='identity') +
